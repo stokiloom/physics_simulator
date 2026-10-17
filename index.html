@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Физика. Тренажёр</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;max-width:900px;margin:0 auto;padding:20px;background:#f5f7fa;color:#2c3e50;line-height:1.5}
+h1{color:#2c3e50;border-bottom:3px solid #3498db;padding-bottom:10px}
+.screen{display:none}.screen.active{display:block}
+.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:15px 0}
+.topic-item{background:#fff;padding:10px 15px;border-radius:6px;border:2px solid #e0e6ed;cursor:pointer;transition:all .2s}
+.topic-item:hover{border-color:#3498db}
+.topic-item.selected{background:#3498db;color:#fff;border-color:#2980b9}
+.level-buttons,.type-buttons{display:flex;gap:10px;margin:10px 0;flex-wrap:wrap}
+.level-btn,.type-btn{flex:1;min-width:150px;padding:12px;background:#fff;border:2px solid #e0e6ed;border-radius:6px;cursor:pointer;font-size:15px;transition:all .2s}
+.level-btn.selected,.type-btn.selected{background:#3498db;color:#fff;border-color:#2980b9}
+.btn{padding:12px 24px;background:#3498db;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:16px;margin:10px 5px 10px 0}
+.btn:hover{background:#2980b9}
+.btn.secondary{background:#95a5a6}.btn.success{background:#27ae60}
+.task{background:#fff;padding:20px;margin:15px 0;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.1)}
+.task.correct{border-left:5px solid #27ae60}.task.incorrect{border-left:5px solid #e74c3c}
+.task-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid #ecf0f1;flex-wrap:wrap;gap:8px}
+.task-number{font-weight:700;color:#3498db;font-size:18px}
+.task-topic{background:#ecf0f1;padding:4px 10px;border-radius:4px;font-size:13px;color:#7f8c8d}
+.task-question{margin:15px 0;font-size:16px}
+.task-given{background:#f8f9fa;padding:12px 15px;border-radius:6px;margin:10px 0;border-left:4px solid #3498db}
+.task-given strong{color:#2980b9}
+.answer-input{display:flex;gap:10px;align-items:center;margin-top:15px;flex-wrap:wrap}
+.answer-input input{padding:10px;font-size:16px;border:2px solid #e0e6ed;border-radius:6px;width:180px}
+.answer-unit{background:#ecf0f1;padding:10px 15px;border-radius:6px;font-weight:500}
+.unit-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.unit-option{padding:8px 16px;background:#fff;border:2px solid #e0e6ed;border-radius:6px;cursor:pointer}
+.unit-option.selected{background:#3498db;color:#fff;border-color:#2980b9}
+.task-result{margin-top:15px;padding:12px;border-radius:6px;font-weight:500}
+.task-result.correct{background:#d5f4e6;color:#27ae60}
+.task-result.incorrect{background:#fadbd8;color:#c0392b}
+.task-hint{margin-top:8px;font-size:13px;color:#888;font-style:italic}
+.results-summary{background:#fff;padding:20px;border-radius:8px;margin:20px 0;box-shadow:0 2px 4px rgba(0,0,0,.1)}
+.score{font-size:32px;font-weight:700;color:#3498db;text-align:center;margin:15px 0}
+.score-bar{height:20px;background:#ecf0f1;border-radius:10px;overflow:hidden;margin:15px 0}
+.score-fill{height:100%;background:linear-gradient(90deg,#27ae60,#2ecc71);transition:width .5s}
+.stats{display:flex;justify-content:space-around;margin:20px 0}
+.stat{text-align:center}.stat-value{font-size:24px;font-weight:700}.stat-label{color:#7f8c8d;font-size:14px}
+.info-box{background:#eaf4fc;border-left:4px solid #3498db;padding:12px 15px;margin:15px 0;border-radius:4px}
+.warning-box{background:#fef5e7;border-left:4px solid #f39c12;padding:12px 15px;margin:15px 0;border-radius:4px}
+.topic-stat-card{background:#fff;padding:12px 15px;margin:8px 0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.topic-stat-header{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px}
+.topic-stat-bar-bg{width:100%;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden}
+.topic-stat-bar-fill{height:100%;border-radius:4px}
+.review-card{background:#fff;border-radius:8px;padding:15px;margin:12px 0;box-shadow:0 2px 5px rgba(0,0,0,.08);border-left:5px solid #ccc}
+.review-card.correct{border-left-color:#4caf50}
+.review-card.incorrect{border-left-color:#f44336}
+.review-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px;color:#555}
+.review-title{font-weight:600;color:#333}
+.review-question{background:#f8f9fa;padding:10px;border-radius:6px;font-size:14px;margin-bottom:12px}
+.review-formula{background:#fffbea;padding:14px;border-radius:6px;margin:12px 0;text-align:center;border:1px dashed #f39c12;font-size:17px;overflow-x:auto}
+.review-formula-label{font-size:13px;color:#b7791f;font-weight:600;margin-bottom:6px;text-align:left}
+.ans-row{display:flex;align-items:center;gap:10px;font-size:14px;margin:6px 0;flex-wrap:wrap}
+.ans-label{min-width:140px;color:#666;font-weight:500}
+.ans-value{font-weight:700;padding:4px 10px;border-radius:4px}
+.ans-value.correct{background:#e8f5e9;color:#2e7d32}
+.ans-value.incorrect{background:#ffebee;color:#c62828}
+</style>
+</head>
+<body>
+<h1>🔬 Физика. Тренажёр</h1>
+
+<div id="settings-screen" class="screen active">
+<h2>Настройки теста</h2>
+<h3>Выберите темы:</h3>
+<div class="info-box">💡 Нажмите на тему, чтобы выбрать её.</div>
+<div style="margin-bottom:10px">
+<button class="btn secondary" onclick="selectAllTopics()">Выбрать все темы</button>
+<button class="btn secondary" onclick="deselectAllTopics()">Снять выбор</button>
+</div>
+<div id="topics-grid" class="topics-grid"></div>
+<h3>Уровень сложности:</h3>
+<div class="level-buttons">
+<button class="level-btn" data-level="1" onclick="selectLevel(1)"><strong>Уровень 1</strong><br>Найти основную величину</button>
+<button class="level-btn" data-level="2" onclick="selectLevel(2)"><strong>Уровень 2</strong><br>Выразить вспомогательную величину</button>
+</div>
+<h3>Тип заданий:</h3>
+<div class="type-buttons">
+<button class="type-btn" data-type="tasks" onclick="selectType('tasks')">Только задачи</button>
+<button class="type-btn" data-type="units" onclick="selectType('units')">Только единицы</button>
+<button class="type-btn selected" data-type="mixed" onclick="selectType('mixed')">Смешанный</button>
+</div>
+<div class="warning-box">⚠️ Ответы округляются до сотых.</div>
+<button class="btn success" onclick="generateTest()" style="font-size:18px;padding:15px 30px">🚀 Сформировать тест</button>
+</div>
+
+<div id="test-screen" class="screen">
+<h2>Тест</h2>
+<div class="info-box">📝 Введите ответы, затем нажмите «Проверить».</div>
+<div id="tasks-container"></div>
+<button class="btn success" onclick="checkTest()" style="font-size:18px;padding:15px 30px">✓ Проверить ответы</button>
+<button class="btn secondary" onclick="showScreen('settings-screen')">← Назад</button>
+</div>
+
+<div id="results-screen" class="screen">
+<h2>Результаты</h2>
+<div class="results-summary">
+<div class="score" id="score-text"></div>
+<div class="score-bar"><div class="score-fill" id="score-fill"></div></div>
+<div class="stats">
+<div class="stat"><div class="stat-value" id="correct-count">0</div><div class="stat-label">Правильных</div></div>
+<div class="stat"><div class="stat-value" id="incorrect-count">0</div><div class="stat-label">Неправильных</div></div>
+<div class="stat"><div class="stat-value" id="total-count">0</div><div class="stat-label">Всего</div></div>
+</div>
+</div>
+<div id="detailed-results"></div>
+<div style="margin-top:30px;display:flex;gap:15px;flex-wrap:wrap;justify-content:center">
+<button class="btn success" onclick="restartTest()">🔄 Пройти ещё раз</button>
+<button class="btn secondary" onclick="showScreen('settings-screen')">⚙️ Изменить настройки</button>
+</div>
+</div>
+
+<script>
+// ============================================================================
+// МАССИВ ФОРМУЛ: поле formula = LaTeX, calcMain = Уровень 1, calcOther = Уровень 2
+// ============================================================================
+const formulas=[
+// ТЕСТ 1
+{id:"uniform_velocity",topic:"Тест 1. Равномерное прямолинейное движение",name:"Скорость равномерного движения",mainVar:"velocity",formula:"$$v = \\frac{\\Delta r}{\\Delta t}$$",calcMain:(v)=>v.displacement/v.time,calcOther:{displacement:(v)=>v.velocity*v.time,time:(v)=>v.displacement/v.velocity},variables:{velocity:{name:"скорость",unit:"м/с",min:5,max:50},displacement:{name:"перемещение",unit:"м",min:10,max:500},time:{name:"время",unit:"с",min:1,max:60}}},
+{id:"uniform_kinematic",topic:"Тест 1. Равномерное прямолинейное движение",name:"Кинематический закон",mainVar:"position",formula:"$$x = x_0 + v_x t$$",calcMain:(v)=>v.initialPosition+v.velocity*v.time,calcOther:{initialPosition:(v)=>v.position-v.velocity*v.time,velocity:(v)=>(v.position-v.initialPosition)/v.time,time:(v)=>(v.position-v.initialPosition)/v.velocity},variables:{position:{name:"координата",unit:"м",min:0,max:1000},initialPosition:{name:"начальная координата",unit:"м",min:0,max:100},velocity:{name:"скорость",unit:"м/с",min:1,max:50},time:{name:"время",unit:"с",min:1,max:60}}},
+{id:"galileo_velocity",topic:"Тест 1. Равномерное прямолинейное движение",name:"Сложение скоростей",mainVar:"velocity",formula:"$$\\vec{v} = \\vec{v}_0 + \\vec{v}_1$$",calcMain:(v)=>v.initialVelocity+v.transferVelocity,calcOther:{initialVelocity:(v)=>v.velocity-v.transferVelocity,transferVelocity:(v)=>v.velocity-v.initialVelocity},variables:{velocity:{name:"абсолютная скорость",unit:"м/с",min:10,max:100},initialVelocity:{name:"относительная скорость",unit:"м/с",min:1,max:50},transferVelocity:{name:"переносная скорость",unit:"м/с",min:1,max:50}}},
+{id:"average_speed",topic:"Тест 1. Равномерное прямолинейное движение",name:"Средняя скорость пути",mainVar:"averageVelocity",formula:"$$v_{ср} = \\frac{s}{\\Delta t}$$",calcMain:(v)=>v.distance/v.time,calcOther:{distance:(v)=>v.averageVelocity*v.time,time:(v)=>v.distance/v.averageVelocity},variables:{averageVelocity:{name:"средняя скорость",unit:"м/с",min:1,max:100},distance:{name:"путь",unit:"м",min:10,max:1000},time:{name:"время",unit:"с",min:1,max:100}}},
+// ТЕСТ 2
+{id:"acceleration",topic:"Тест 2. Равноускоренное прямолинейное движение",name:"Ускорение",mainVar:"acceleration",formula:"$$\\vec{a} = \\frac{\\vec{v} - \\vec{v}_0}{\\Delta t}$$",calcMain:(v)=>(v.speed-v.initialSpeed)/v.time,calcOther:{speed:(v)=>v.initialSpeed+v.acceleration*v.time,initialSpeed:(v)=>v.speed-v.acceleration*v.time,time:(v)=>(v.speed-v.initialSpeed)/v.acceleration},variables:{acceleration:{name:"ускорение",unit:"м/с²",min:1,max:20},speed:{name:"конечная скорость",unit:"м/с",min:10,max:100},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:20},time:{name:"время",unit:"с",min:1,max:20}}},
+{id:"instantaneous_velocity",topic:"Тест 2. Равноускоренное прямолинейное движение",name:"Мгновенная скорость",mainVar:"speed",formula:"$$\\vec{v} = \\vec{v}_0 + \\vec{a}t$$",calcMain:(v)=>v.initialSpeed+v.acceleration*v.time,calcOther:{initialSpeed:(v)=>v.speed-v.acceleration*v.time,acceleration:(v)=>(v.speed-v.initialSpeed)/v.time,time:(v)=>(v.speed-v.initialSpeed)/v.acceleration},variables:{speed:{name:"конечная скорость",unit:"м/с",min:10,max:100},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:20},acceleration:{name:"ускорение",unit:"м/с²",min:1,max:20},time:{name:"время",unit:"с",min:1,max:20}}},
+{id:"displacement_time",topic:"Тест 2. Равноускоренное прямолинейное движение",name:"Перемещение через время",mainVar:"displacement",formula:"$$\\Delta \\vec{r} = \\vec{v}_0 t + \\frac{\\vec{a}t^2}{2}$$",calcMain:(v)=>v.initialSpeed*v.time+v.acceleration*v.time*v.time/2,calcOther:{initialSpeed:(v)=>(v.displacement-v.acceleration*v.time*v.time/2)/v.time,acceleration:(v)=>2*(v.displacement-v.initialSpeed*v.time)/(v.time*v.time)},variables:{displacement:{name:"перемещение",unit:"м",min:10,max:1000},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:20},acceleration:{name:"ускорение",unit:"м/с²",min:1,max:20},time:{name:"время",unit:"с",min:1,max:20}}},
+{id:"displacement_no_time",topic:"Тест 2. Равноускоренное прямолинейное движение",name:"Перемещение без времени",mainVar:"displacement",formula:"$$\\Delta r_x = \\frac{v_x^2 - v_{0x}^2}{2a_x}$$",calcMain:(v)=>(v.speed*v.speed-v.initialSpeed*v.initialSpeed)/(2*v.acceleration),calcOther:{speed:(v)=>Math.sqrt(v.initialSpeed*v.initialSpeed+2*v.acceleration*v.displacement),acceleration:(v)=>(v.speed*v.speed-v.initialSpeed*v.initialSpeed)/(2*v.displacement)},variables:{displacement:{name:"перемещение",unit:"м",min:10,max:1000},speed:{name:"конечная скорость",unit:"м/с",min:10,max:100},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:20},acceleration:{name:"ускорение",unit:"м/с²",min:1,max:20}}},
+{id:"displacement_avg_velocity",topic:"Тест 2. Равноускоренное прямолинейное движение",name:"Перемещение через среднюю скорость",mainVar:"displacement",formula:"$$\\Delta r_x = \\frac{v_{0x} + v_x}{2}t$$",calcMain:(v)=>(v.initialSpeed+v.speed)/2*v.time,calcOther:{initialSpeed:(v)=>2*v.displacement/v.time-v.speed,speed:(v)=>2*v.displacement/v.time-v.initialSpeed,time:(v)=>2*v.displacement/(v.initialSpeed+v.speed)},variables:{displacement:{name:"перемещение",unit:"м",min:10,max:1000},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:20},speed:{name:"конечная скорость",unit:"м/с",min:10,max:100},time:{name:"время",unit:"с",min:1,max:20}}},
+{id:"kinematic_law_2",topic:"Тест 2. Равноускоренное прямолинейное движение",name:"Кинематический закон",mainVar:"position",formula:"$$x = x_0 + v_{0x}t + \\frac{a_x t^2}{2}$$",calcMain:(v)=>v.initialPosition+v.initialSpeed*v.time+v.acceleration*v.time*v.time/2,calcOther:{initialPosition:(v)=>v.position-v.initialSpeed*v.time-v.acceleration*v.time*v.time/2,initialSpeed:(v)=>(v.position-v.initialPosition-v.acceleration*v.time*v.time/2)/v.time},variables:{position:{name:"координата",unit:"м",min:0,max:1000},initialPosition:{name:"начальная координата",unit:"м",min:0,max:100},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:20},acceleration:{name:"ускорение",unit:"м/с²",min:1,max:20},time:{name:"время",unit:"с",min:1,max:20}}},
+// ТЕСТ 3
+{id:"free_fall_velocity",topic:"Тест 3. Свободное падение",name:"Скорость при свободном падении",mainVar:"speed",formula:"$$\\vec{v} = \\vec{v}_0 + \\vec{g}t$$",calcMain:(v)=>v.initialSpeed+10*v.time,calcOther:{initialSpeed:(v)=>v.speed-10*v.time,time:(v)=>(v.speed-v.initialSpeed)/10},variables:{speed:{name:"скорость",unit:"м/с",min:10,max:100},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:30},time:{name:"время",unit:"с",min:1,max:10}}},
+{id:"free_fall_displacement",topic:"Тест 3. Свободное падение",name:"Перемещение при свободном падении",mainVar:"displacement",formula:"$$\\Delta \\vec{r} = \\vec{v}_0 t + \\frac{\\vec{g}t^2}{2}$$",calcMain:(v)=>v.initialSpeed*v.time+10*v.time*v.time/2,calcOther:{initialSpeed:(v)=>(v.displacement-10*v.time*v.time/2)/v.time},variables:{displacement:{name:"перемещение",unit:"м",min:10,max:500},initialSpeed:{name:"начальная скорость",unit:"м/с",min:0,max:30},time:{name:"время",unit:"с",min:1,max:10}}},
+{id:"projectile_time",topic:"Тест 3. Свободное падение",name:"Время полёта",mainVar:"time",formula:"$$t_{п} = \\frac{2v_0 \\sin\\alpha}{g}$$",calcMain:(v)=>2*v.initialSpeed*Math.sin(v.angle*Math.PI/180)/10,calcOther:{initialSpeed:(v)=>v.time*10/(2*Math.sin(v.angle*Math.PI/180))},variables:{time:{name:"время полёта",unit:"с",min:1,max:20},initialSpeed:{name:"начальная скорость",unit:"м/с",min:20,max:100},angle:{name:"угол броска",unit:"°",min:30,max:60}}},
+{id:"projectile_max_height",topic:"Тест 3. Свободное падение",name:"Максимальная высота",mainVar:"maxHeight",formula:"$$h_{max} = \\frac{v_0^2 \\sin^2\\alpha}{2g}$$",calcMain:(v)=>{const s=Math.sin(v.angle*Math.PI/180);return v.initialSpeed*v.initialSpeed*s*s/20},calcOther:{initialSpeed:(v)=>Math.sqrt(v.maxHeight*20)/Math.sin(v.angle*Math.PI/180)},variables:{maxHeight:{name:"максимальная высота",unit:"м",min:5,max:200},initialSpeed:{name:"начальная скорость",unit:"м/с",min:20,max:100},angle:{name:"угол броска",unit:"°",min:30,max:60}}},
+{id:"projectile_range",topic:"Тест 3. Свободное падение",name:"Дальность полёта",mainVar:"range",formula:"$$L = \\frac{v_0^2 \\sin 2\\alpha}{g}$$",calcMain:(v)=>v.initialSpeed*v.initialSpeed*Math.sin(2*v.angle*Math.PI/180)/10,calcOther:{initialSpeed:(v)=>Math.sqrt(v.range*10/Math.sin(2*v.angle*Math.PI/180))},variables:{range:{name:"дальность полёта",unit:"м",min:10,max:1000},initialSpeed:{name:"начальная скорость",unit:"м/с",min:20,max:100},angle:{name:"угол броска",unit:"°",min:30,max:60}}},
+// ТЕСТ 4
+{id:"period",topic:"Тест 4. Движение по окружности",name:"Период",mainVar:"period",formula:"$$T = \\frac{t}{N} = \\frac{1}{\\nu}$$",calcMain:(v)=>v.time/v.revolutions,calcOther:{time:(v)=>v.period*v.revolutions,revolutions:(v)=>v.time/v.period},variables:{period:{name:"период",unit:"с",min:1,max:10},time:{name:"время",unit:"с",min:1,max:100},revolutions:{name:"число оборотов",unit:"",min:1,max:100}}},
+{id:"frequency",topic:"Тест 4. Движение по окружности",name:"Частота",mainVar:"frequency",formula:"$$\\nu = \\frac{N}{t} = \\frac{1}{T}$$",calcMain:(v)=>v.revolutions/v.time,calcOther:{revolutions:(v)=>v.frequency*v.time,time:(v)=>v.revolutions/v.frequency},variables:{frequency:{name:"частота",unit:"Гц",min:1,max:10},revolutions:{name:"число оборотов",unit:"",min:1,max:100},time:{name:"время",unit:"с",min:1,max:100}}},
+{id:"angular_velocity",topic:"Тест 4. Движение по окружности",name:"Угловая скорость",mainVar:"angularVelocity",formula:"$$\\omega = \\frac{2\\pi}{T} = 2\\pi\\nu$$",calcMain:(v)=>2*Math.PI/v.period,calcOther:{period:(v)=>2*Math.PI/v.angularVelocity},variables:{angularVelocity:{name:"угловая скорость",unit:"рад/с",min:1,max:20},period:{name:"период",unit:"с",min:1,max:10}}},
+{id:"linear_velocity",topic:"Тест 4. Движение по окружности",name:"Линейная скорость",mainVar:"velocity",formula:"$$v = \\frac{2\\pi R}{T} = \\omega R$$",calcMain:(v)=>v.angularVelocity*v.radius,calcOther:{angularVelocity:(v)=>v.velocity/v.radius,radius:(v)=>v.velocity/v.angularVelocity},variables:{velocity:{name:"линейная скорость",unit:"м/с",min:1,max:100},radius:{name:"радиус",unit:"м",min:1,max:50},angularVelocity:{name:"угловая скорость",unit:"рад/с",min:1,max:20}}},
+{id:"centripetal_acceleration",topic:"Тест 4. Движение по окружности",name:"Центростремительное ускорение",mainVar:"acceleration",formula:"$$a = \\frac{v^2}{R} = \\omega^2 R$$",calcMain:(v)=>v.velocity*v.velocity/v.radius,calcOther:{velocity:(v)=>Math.sqrt(v.acceleration*v.radius),radius:(v)=>v.velocity*v.velocity/v.acceleration},variables:{acceleration:{name:"центростремительное ускорение",unit:"м/с²",min:1,max:100},velocity:{name:"линейная скорость",unit:"м/с",min:1,max:100},radius:{name:"радиус",unit:"м",min:1,max:50}}},
+// ТЕСТ 5
+{id:"newton_second",topic:"Тест 5. Законы Ньютона",name:"Второй закон Ньютона",mainVar:"acceleration",formula:"$$\\vec{a} = \\frac{\\vec{F}}{m}$$",calcMain:(v)=>v.force/v.mass,calcOther:{force:(v)=>v.acceleration*v.mass,mass:(v)=>v.force/v.acceleration},variables:{acceleration:{name:"ускорение",unit:"м/с²",min:1,max:50},force:{name:"сила",unit:"Н",min:10,max:1000},mass:{name:"масса",unit:"кг",min:1,max:100}}},
+{id:"net_force",topic:"Тест 5. Законы Ньютона",name:"Равнодействующая сила",mainVar:"netForce",formula:"$$\\vec{F} = \\vec{F}_1 + \\vec{F}_2$$",calcMain:(v)=>v.force1+v.force2,calcOther:{force1:(v)=>v.netForce-v.force2,force2:(v)=>v.netForce-v.force1},variables:{netForce:{name:"равнодействующая сила",unit:"Н",min:10,max:1000},force1:{name:"сила 1",unit:"Н",min:1,max:500},force2:{name:"сила 2",unit:"Н",min:1,max:500}}},
+{id:"newton_third",topic:"Тест 5. Законы Ньютона",name:"Третий закон Ньютона",mainVar:"force2",formula:"$$\\vec{F}_1 = -\\vec{F}_2$$",calcMain:(v)=>v.force1,calcOther:{force1:(v)=>v.force2},variables:{force1:{name:"сила действия",unit:"Н",min:1,max:1000},force2:{name:"сила противодействия",unit:"Н",min:1,max:1000}}},
+{id:"universal_gravitation",topic:"Тест 5. Законы Ньютона",name:"Закон всемирного тяготения",mainVar:"force",formula:"$$F = G\\frac{m_1 m_2}{r^2}$$",calcMain:(v)=>6.67e-11*v.mass1*v.mass2/(v.distance*v.distance),calcOther:{distance:(v)=>Math.sqrt(6.67e-11*v.mass1*v.mass2/v.force)},variables:{force:{name:"сила притяжения",unit:"Н",min:1e-8,max:1e-4},mass1:{name:"масса тела 1",unit:"кг",min:1e10,max:1e12},mass2:{name:"масса тела 2",unit:"кг",min:1e10,max:1e12},distance:{name:"расстояние",unit:"м",min:1e4,max:1e6}}},
+// ТЕСТ 6
+{id:"kinetic_friction",topic:"Тест 6. Сила трения",name:"Сила трения скольжения",mainVar:"frictionForce",formula:"$$F_{тр} = \\mu N$$",calcMain:(v)=>v.frictionCoeff*v.normalForce,calcOther:{frictionCoeff:(v)=>v.frictionForce/v.normalForce,normalForce:(v)=>v.frictionForce/v.frictionCoeff},variables:{frictionForce:{name:"сила трения",unit:"Н",min:1,max:500},frictionCoeff:{name:"коэффициент трения",unit:"",min:0.1,max:0.9},normalForce:{name:"сила реакции опоры",unit:"Н",min:10,max:1000}}},
+{id:"static_friction_max",topic:"Тест 6. Сила трения",name:"Сила трения покоя (макс.)",mainVar:"frictionForce",formula:"$$F_{тр.п. max} = \\mu_{п} N$$",calcMain:(v)=>v.frictionCoeff*v.normalForce,calcOther:{frictionCoeff:(v)=>v.frictionForce/v.normalForce,normalForce:(v)=>v.frictionForce/v.frictionCoeff},variables:{frictionForce:{name:"макс. сила трения покоя",unit:"Н",min:1,max:500},frictionCoeff:{name:"коэффициент трения покоя",unit:"",min:0.1,max:0.9},normalForce:{name:"сила реакции опоры",unit:"Н",min:10,max:1000}}},
+// ТЕСТ 7
+{id:"hooke_law",topic:"Тест 7. Сила упругости. Закон Гука",name:"Закон Гука",mainVar:"elasticForce",formula:"$$F_{упр} = k \\Delta l$$",calcMain:(v)=>v.stiffness*v.elongation,calcOther:{stiffness:(v)=>v.elasticForce/v.elongation,elongation:(v)=>v.elasticForce/v.stiffness},variables:{elasticForce:{name:"сила упругости",unit:"Н",min:1,max:500},stiffness:{name:"жёсткость",unit:"Н/м",min:10,max:10000},elongation:{name:"удлинение",unit:"м",min:0.01,max:1}}},
+{id:"absolute_elongation",topic:"Тест 7. Сила упругости. Закон Гука",name:"Абсолютное удлинение",mainVar:"elongation",formula:"$$\\Delta l = l - l_0$$",calcMain:(v)=>v.length-v.initialLength,calcOther:{length:(v)=>v.elongation+v.initialLength,initialLength:(v)=>v.length-v.elongation},variables:{elongation:{name:"удлинение",unit:"м",min:0.01,max:1},length:{name:"конечная длина",unit:"м",min:1,max:5},initialLength:{name:"начальная длина",unit:"м",min:1,max:5}}},
+// ТЕСТ 8
+{id:"centripetal_force",topic:"Тест 8. Динамика по окружности",name:"Центростремительная сила",mainVar:"centripetalForce",formula:"$$F_{ц} = m\\frac{v^2}{R} = m\\omega^2 R$$",calcMain:(v)=>v.mass*v.velocity*v.velocity/v.radius,calcOther:{mass:(v)=>v.centripetalForce*v.radius/(v.velocity*v.velocity),velocity:(v)=>Math.sqrt(v.centripetalForce*v.radius/v.mass),radius:(v)=>v.mass*v.velocity*v.velocity/v.centripetalForce},variables:{centripetalForce:{name:"центростремительная сила",unit:"Н",min:1,max:1000},mass:{name:"масса",unit:"кг",min:1,max:100},velocity:{name:"скорость",unit:"м/с",min:1,max:50},radius:{name:"радиус",unit:"м",min:1,max:50}}},
+// ТЕСТ 9
+{id:"momentum",topic:"Тест 9. Импульс тела",name:"Импульс тела",mainVar:"momentum",formula:"$$\\vec{p} = m\\vec{v}$$",calcMain:(v)=>v.mass*v.velocity,calcOther:{mass:(v)=>v.momentum/v.velocity,velocity:(v)=>v.momentum/v.mass},variables:{momentum:{name:"импульс",unit:"кг·м/с",min:1,max:1000},mass:{name:"масса",unit:"кг",min:1,max:100},velocity:{name:"скорость",unit:"м/с",min:1,max:50}}},
+{id:"impulse",topic:"Тест 9. Импульс тела",name:"Импульс силы",mainVar:"impulse",formula:"$$\\Delta \\vec{p} = \\vec{F}\\Delta t$$",calcMain:(v)=>v.force*v.time,calcOther:{force:(v)=>v.impulse/v.time,time:(v)=>v.impulse/v.force},variables:{impulse:{name:"импульс силы",unit:"Н·с",min:1,max:1000},force:{name:"сила",unit:"Н",min:1,max:500},time:{name:"время",unit:"с",min:1,max:10}}},
+{id:"momentum_conservation",topic:"Тест 9. Импульс тела",name:"Закон сохранения импульса",mainVar:"finalMomentum",formula:"$$\\vec{p}_1 + \\vec{p}_2 = const$$",calcMain:(v)=>v.initialMomentum,calcOther:{initialMomentum:(v)=>v.finalMomentum},variables:{initialMomentum:{name:"начальный импульс",unit:"кг·м/с",min:1,max:1000},finalMomentum:{name:"конечный импульс",unit:"кг·м/с",min:1,max:1000}}},
+// ТЕСТ 10
+{id:"mechanical_work",topic:"Тест 10. Механическая работа. Мощность",name:"Механическая работа",mainVar:"work",formula:"$$A = F \\Delta r \\cos\\alpha$$",calcMain:(v)=>v.force*v.displacement*Math.cos(v.angle*Math.PI/180),calcOther:{force:(v)=>v.work/(v.displacement*Math.cos(v.angle*Math.PI/180)),displacement:(v)=>v.work/(v.force*Math.cos(v.angle*Math.PI/180))},variables:{work:{name:"работа",unit:"Дж",min:1,max:10000},force:{name:"сила",unit:"Н",min:1,max:500},displacement:{name:"перемещение",unit:"м",min:1,max:100},angle:{name:"угол",unit:"°",min:0,max:60}}},
+{id:"power",topic:"Тест 10. Механическая работа. Мощность",name:"Мощность",mainVar:"power",formula:"$$P = \\frac{A}{\\Delta t}$$",calcMain:(v)=>v.work/v.time,calcOther:{work:(v)=>v.power*v.time,time:(v)=>v.work/v.power},variables:{power:{name:"мощность",unit:"Вт",min:1,max:10000},work:{name:"работа",unit:"Дж",min:1,max:10000},time:{name:"время",unit:"с",min:1,max:100}}},
+// ТЕСТ 11
+{id:"kinetic_energy",topic:"Тест 11. Кинетическая и потенциальная энергии",name:"Кинетическая энергия",mainVar:"kineticEnergy",formula:"$$E_k = \\frac{mv^2}{2}$$",calcMain:(v)=>v.mass*v.velocity*v.velocity/2,calcOther:{mass:(v)=>2*v.kineticEnergy/(v.velocity*v.velocity),velocity:(v)=>Math.sqrt(2*v.kineticEnergy/v.mass)},variables:{kineticEnergy:{name:"кинетическая энергия",unit:"Дж",min:1,max:10000},mass:{name:"масса",unit:"кг",min:1,max:100},velocity:{name:"скорость",unit:"м/с",min:1,max:50}}},
+{id:"work_energy_theorem",topic:"Тест 11. Кинетическая и потенциальная энергии",name:"Теорема о кинетической энергии",mainVar:"work",formula:"$$A = \\Delta E_k$$",calcMain:(v)=>v.finalEnergy-v.initialEnergy,calcOther:{initialEnergy:(v)=>v.finalEnergy-v.work,finalEnergy:(v)=>v.initialEnergy+v.work},variables:{work:{name:"работа",unit:"Дж",min:1,max:10000},initialEnergy:{name:"начальная кин. энергия",unit:"Дж",min:0,max:5000},finalEnergy:{name:"конечная кин. энергия",unit:"Дж",min:100,max:10000}}},
+{id:"potential_energy_gravity",topic:"Тест 11. Кинетическая и потенциальная энергии",name:"Потенциальная энергия тяготения",mainVar:"potentialEnergy",formula:"$$E_p = mgh$$",calcMain:(v)=>v.mass*10*v.height,calcOther:{mass:(v)=>v.potentialEnergy/(10*v.height),height:(v)=>v.potentialEnergy/(v.mass*10)},variables:{potentialEnergy:{name:"потенциальная энергия",unit:"Дж",min:1,max:10000},mass:{name:"масса",unit:"кг",min:1,max:100},height:{name:"высота",unit:"м",min:1,max:100}}},
+{id:"potential_energy_elastic",topic:"Тест 11. Кинетическая и потенциальная энергии",name:"Потенциальная энергия упругости",mainVar:"potentialEnergy",formula:"$$E_p = \\frac{k \\Delta l^2}{2}$$",calcMain:(v)=>v.stiffness*v.elongation*v.elongation/2,calcOther:{stiffness:(v)=>2*v.potentialEnergy/(v.elongation*v.elongation),elongation:(v)=>Math.sqrt(2*v.potentialEnergy/v.stiffness)},variables:{potentialEnergy:{name:"потенциальная энергия",unit:"Дж",min:1,max:10000},stiffness:{name:"жёсткость",unit:"Н/м",min:10,max:10000},elongation:{name:"удлинение",unit:"м",min:0.01,max:1}}},
+// ТЕСТ 12
+{id:"total_mechanical_energy",topic:"Тест 12. Закон сохранения энергии",name:"Полная механическая энергия",mainVar:"totalEnergy",formula:"$$E = E_k + E_p$$",calcMain:(v)=>v.kineticEnergy+v.potentialEnergy,calcOther:{kineticEnergy:(v)=>v.totalEnergy-v.potentialEnergy,potentialEnergy:(v)=>v.totalEnergy-v.kineticEnergy},variables:{totalEnergy:{name:"полная энергия",unit:"Дж",min:1,max:10000},kineticEnergy:{name:"кинетическая энергия",unit:"Дж",min:0,max:10000},potentialEnergy:{name:"потенциальная энергия",unit:"Дж",min:0,max:10000}}},
+{id:"inelastic_collision_heat",topic:"Тест 12. Закон сохранения энергии",name:"Теплота при неупругом столкновении",mainVar:"heat",formula:"$$Q = -\\Delta E_{мех}$$",calcMain:(v)=>v.initialMechEnergy-v.finalMechEnergy,calcOther:{initialMechEnergy:(v)=>v.heat+v.finalMechEnergy,finalMechEnergy:(v)=>v.initialMechEnergy-v.heat},variables:{heat:{name:"теплота",unit:"Дж",min:1,max:10000},initialMechEnergy:{name:"начальная мех. энергия",unit:"Дж",min:100,max:10000},finalMechEnergy:{name:"конечная мех. энергия",unit:"Дж",min:1,max:5000}}},
+// ТЕСТ 13
+{id:"pressure",topic:"Тест 13. Давление. Статика",name:"Давление",mainVar:"pressure",formula:"$$p = \\frac{F}{S}$$",calcMain:(v)=>v.force/v.area,calcOther:{force:(v)=>v.pressure*v.area,area:(v)=>v.force/v.pressure},variables:{pressure:{name:"давление",unit:"Па",min:10,max:100000},force:{name:"сила",unit:"Н",min:10,max:10000},area:{name:"площадь",unit:"м²",min:0.01,max:10}}},
+{id:"hydrostatic_pressure",topic:"Тест 13. Давление. Статика",name:"Гидростатическое давление",mainVar:"pressure",formula:"$$p = \\rho g h$$",calcMain:(v)=>v.density*10*v.height,calcOther:{density:(v)=>v.pressure/(10*v.height),height:(v)=>v.pressure/(v.density*10)},variables:{pressure:{name:"давление",unit:"Па",min:100,max:100000},density:{name:"плотность",unit:"кг/м³",min:500,max:15000},height:{name:"высота столба",unit:"м",min:1,max:100}}},
+{id:"archimedes_force",topic:"Тест 13. Давление. Статика",name:"Сила Архимеда",mainVar:"archimedesForce",formula:"$$F_A = \\rho_{ж} g V_{п}$$",calcMain:(v)=>v.density*10*v.volume,calcOther:{density:(v)=>v.archimedesForce/(10*v.volume),volume:(v)=>v.archimedesForce/(v.density*10)},variables:{archimedesForce:{name:"сила Архимеда",unit:"Н",min:1,max:10000},density:{name:"плотность жидкости",unit:"кг/м³",min:500,max:15000},volume:{name:"объём погруженной части",unit:"м³",min:0.001,max:10}}},
+{id:"torque",topic:"Тест 13. Давление. Статика",name:"Момент силы",mainVar:"torque",formula:"$$M = F \\cdot d$$",calcMain:(v)=>v.force*v.leverArm,calcOther:{force:(v)=>v.torque/v.leverArm,leverArm:(v)=>v.torque/v.force},variables:{torque:{name:"момент силы",unit:"Н·м",min:1,max:1000},force:{name:"сила",unit:"Н",min:1,max:500},leverArm:{name:"плечо силы",unit:"м",min:1,max:10}}},
+// ТЕСТ 14
+{id:"amount_of_substance",topic:"Тест 14. Основное уравнение МКТ",name:"Количество вещества",mainVar:"amount",formula:"$$\\nu = \\frac{m}{M}$$",calcMain:(v)=>v.mass/v.molarMass,calcOther:{mass:(v)=>v.amount*v.molarMass,molarMass:(v)=>v.mass/v.amount},variables:{amount:{name:"количество вещества",unit:"моль",min:1,max:100},mass:{name:"масса",unit:"кг",min:1,max:10000},molarMass:{name:"молярная масса",unit:"кг/моль",min:0.001,max:1}}},
+{id:"mkt_equation_2",topic:"Тест 14. Основное уравнение МКТ",name:"Давление идеального газа",mainVar:"pressure",formula:"$$p = nkT$$",calcMain:(v)=>v.concentration*1.38e-23*v.temperature,calcOther:{concentration:(v)=>v.pressure/(1.38e-23*v.temperature),temperature:(v)=>v.pressure/(v.concentration*1.38e-23)},variables:{pressure:{name:"давление",unit:"Па",min:1000,max:1000000},concentration:{name:"концентрация",unit:"м⁻³",min:1e24,max:1e26},temperature:{name:"температура",unit:"К",min:100,max:1000}}},
+{id:"absolute_temperature",topic:"Тест 14. Основное уравнение МКТ",name:"Абсолютная температура",mainVar:"temperature",formula:"$$T = t + 273$$",calcMain:(v)=>v.celsius+273,calcOther:{celsius:(v)=>v.temperature-273},variables:{temperature:{name:"температура",unit:"К",min:100,max:1000},celsius:{name:"температура",unit:"°C",min:-173,max:727}}},
+{id:"avg_kinetic_energy",topic:"Тест 14. Основное уравнение МКТ",name:"Средняя кинетическая энергия",mainVar:"avgKineticEnergy",formula:"$$\\overline{E_k} = \\frac{3}{2} k T$$",calcMain:(v)=>1.5*1.38e-23*v.temperature,calcOther:{temperature:(v)=>v.avgKineticEnergy/(1.5*1.38e-23)},variables:{avgKineticEnergy:{name:"средняя кин. энергия",unit:"Дж",min:1e-21,max:1e-19},temperature:{name:"температура",unit:"К",min:100,max:1000}}},
+{id:"rms_velocity",topic:"Тест 14. Основное уравнение МКТ",name:"Средняя квадратичная скорость",mainVar:"rmsVelocity",formula:"$$\\overline{v^2} = \\frac{3kT}{m_0}$$",calcMain:(v)=>Math.sqrt(3*1.38e-23*v.temperature/v.moleculeMass),calcOther:{temperature:(v)=>v.rmsVelocity*v.rmsVelocity*v.moleculeMass/(3*1.38e-23)},variables:{rmsVelocity:{name:"средняя квадратичная скорость",unit:"м/с",min:100,max:2000},temperature:{name:"температура",unit:"К",min:100,max:1000},moleculeMass:{name:"масса молекулы",unit:"кг",min:1e-27,max:1e-25}}},
+// ТЕСТ 15
+{id:"clapeyron_mendeleev",topic:"Тест 15. Уравнение состояния идеального газа",name:"Уравнение Менделеева-Клапейрона",mainVar:"pressure",formula:"$$pV = \\frac{m}{M} RT$$",calcMain:(v)=>(v.mass/v.molarMass)*8.31*v.temperature/v.volume,calcOther:{volume:(v)=>(v.mass/v.molarMass)*8.31*v.temperature/v.pressure,temperature:(v)=>v.pressure*v.volume*v.molarMass/(v.mass*8.31)},variables:{pressure:{name:"давление",unit:"Па",min:1000,max:1000000},volume:{name:"объём",unit:"м³",min:0.01,max:10},mass:{name:"масса",unit:"кг",min:0.01,max:100},molarMass:{name:"молярная масса",unit:"кг/моль",min:0.001,max:0.5},temperature:{name:"температура",unit:"К",min:100,max:1000}}},
+{id:"dalton_law",topic:"Тест 15. Уравнение состояния идеального газа",name:"Закон Дальтона",mainVar:"totalPressure",formula:"$$p = p_1 + p_2 + ... + p_n$$",calcMain:(v)=>v.partialPressure1+v.partialPressure2,calcOther:{partialPressure1:(v)=>v.totalPressure-v.partialPressure2,partialPressure2:(v)=>v.totalPressure-v.partialPressure1},variables:{totalPressure:{name:"общее давление",unit:"Па",min:1000,max:1000000},partialPressure1:{name:"парциальное давление 1",unit:"Па",min:100,max:500000},partialPressure2:{name:"парциальное давление 2",unit:"Па",min:100,max:500000}}},
+// ТЕСТ 16
+{id:"boyle_mariotte",topic:"Тест 16. Изопроцессы",name:"Закон Бойля-Мариотта",mainVar:"finalPressure",formula:"$$pV = const$$",calcMain:(v)=>v.initialPressure*v.initialVolume/v.finalVolume,calcOther:{initialPressure:(v)=>v.finalPressure*v.finalVolume/v.initialVolume,finalVolume:(v)=>v.initialPressure*v.initialVolume/v.finalPressure},variables:{initialPressure:{name:"начальное давление",unit:"Па",min:1000,max:100000},finalPressure:{name:"конечное давление",unit:"Па",min:1000,max:100000},initialVolume:{name:"начальный объём",unit:"м³",min:1,max:10},finalVolume:{name:"конечный объём",unit:"м³",min:1,max:10}}},
+{id:"gay_lussac",topic:"Тест 16. Изопроцессы",name:"Закон Гей-Люссака",mainVar:"finalVolume",formula:"$$\\frac{V}{T} = const$$",calcMain:(v)=>v.initialVolume*v.finalTemp/v.initialTemp,calcOther:{initialVolume:(v)=>v.finalVolume*v.initialTemp/v.finalTemp,finalTemp:(v)=>v.finalVolume*v.initialTemp/v.initialVolume},variables:{initialVolume:{name:"начальный объём",unit:"м³",min:1,max:10},finalVolume:{name:"конечный объём",unit:"м³",min:1,max:10},initialTemp:{name:"начальная температура",unit:"К",min:100,max:1000},finalTemp:{name:"конечная температура",unit:"К",min:100,max:1000}}},
+{id:"charles",topic:"Тест 16. Изопроцессы",name:"Закон Шарля",mainVar:"finalPressure",formula:"$$\\frac{p}{T} = const$$",calcMain:(v)=>v.initialPressure*v.finalTemp/v.initialTemp,calcOther:{initialPressure:(v)=>v.finalPressure*v.initialTemp/v.finalTemp,finalTemp:(v)=>v.finalPressure*v.initialTemp/v.initialPressure},variables:{initialPressure:{name:"начальное давление",unit:"Па",min:1000,max:100000},finalPressure:{name:"конечное давление",unit:"Па",min:1000,max:100000},initialTemp:{name:"начальная температура",unit:"К",min:100,max:1000},finalTemp:{name:"конечная температура",unit:"К",min:100,max:1000}}},
+// ТЕСТ 17
+{id:"surface_tension",topic:"Тест 17. Поверхностное натяжение",name:"Поверхностное натяжение",mainVar:"surfaceTension",formula:"$$\\sigma = \\frac{F}{l}$$",calcMain:(v)=>v.force/v.length,calcOther:{force:(v)=>v.surfaceTension*v.length,length:(v)=>v.force/v.surfaceTension},variables:{surfaceTension:{name:"коэффициент поверхн. натяжения",unit:"Н/м",min:0.01,max:1},force:{name:"сила",unit:"Н",min:1,max:100},length:{name:"длина",unit:"м",min:1,max:100}}},
+{id:"capillary_rise",topic:"Тест 17. Поверхностное натяжение",name:"Подъём жидкости в капилляре",mainVar:"height",formula:"$$h = \\frac{2\\sigma}{\\rho g r}$$",calcMain:(v)=>2*v.surfaceTension/(v.density*10*v.radius),calcOther:{surfaceTension:(v)=>v.height*v.density*10*v.radius/2,radius:(v)=>2*v.surfaceTension/(v.height*v.density*10)},variables:{height:{name:"высота подъёма",unit:"м",min:0.001,max:1},surfaceTension:{name:"коэфф. поверхн. натяжения",unit:"Н/м",min:0.01,max:1},density:{name:"плотность",unit:"кг/м³",min:500,max:15000},radius:{name:"радиус капилляра",unit:"м",min:0.0001,max:0.01}}},
+{id:"relative_humidity",topic:"Тест 17. Поверхностное натяжение. Влажность",name:"Относительная влажность",mainVar:"humidity",formula:"$$\\varphi = \\frac{p}{p_н} \\cdot 100\\%$$",calcMain:(v)=>v.partialPressure/v.saturatedPressure*100,calcOther:{partialPressure:(v)=>v.humidity*v.saturatedPressure/100,saturatedPressure:(v)=>v.partialPressure*100/v.humidity},variables:{humidity:{name:"относительная влажность",unit:"%",min:10,max:100},partialPressure:{name:"парциальное давление",unit:"Па",min:100,max:5000},saturatedPressure:{name:"давление насыщ. пара",unit:"Па",min:1000,max:10000}}},
+// ТЕСТ 18
+{id:"internal_energy",topic:"Тест 18. Основы термодинамики",name:"Внутренняя энергия одноатомного газа",mainVar:"internalEnergy",formula:"$$U = \\frac{3}{2} \\frac{m}{M} RT$$",calcMain:(v)=>1.5*(v.mass/v.molarMass)*8.31*v.temperature,calcOther:{temperature:(v)=>v.internalEnergy*v.molarMass/(1.5*v.mass*8.31)},variables:{internalEnergy:{name:"внутренняя энергия",unit:"Дж",min:100,max:100000},mass:{name:"масса",unit:"кг",min:0.01,max:100},molarMass:{name:"молярная масса",unit:"кг/моль",min:0.001,max:0.5},temperature:{name:"температура",unit:"К",min:100,max:1000}}},
+{id:"work_of_gas",topic:"Тест 18. Основы термодинамики",name:"Работа газа",mainVar:"work",formula:"$$A = p \\Delta V$$",calcMain:(v)=>v.pressure*v.volumeChange,calcOther:{pressure:(v)=>v.work/v.volumeChange,volumeChange:(v)=>v.work/v.pressure},variables:{work:{name:"работа",unit:"Дж",min:1,max:10000},pressure:{name:"давление",unit:"Па",min:1000,max:100000},volumeChange:{name:"изменение объёма",unit:"м³",min:0.01,max:1}}},
+{id:"first_law_thermo",topic:"Тест 18. Основы термодинамики",name:"Первый закон термодинамики",mainVar:"heat",formula:"$$Q = \\Delta U + A$$",calcMain:(v)=>v.internalEnergyChange+v.work,calcOther:{internalEnergyChange:(v)=>v.heat-v.work,work:(v)=>v.heat-v.internalEnergyChange},variables:{heat:{name:"количество теплоты",unit:"Дж",min:1,max:10000},internalEnergyChange:{name:"изменение внутр. энергии",unit:"Дж",min:1,max:10000},work:{name:"работа",unit:"Дж",min:1,max:10000}}},
+// ТЕСТ 19
+{id:"heat_heating",topic:"Тест 19. Количество теплоты",name:"Теплота при нагревании",mainVar:"heat",formula:"$$Q = cm\\Delta t$$",calcMain:(v)=>v.specificHeat*v.mass*v.tempChange,calcOther:{specificHeat:(v)=>v.heat/(v.mass*v.tempChange),mass:(v)=>v.heat/(v.specificHeat*v.tempChange),tempChange:(v)=>v.heat/(v.specificHeat*v.mass)},variables:{heat:{name:"количество теплоты",unit:"Дж",min:100,max:100000},specificHeat:{name:"удельная теплоёмкость",unit:"Дж/(кг·°C)",min:100,max:5000},mass:{name:"масса",unit:"кг",min:1,max:100},tempChange:{name:"изменение температуры",unit:"°C",min:1,max:100}}},
+{id:"heat_melting",topic:"Тест 19. Количество теплоты",name:"Теплота плавления",mainVar:"heat",formula:"$$Q = \\lambda m$$",calcMain:(v)=>v.specificHeatOfFusion*v.mass,calcOther:{specificHeatOfFusion:(v)=>v.heat/v.mass,mass:(v)=>v.heat/v.specificHeatOfFusion},variables:{heat:{name:"количество теплоты",unit:"Дж",min:100,max:100000},specificHeatOfFusion:{name:"удельная теплота плавления",unit:"Дж/кг",min:10000,max:500000},mass:{name:"масса",unit:"кг",min:1,max:100}}},
+{id:"heat_vaporization",topic:"Тест 19. Количество теплоты",name:"Теплота парообразования",mainVar:"heat",formula:"$$Q = Lm$$",calcMain:(v)=>v.specificHeatOfVaporization*v.mass,calcOther:{specificHeatOfVaporization:(v)=>v.heat/v.mass,mass:(v)=>v.heat/v.specificHeatOfVaporization},variables:{heat:{name:"количество теплоты",unit:"Дж",min:100,max:100000},specificHeatOfVaporization:{name:"удельная теплота парообразования",unit:"Дж/кг",min:100000,max:3000000},mass:{name:"масса",unit:"кг",min:1,max:100}}},
+{id:"heat_combustion",topic:"Тест 19. Количество теплоты",name:"Теплота сгорания",mainVar:"heat",formula:"$$Q = qm$$",calcMain:(v)=>v.specificHeatOfCombustion*v.mass,calcOther:{specificHeatOfCombustion:(v)=>v.heat/v.mass,mass:(v)=>v.heat/v.specificHeatOfCombustion},variables:{heat:{name:"количество теплоты",unit:"Дж",min:100,max:100000},specificHeatOfCombustion:{name:"удельная теплота сгорания",unit:"Дж/кг",min:1000000,max:50000000},mass:{name:"масса",unit:"кг",min:1,max:100}}},
+// ТЕСТ 20
+{id:"cycle_work",topic:"Тест 20. Циклы. Тепловые двигатели",name:"Работа цикла",mainVar:"work",formula:"$$A = Q_1 - |Q_2|$$",calcMain:(v)=>v.heatHot-Math.abs(v.heatCold),calcOther:{heatHot:(v)=>v.work+Math.abs(v.heatCold),heatCold:(v)=>v.heatHot-v.work},variables:{work:{name:"работа",unit:"Дж",min:100,max:10000},heatHot:{name:"теплота от нагревателя",unit:"Дж",min:1000,max:100000},heatCold:{name:"теплота холодильнику",unit:"Дж",min:100,max:50000}}},
+{id:"cycle_efficiency",topic:"Тест 20. Циклы. Тепловые двигатели",name:"КПД теплового двигателя",mainVar:"efficiency",formula:"$$\\eta = \\frac{A}{Q_1} \\cdot 100\\%$$",calcMain:(v)=>v.work/v.heatHot*100,calcOther:{work:(v)=>v.efficiency*v.heatHot/100,heatHot:(v)=>v.work*100/v.efficiency},variables:{efficiency:{name:"КПД",unit:"%",min:1,max:90},work:{name:"работа",unit:"Дж",min:100,max:10000},heatHot:{name:"теплота от нагревателя",unit:"Дж",min:1000,max:100000}}},
+{id:"carnot_efficiency",topic:"Тест 20. Циклы. Тепловые двигатели",name:"КПД цикла Карно",mainVar:"efficiency",formula:"$$\\eta_K = \\frac{T_1 - T_2}{T_1} \\cdot 100\\%$$",calcMain:(v)=>(v.tempHot-v.tempCold)/v.tempHot*100,calcOther:{tempHot:(v)=>v.tempCold/(1-v.efficiency/100),tempCold:(v)=>v.tempHot*(1-v.efficiency/100)},variables:{efficiency:{name:"КПД",unit:"%",min:1,max:90},tempHot:{name:"температура нагревателя",unit:"К",min:300,max:1000},tempCold:{name:"температура холодильника",unit:"К",min:100,max:300}}},
+// ТЕСТ 21
+{id:"coulomb_law_vacuum",topic:"Тест 21. Закон Кулона",name:"Закон Кулона в вакууме",mainVar:"force",formula:"$$F = k \\frac{|q_1 q_2|}{r^2}$$",calcMain:(v)=>9e9*Math.abs(v.charge1*v.charge2)/(v.distance*v.distance),calcOther:{distance:(v)=>Math.sqrt(9e9*Math.abs(v.charge1*v.charge2)/v.force)},variables:{force:{name:"сила",unit:"Н",min:1e-6,max:1e-2},charge1:{name:"заряд 1",unit:"Кл",min:1e-6,max:1e-4},charge2:{name:"заряд 2",unit:"Кл",min:1e-6,max:1e-4},distance:{name:"расстояние",unit:"м",min:0.01,max:10}}},
+// ТЕСТ 22
+{id:"electric_field_strength",topic:"Тест 22. Напряжённость электростатического поля",name:"Напряжённость поля",mainVar:"fieldStrength",formula:"$$\\vec{E} = \\frac{\\vec{F}}{q}$$",calcMain:(v)=>v.force/v.charge,calcOther:{force:(v)=>v.fieldStrength*v.charge,charge:(v)=>v.force/v.fieldStrength},variables:{fieldStrength:{name:"напряжённость",unit:"В/м",min:1,max:10000},force:{name:"сила",unit:"Н",min:1e-4,max:1},charge:{name:"заряд",unit:"Кл",min:1e-6,max:1e-3}}},
+{id:"point_charge_field",topic:"Тест 22. Напряжённость электростатического поля",name:"Напряжённость поля точечного заряда",mainVar:"fieldStrength",formula:"$$E = k \\frac{|q|}{r^2}$$",calcMain:(v)=>9e9*Math.abs(v.charge)/(v.distance*v.distance),calcOther:{distance:(v)=>Math.sqrt(9e9*Math.abs(v.charge)/v.fieldStrength)},variables:{fieldStrength:{name:"напряжённость",unit:"В/м",min:1,max:10000},charge:{name:"заряд",unit:"Кл",min:1e-6,max:1e-4},distance:{name:"расстояние",unit:"м",min:0.01,max:10}}},
+{id:"superposition_principle",topic:"Тест 22. Напряжённость электростатического поля",name:"Принцип суперпозиции",mainVar:"totalField",formula:"$$\\vec{E} = \\vec{E}_1 + \\vec{E}_2$$",calcMain:(v)=>v.field1+v.field2,calcOther:{field1:(v)=>v.totalField-v.field2,field2:(v)=>v.totalField-v.field1},variables:{totalField:{name:"результирующая напряжённость",unit:"В/м",min:1,max:10000},field1:{name:"напряжённость 1",unit:"В/м",min:1,max:5000},field2:{name:"напряжённость 2",unit:"В/м",min:1,max:5000}}},
+// ТЕСТ 23
+{id:"potential",topic:"Тест 23. Потенциал. Работа поля",name:"Потенциал",mainVar:"potential",formula:"$$\\varphi = \\frac{W}{q_0}$$",calcMain:(v)=>v.work/v.charge,calcOther:{work:(v)=>v.potential*v.charge,charge:(v)=>v.work/v.potential},variables:{potential:{name:"потенциал",unit:"В",min:1,max:10000},work:{name:"работа",unit:"Дж",min:1,max:10000},charge:{name:"заряд",unit:"Кл",min:1e-6,max:1e-3}}},
+{id:"field_work_1",topic:"Тест 23. Потенциал. Работа поля",name:"Работа поля",mainVar:"work",formula:"$$A = qU$$",calcMain:(v)=>v.charge*v.voltage,calcOther:{charge:(v)=>v.work/v.voltage,voltage:(v)=>v.work/v.charge},variables:{work:{name:"работа",unit:"Дж",min:1,max:10000},charge:{name:"заряд",unit:"Кл",min:1e-6,max:1e-3},voltage:{name:"напряжение",unit:"В",min:1,max:10000}}},
+{id:"field_work_2",topic:"Тест 23. Потенциал. Работа поля",name:"Работа в однородном поле",mainVar:"work",formula:"$$A = qEd$$",calcMain:(v)=>v.charge*v.fieldStrength*v.distance,calcOther:{fieldStrength:(v)=>v.work/(v.charge*v.distance),distance:(v)=>v.work/(v.charge*v.fieldStrength)},variables:{work:{name:"работа",unit:"Дж",min:1,max:10000},charge:{name:"заряд",unit:"Кл",min:1e-6,max:1e-3},fieldStrength:{name:"напряжённость",unit:"В/м",min:1,max:10000},distance:{name:"расстояние",unit:"м",min:0.01,max:10}}},
+{id:"voltage_strength_relation",topic:"Тест 23. Потенциал. Работа поля",name:"Связь напряжения и напряжённости",mainVar:"fieldStrength",formula:"$$E = \\frac{U}{d}$$",calcMain:(v)=>v.voltage/v.distance,calcOther:{voltage:(v)=>v.fieldStrength*v.distance,distance:(v)=>v.voltage/v.fieldStrength},variables:{fieldStrength:{name:"напряжённость",unit:"В/м",min:1,max:10000},voltage:{name:"напряжение",unit:"В",min:1,max:10000},distance:{name:"расстояние",unit:"м",min:0.01,max:10}}},
+// ТЕСТ 24
+{id:"capacitance",topic:"Тест 24. Конденсаторы",name:"Электроемкость",mainVar:"capacitance",formula:"$$C = \\frac{q}{U}$$",calcMain:(v)=>v.charge/v.voltage,calcOther:{charge:(v)=>v.capacitance*v.voltage,voltage:(v)=>v.charge/v.capacitance},variables:{capacitance:{name:"ёмкость",unit:"Ф",min:1e-6,max:1e-3},charge:{name:"заряд",unit:"Кл",min:1e-6,max:1e-3},voltage:{name:"напряжение",unit:"В",min:1,max:1000}}},
+{id:"capacitors_series",topic:"Тест 24. Конденсаторы",name:"Последовательное соединение",mainVar:"totalCapacitance",formula:"$$\\frac{1}{C} = \\frac{1}{C_1} + \\frac{1}{C_2}$$",calcMain:(v)=>1/(1/v.c1+1/v.c2),calcOther:{c1:(v)=>1/(1/v.totalCapacitance-1/v.c2),c2:(v)=>1/(1/v.totalCapacitance-1/v.c1)},variables:{totalCapacitance:{name:"общая ёмкость",unit:"Ф",min:1e-6,max:1e-3},c1:{name:"ёмкость 1",unit:"Ф",min:1e-6,max:1e-3},c2:{name:"ёмкость 2",unit:"Ф",min:1e-6,max:1e-3}}},
+{id:"capacitors_parallel",topic:"Тест 24. Конденсаторы",name:"Параллельное соединение",mainVar:"totalCapacitance",formula:"$$C = C_1 + C_2$$",calcMain:(v)=>v.c1+v.c2,calcOther:{c1:(v)=>v.totalCapacitance-v.c2,c2:(v)=>v.totalCapacitance-v.c1},variables:{totalCapacitance:{name:"общая ёмкость",unit:"Ф",min:1e-6,max:1e-3},c1:{name:"ёмкость 1",unit:"Ф",min:1e-6,max:1e-3},c2:{name:"ёмкость 2",unit:"Ф",min:1e-6,max:1e-3}}},
+{id:"capacitor_energy",topic:"Тест 24. Конденсаторы",name:"Энергия конденсатора",mainVar:"energy",formula:"$$W = \\frac{CU^2}{2}$$",calcMain:(v)=>v.capacitance*v.voltage*v.voltage/2,calcOther:{capacitance:(v)=>2*v.energy/(v.voltage*v.voltage),voltage:(v)=>Math.sqrt(2*v.energy/v.capacitance)},variables:{energy:{name:"энергия",unit:"Дж",min:0.001,max:10},capacitance:{name:"ёмкость",unit:"Ф",min:1e-6,max:1e-3},voltage:{name:"напряжение",unit:"В",min:1,max:1000}}},
+// ТЕСТ 25
+{id:"ohm_law_part",topic:"Тест 25. Постоянный электрический ток",name:"Закон Ома для участка цепи",mainVar:"current",formula:"$$I = \\frac{U}{R}$$",calcMain:(v)=>v.voltage/v.resistance,calcOther:{voltage:(v)=>v.current*v.resistance,resistance:(v)=>v.voltage/v.current},variables:{current:{name:"сила тока",unit:"А",min:0.1,max:100},voltage:{name:"напряжение",unit:"В",min:1,max:1000},resistance:{name:"сопротивление",unit:"Ом",min:1,max:1000}}},
+{id:"resistance_conductor",topic:"Тест 25. Постоянный электрический ток",name:"Сопротивление проводника",mainVar:"resistance",formula:"$$R = \\rho \\frac{l}{S}$$",calcMain:(v)=>v.resistivity*v.length/v.area,calcOther:{resistivity:(v)=>v.resistance*v.area/v.length,length:(v)=>v.resistance*v.area/v.resistivity},variables:{resistance:{name:"сопротивление",unit:"Ом",min:0.1,max:1000},resistivity:{name:"удельное сопротивление",unit:"Ом·м",min:1e-6,max:1e-3},length:{name:"длина",unit:"м",min:1,max:100},area:{name:"площадь сечения",unit:"м²",min:1e-4,max:1e-2}}},
+{id:"conductors_series",topic:"Тест 25. Постоянный электрический ток",name:"Последовательное соединение проводников",mainVar:"totalResistance",formula:"$$R = R_1 + R_2$$",calcMain:(v)=>v.r1+v.r2,calcOther:{r1:(v)=>v.totalResistance-v.r2,r2:(v)=>v.totalResistance-v.r1},variables:{totalResistance:{name:"общее сопротивление",unit:"Ом",min:1,max:1000},r1:{name:"сопротивление 1",unit:"Ом",min:1,max:500},r2:{name:"сопротивление 2",unit:"Ом",min:1,max:500}}},
+{id:"conductors_parallel",topic:"Тест 25. Постоянный электрический ток",name:"Параллельное соединение проводников",mainVar:"totalResistance",formula:"$$\\frac{1}{R} = \\frac{1}{R_1} + \\frac{1}{R_2}$$",calcMain:(v)=>1/(1/v.r1+1/v.r2),calcOther:{r1:(v)=>1/(1/v.totalResistance-1/v.r2),r2:(v)=>1/(1/v.totalResistance-1/v.r1)},variables:{totalResistance:{name:"общее сопротивление",unit:"Ом",min:1,max:1000},r1:{name:"сопротивление 1",unit:"Ом",min:1,max:1000},r2:{name:"сопротивление 2",unit:"Ом",min:1,max:1000}}},
+// ТЕСТ 26
+{id:"ohm_law_full",topic:"Тест 26. Закон Ома для полной цепи",name:"Закон Ома для полной цепи",mainVar:"current",formula:"$$I = \\frac{\\mathcal{E}}{R + r}$$",calcMain:(v)=>v.emf/(v.externalResistance+v.internalResistance),calcOther:{emf:(v)=>v.current*(v.externalResistance+v.internalResistance),externalResistance:(v)=>v.emf/v.current-v.internalResistance},variables:{current:{name:"сила тока",unit:"А",min:0.1,max:100},emf:{name:"ЭДС",unit:"В",min:1,max:100},externalResistance:{name:"внешнее сопротивление",unit:"Ом",min:1,max:1000},internalResistance:{name:"внутреннее сопротивление",unit:"Ом",min:1,max:10}}},
+{id:"short_circuit_current",topic:"Тест 26. Закон Ома для полной цепи",name:"Ток короткого замыкания",mainVar:"shortCircuitCurrent",formula:"$$I_{к.з} = \\frac{\\mathcal{E}}{r}$$",calcMain:(v)=>v.emf/v.internalResistance,calcOther:{emf:(v)=>v.shortCircuitCurrent*v.internalResistance,internalResistance:(v)=>v.emf/v.shortCircuitCurrent},variables:{shortCircuitCurrent:{name:"ток короткого замыкания",unit:"А",min:1,max:1000},emf:{name:"ЭДС",unit:"В",min:1,max:100},internalResistance:{name:"внутреннее сопротивление",unit:"Ом",min:1,max:10}}},
+// ТЕСТ 27
+{id:"current_work",topic:"Тест 27. Работа и мощность тока",name:"Работа тока",mainVar:"work",formula:"$$A = IU\\Delta t$$",calcMain:(v)=>v.current*v.voltage*v.time,calcOther:{current:(v)=>v.work/(v.voltage*v.time),voltage:(v)=>v.work/(v.current*v.time),time:(v)=>v.work/(v.current*v.voltage)},variables:{work:{name:"работа",unit:"Дж",min:1,max:100000},current:{name:"сила тока",unit:"А",min:0.1,max:100},voltage:{name:"напряжение",unit:"В",min:1,max:1000},time:{name:"время",unit:"с",min:1,max:1000}}},
+{id:"current_power",topic:"Тест 27. Работа и мощность тока",name:"Мощность тока",mainVar:"power",formula:"$$P = IU$$",calcMain:(v)=>v.current*v.voltage,calcOther:{current:(v)=>v.power/v.voltage,voltage:(v)=>v.power/v.current},variables:{power:{name:"мощность",unit:"Вт",min:1,max:10000},current:{name:"сила тока",unit:"А",min:0.1,max:100},voltage:{name:"напряжение",unit:"В",min:1,max:1000}}},
+{id:"joule_lenz",topic:"Тест 27. Работа и мощность тока",name:"Закон Джоуля-Ленца",mainVar:"heat",formula:"$$Q = I^2R\\Delta t$$",calcMain:(v)=>v.current*v.current*v.resistance*v.time,calcOther:{current:(v)=>Math.sqrt(v.heat/(v.resistance*v.time)),resistance:(v)=>v.heat/(v.current*v.current*v.time),time:(v)=>v.heat/(v.current*v.current*v.resistance)},variables:{heat:{name:"количество теплоты",unit:"Дж",min:1,max:100000},current:{name:"сила тока",unit:"А",min:0.1,max:100},resistance:{name:"сопротивление",unit:"Ом",min:1,max:1000},time:{name:"время",unit:"с",min:1,max:1000}}},
+{id:"source_efficiency",topic:"Тест 27. Работа и мощность тока",name:"КПД источника тока",mainVar:"efficiency",formula:"$$\\eta = \\frac{R}{R + r} \\cdot 100\\%$$",calcMain:(v)=>v.resistance/(v.resistance+v.internalResistance)*100,calcOther:{resistance:(v)=>v.efficiency*v.internalResistance/(100-v.efficiency)},variables:{efficiency:{name:"КПД",unit:"%",min:1,max:99},resistance:{name:"внешнее сопротивление",unit:"Ом",min:1,max:1000},internalResistance:{name:"внутреннее сопротивление",unit:"Ом",min:1,max:100}}},
+// ТЕСТ 28
+{id:"amperes_force",topic:"Тест 28. Магнитное поле",name:"Сила Ампера",mainVar:"amperesForce",formula:"$$F_A = IBl \\sin\\alpha$$",calcMain:(v)=>v.current*v.magneticField*v.length*Math.sin(v.angle*Math.PI/180),calcOther:{current:(v)=>v.amperesForce/(v.magneticField*v.length*Math.sin(v.angle*Math.PI/180)),magneticField:(v)=>v.amperesForce/(v.current*v.length*Math.sin(v.angle*Math.PI/180)),length:(v)=>v.amperesForce/(v.current*v.magneticField*Math.sin(v.angle*Math.PI/180))},variables:{amperesForce:{name:"сила Ампера",unit:"Н",min:0.001,max:10},current:{name:"сила тока",unit:"А",min:0.1,max:100},magneticField:{name:"индукция",unit:"Тл",min:0.01,max:1},length:{name:"длина проводника",unit:"м",min:0.01,max:10},angle:{name:"угол",unit:"°",min:30,max:90}}},
+{id:"lorentz_force",topic:"Тест 28. Магнитное поле",name:"Сила Лоренца",mainVar:"lorentzForce",formula:"$$F_L = qvB \\sin\\alpha$$",calcMain:(v)=>Math.abs(v.charge)*v.velocity*v.magneticField*Math.sin(v.angle*Math.PI/180),calcOther:{velocity:(v)=>v.lorentzForce/(Math.abs(v.charge)*v.magneticField*Math.sin(v.angle*Math.PI/180)),magneticField:(v)=>v.lorentzForce/(Math.abs(v.charge)*v.velocity*Math.sin(v.angle*Math.PI/180))},variables:{lorentzForce:{name:"сила Лоренца",unit:"Н",min:1e-6,max:0.01},charge:{name:"заряд",unit:"Кл",min:1e-6,max:1e-3},velocity:{name:"скорость",unit:"м/с",min:1,max:1000000},magneticField:{name:"индукция",unit:"Тл",min:0.01,max:1},angle:{name:"угол",unit:"°",min:30,max:90}}},
+// ТЕСТ 29
+{id:"magnetic_flux",topic:"Тест 29. Электромагнитная индукция",name:"Магнитный поток",mainVar:"magneticFlux",formula:"$$\\Phi = BS \\cos\\alpha$$",calcMain:(v)=>v.magneticField*v.area*Math.cos(v.angle*Math.PI/180),calcOther:{magneticField:(v)=>v.magneticFlux/(v.area*Math.cos(v.angle*Math.PI/180)),area:(v)=>v.magneticFlux/(v.magneticField*Math.cos(v.angle*Math.PI/180))},variables:{magneticFlux:{name:"магнитный поток",unit:"Вб",min:0.001,max:1},magneticField:{name:"индукция",unit:"Тл",min:0.01,max:1},area:{name:"площадь",unit:"м²",min:0.01,max:10},angle:{name:"угол",unit:"°",min:0,max:60}}},
+{id:"emf_induction",topic:"Тест 29. Электромагнитная индукция",name:"ЭДС индукции",mainVar:"emf",formula:"$$\\mathcal{E}_{инд} = -\\frac{\\Delta\\Phi}{\\Delta t}$$",calcMain:(v)=>Math.abs(v.fluxChange)/v.time,calcOther:{fluxChange:(v)=>v.emf*v.time,time:(v)=>Math.abs(v.fluxChange)/v.emf},variables:{emf:{name:"ЭДС индукции",unit:"В",min:0.01,max:100},fluxChange:{name:"изменение потока",unit:"Вб",min:0.01,max:10},time:{name:"время",unit:"с",min:0.1,max:10}}},
+{id:"emf_moving_conductor",topic:"Тест 29. Электромагнитная индукция",name:"ЭДС в движущемся проводнике",mainVar:"emf",formula:"$$\\mathcal{E} = Blv \\sin\\alpha$$",calcMain:(v)=>v.magneticField*v.length*v.velocity*Math.sin(v.angle*Math.PI/180),calcOther:{velocity:(v)=>v.emf/(v.magneticField*v.length*Math.sin(v.angle*Math.PI/180)),length:(v)=>v.emf/(v.magneticField*v.velocity*Math.sin(v.angle*Math.PI/180))},variables:{emf:{name:"ЭДС",unit:"В",min:0.01,max:100},magneticField:{name:"индукция",unit:"Тл",min:0.01,max:1},length:{name:"длина",unit:"м",min:0.1,max:10},velocity:{name:"скорость",unit:"м/с",min:1,max:100},angle:{name:"угол",unit:"°",min:30,max:90}}},
+{id:"self_induction_emf",topic:"Тест 29. Электромагнитная индукция",name:"ЭДС самоиндукции",mainVar:"emf",formula:"$$\\mathcal{E}_c = -L\\frac{\\Delta I}{\\Delta t}$$",calcMain:(v)=>v.inductance*Math.abs(v.currentChange)/v.time,calcOther:{inductance:(v)=>v.emf*v.time/Math.abs(v.currentChange),currentChange:(v)=>v.emf*v.time/v.inductance},variables:{emf:{name:"ЭДС самоиндукции",unit:"В",min:0.01,max:100},inductance:{name:"индуктивность",unit:"Гн",min:0.01,max:10},currentChange:{name:"изменение тока",unit:"А",min:0.1,max:100},time:{name:"время",unit:"с",min:0.1,max:10}}},
+{id:"magnetic_field_energy",topic:"Тест 29. Электромагнитная индукция",name:"Энергия магнитного поля",mainVar:"energy",formula:"$$W_m = \\frac{LI^2}{2}$$",calcMain:(v)=>v.inductance*v.current*v.current/2,calcOther:{inductance:(v)=>2*v.energy/(v.current*v.current),current:(v)=>Math.sqrt(2*v.energy/v.inductance)},variables:{energy:{name:"энергия",unit:"Дж",min:0.01,max:100},inductance:{name:"индуктивность",unit:"Гн",min:0.01,max:10},current:{name:"сила тока",unit:"А",min:0.1,max:100}}},
+// ТЕСТ 30
+{id:"math_pendulum_period",topic:"Тест 30. Механические колебания и волны",name:"Период математического маятника",mainVar:"period",formula:"$$T = 2\\pi\\sqrt{\\frac{l}{g}}$$",calcMain:(v)=>2*Math.PI*Math.sqrt(v.length/10),calcOther:{length:(v)=>Math.pow(v.period/(2*Math.PI),2)*10},variables:{period:{name:"период",unit:"с",min:1,max:10},length:{name:"длина нити",unit:"м",min:1,max:10}}},
+{id:"spring_pendulum_period",topic:"Тест 30. Механические колебания и волны",name:"Период пружинного маятника",mainVar:"period",formula:"$$T = 2\\pi\\sqrt{\\frac{m}{k}}$$",calcMain:(v)=>2*Math.PI*Math.sqrt(v.mass/v.stiffness),calcOther:{mass:(v)=>Math.pow(v.period/(2*Math.PI),2)*v.stiffness,stiffness:(v)=>v.mass/Math.pow(v.period/(2*Math.PI),2)},variables:{period:{name:"период",unit:"с",min:1,max:10},mass:{name:"масса",unit:"кг",min:1,max:100},stiffness:{name:"жёсткость",unit:"Н/м",min:10,max:10000}}},
+{id:"wavelength",topic:"Тест 30. Механические колебания и волны",name:"Длина волны",mainVar:"wavelength",formula:"$$\\lambda = vT$$",calcMain:(v)=>v.velocity*v.period,calcOther:{velocity:(v)=>v.wavelength/v.period,period:(v)=>v.wavelength/v.velocity},variables:{wavelength:{name:"длина волны",unit:"м",min:0.1,max:100},velocity:{name:"скорость",unit:"м/с",min:1,max:1000},period:{name:"период",unit:"с",min:0.01,max:10}}},
+// ТЕСТ 31
+{id:"thomson_formula",topic:"Тест 31. Электромагнитные колебания",name:"Формула Томсона",mainVar:"period",formula:"$$T = 2\\pi\\sqrt{LC}$$",calcMain:(v)=>2*Math.PI*Math.sqrt(v.inductance*v.capacitance),calcOther:{inductance:(v)=>Math.pow(v.period/(2*Math.PI),2)/v.capacitance,capacitance:(v)=>Math.pow(v.period/(2*Math.PI),2)/v.inductance},variables:{period:{name:"период",unit:"с",min:0.001,max:1},inductance:{name:"индуктивность",unit:"Гн",min:0.01,max:1},capacitance:{name:"ёмкость",unit:"Ф",min:1e-6,max:1e-3}}},
+{id:"rms_current",topic:"Тест 31. Электромагнитные колебания",name:"Действующее значение тока",mainVar:"rmsCurrent",formula:"$$I_{д} = \\frac{I_0}{\\sqrt{2}}$$",calcMain:(v)=>v.amplitudeCurrent/Math.sqrt(2),calcOther:{amplitudeCurrent:(v)=>v.rmsCurrent*Math.sqrt(2)},variables:{rmsCurrent:{name:"действующий ток",unit:"А",min:0.1,max:100},amplitudeCurrent:{name:"амплитуда тока",unit:"А",min:0.1,max:100}}},
+{id:"transformer",topic:"Тест 31. Электромагнитные колебания",name:"Трансформатор",mainVar:"transformationRatio",formula:"$$k = \\frac{N_1}{N_2} = \\frac{U_1}{U_2}$$",calcMain:(v)=>v.primaryVoltage/v.secondaryVoltage,calcOther:{primaryVoltage:(v)=>v.transformationRatio*v.secondaryVoltage,secondaryVoltage:(v)=>v.primaryVoltage/v.transformationRatio},variables:{transformationRatio:{name:"коэффициент трансформации",unit:"",min:0.1,max:10},primaryVoltage:{name:"первичное напряжение",unit:"В",min:10,max:10000},secondaryVoltage:{name:"вторичное напряжение",unit:"В",min:10,max:10000}}},
+{id:"em_wavelength",topic:"Тест 31. Электромагнитные колебания",name:"Длина электромагнитной волны",mainVar:"wavelength",formula:"$$\\lambda = cT$$",calcMain:(v)=>3e8*v.period,calcOther:{period:(v)=>v.wavelength/3e8},variables:{wavelength:{name:"длина волны",unit:"м",min:0.1,max:10000},period:{name:"период",unit:"с",min:1e-9,max:1e-5}}},
+// ТЕСТ 32
+{id:"total_internal_reflection",topic:"Тест 32. Геометрическая оптика",name:"Полное отражение",mainVar:"criticalAngle",formula:"$$\\sin\\alpha_0 = \\frac{n_2}{n_1}$$",calcMain:(v)=>Math.asin(v.refractiveIndex2/v.refractiveIndex1)*180/Math.PI,calcOther:{refractiveIndex1:(v)=>v.refractiveIndex2/Math.sin(v.criticalAngle*Math.PI/180)},variables:{criticalAngle:{name:"предельный угол",unit:"°",min:10,max:89},refractiveIndex1:{name:"показатель преломления 1",unit:"",min:1.3,max:3},refractiveIndex2:{name:"показатель преломления 2",unit:"",min:1,max:1.5}}},
+{id:"refraction",topic:"Тест 32. Геометрическая оптика",name:"Закон преломления",mainVar:"angleRefraction",formula:"$$\\frac{\\sin\\alpha}{\\sin\\gamma} = \\frac{n_2}{n_1}$$",calcMain:(v)=>Math.asin(Math.sin(v.angleIncidence*Math.PI/180)*v.refractiveIndex1/v.refractiveIndex2)*180/Math.PI,calcOther:{angleIncidence:(v)=>Math.asin(Math.sin(v.angleRefraction*Math.PI/180)*v.refractiveIndex2/v.refractiveIndex1)*180/Math.PI},variables:{angleIncidence:{name:"угол падения",unit:"°",min:1,max:89},angleRefraction:{name:"угол преломления",unit:"°",min:1,max:89},refractiveIndex1:{name:"показатель преломления 1",unit:"",min:1,max:3},refractiveIndex2:{name:"показатель преломления 2",unit:"",min:1,max:3}}},
+// ТЕСТ 33
+{id:"thin_lens_formula",topic:"Тест 33. Линзы",name:"Формула тонкой линзы",mainVar:"focalLength",formula:"$$\\frac{1}{F} = \\frac{1}{d} + \\frac{1}{f}$$",calcMain:(v)=>1/(1/v.objectDistance+1/v.imageDistance),calcOther:{objectDistance:(v)=>1/(1/v.focalLength-1/v.imageDistance),imageDistance:(v)=>1/(1/v.focalLength-1/v.objectDistance)},variables:{focalLength:{name:"фокусное расстояние",unit:"м",min:0.01,max:10},objectDistance:{name:"расстояние до предмета",unit:"м",min:0.01,max:100},imageDistance:{name:"расстояние до изображения",unit:"м",min:0.01,max:100}}},
+{id:"optical_power",topic:"Тест 33. Линзы",name:"Оптическая сила",mainVar:"opticalPower",formula:"$$D = \\frac{1}{F}$$",calcMain:(v)=>1/v.focalLength,calcOther:{focalLength:(v)=>1/v.opticalPower},variables:{opticalPower:{name:"оптическая сила",unit:"дптр",min:-10,max:10},focalLength:{name:"фокусное расстояние",unit:"м",min:0.1,max:10}}},
+// ТЕСТ 34
+{id:"interference_max",topic:"Тест 34. Волновая оптика",name:"Условие максимума",mainVar:"pathDifference",formula:"$$\\delta = m\\lambda$$",calcMain:(v)=>v.order*v.wavelength,calcOther:{order:(v)=>v.pathDifference/v.wavelength,wavelength:(v)=>v.pathDifference/v.order},variables:{pathDifference:{name:"оптическая разность хода",unit:"м",min:1e-7,max:1e-5},wavelength:{name:"длина волны",unit:"м",min:4e-7,max:7e-7},order:{name:"порядок максимума",unit:"",min:1,max:10}}},
+{id:"diffraction_grating",topic:"Тест 34. Волновая оптика",name:"Дифракционная решётка",mainVar:"angle",formula:"$$d \\sin\\theta = m\\lambda$$",calcMain:(v)=>Math.asin(Math.min(1,v.order*v.wavelength/v.gratingPeriod))*180/Math.PI,calcOther:{gratingPeriod:(v)=>v.order*v.wavelength/Math.sin(v.angle*Math.PI/180),wavelength:(v)=>v.gratingPeriod*Math.sin(v.angle*Math.PI/180)/v.order},variables:{angle:{name:"угол дифракции",unit:"°",min:1,max:89},gratingPeriod:{name:"период решётки",unit:"м",min:1e-6,max:1e-4},order:{name:"порядок максимума",unit:"",min:1,max:10},wavelength:{name:"длина волны",unit:"м",min:4e-7,max:7e-7}}},
+// ТЕСТ 35
+{id:"relativistic_length",topic:"Тест 35. СТО",name:"Релятивистское сокращение длины",mainVar:"length",formula:"$$l = l_0 \\sqrt{1 - \\frac{v^2}{c^2}}$$",calcMain:(v)=>v.properLength*Math.sqrt(1-v.velocity*v.velocity/(9e16)),calcOther:{properLength:(v)=>v.length/Math.sqrt(1-v.velocity*v.velocity/(9e16))},variables:{length:{name:"длина",unit:"м",min:0.1,max:100},properLength:{name:"собственная длина",unit:"м",min:0.1,max:100},velocity:{name:"скорость",unit:"м/с",min:1e7,max:2.9e8}}},
+{id:"relativistic_time",topic:"Тест 35. СТО",name:"Релятивистское замедление времени",mainVar:"time",formula:"$$\\tau = \\frac{\\tau_0}{\\sqrt{1 - \\frac{v^2}{c^2}}}$$",calcMain:(v)=>v.properTime/Math.sqrt(1-v.velocity*v.velocity/(9e16)),calcOther:{properTime:(v)=>v.time*Math.sqrt(1-v.velocity*v.velocity/(9e16))},variables:{time:{name:"время",unit:"с",min:1,max:1000},properTime:{name:"собственное время",unit:"с",min:1,max:1000},velocity:{name:"скорость",unit:"м/с",min:1e7,max:2.9e8}}},
+{id:"rest_energy",topic:"Тест 35. СТО",name:"Энергия покоя",mainVar:"energy",formula:"$$E = mc^2$$",calcMain:(v)=>v.mass*9e16,calcOther:{mass:(v)=>v.energy/9e16},variables:{energy:{name:"энергия покоя",unit:"Дж",min:1e-10,max:1e-5},mass:{name:"масса",unit:"кг",min:1e-30,max:1e-27}}},
+{id:"photon_energy",topic:"Тест 35. СТО. Фотоэффект",name:"Энергия фотона",mainVar:"energy",formula:"$$E = h \\nu$$",calcMain:(v)=>6.626e-34*v.frequency,calcOther:{frequency:(v)=>v.energy/6.626e-34},variables:{energy:{name:"энергия фотона",unit:"Дж",min:1e-19,max:1e-15},frequency:{name:"частота",unit:"Гц",min:1e14,max:1e20}}},
+{id:"einstein_photoelectric",topic:"Тест 35. СТО. Фотоэффект",name:"Уравнение Эйнштейна для фотоэффекта",mainVar:"photonEnergy",formula:"$$h\\nu = A_{вых} + E_{k max}$$",calcMain:(v)=>v.workFunction+v.maxKineticEnergy,calcOther:{workFunction:(v)=>v.photonEnergy-v.maxKineticEnergy,maxKineticEnergy:(v)=>v.photonEnergy-v.workFunction},variables:{photonEnergy:{name:"энергия фотона",unit:"Дж",min:1e-19,max:1e-15},workFunction:{name:"работа выхода",unit:"Дж",min:1e-20,max:9e-16},maxKineticEnergy:{name:"макс. кин. энергия",unit:"Дж",min:1e-20,max:9e-16}}},
+{id:"photoelectric_threshold",topic:"Тест 35. СТО. Фотоэффект",name:"Красная граница фотоэффекта",mainVar:"thresholdFrequency",formula:"$$\\nu_{min} = \\frac{A_{вых}}{h}$$",calcMain:(v)=>v.workFunction/6.626e-34,calcOther:{workFunction:(v)=>v.thresholdFrequency*6.626e-34},variables:{thresholdFrequency:{name:"красная граница (частота)",unit:"Гц",min:1e14,max:1e16},workFunction:{name:"работа выхода",unit:"Дж",min:1e-19,max:1e-15}}},
+// ТЕСТ 36
+{id:"bohr_frequency",topic:"Тест 36. Атомная и ядерная физика",name:"Правило частот Бора",mainVar:"frequency",formula:"$$h\\nu = E_k - E_m$$",calcMain:(v)=>(v.initialEnergy-v.finalEnergy)/6.626e-34,calcOther:{initialEnergy:(v)=>v.finalEnergy+v.frequency*6.626e-34,finalEnergy:(v)=>v.initialEnergy-v.frequency*6.626e-34},variables:{frequency:{name:"частота излучения",unit:"Гц",min:1e14,max:1e16},initialEnergy:{name:"начальная энергия уровня",unit:"Дж",min:1e-19,max:1e-15},finalEnergy:{name:"конечная энергия уровня",unit:"Дж",min:1e-20,max:9e-16}}},
+{id:"binding_energy",topic:"Тест 36. Атомная и ядерная физика",name:"Энергия связи ядра",mainVar:"bindingEnergy",formula:"$$E_{св} = \\Delta m c^2$$",calcMain:(v)=>v.massDefect*9e16,calcOther:{massDefect:(v)=>v.bindingEnergy/9e16},variables:{bindingEnergy:{name:"энергия связи",unit:"Дж",min:1e-12,max:1e-10},massDefect:{name:"дефект массы",unit:"кг",min:1e-29,max:1e-27}}},
+{id:"radioactive_decay",topic:"Тест 36. Атомная и ядерная физика",name:"Закон радиоактивного распада",mainVar:"nucleiCount",formula:"$$N = N_0 2^{-\\frac{t}{T}}$$",calcMain:(v)=>v.initialNuclei*Math.pow(2,-v.time/v.halfLife),calcOther:{initialNuclei:(v)=>v.nucleiCount/Math.pow(2,-v.time/v.halfLife),halfLife:(v)=>-v.time/Math.log2(v.nucleiCount/v.initialNuclei)},variables:{nucleiCount:{name:"число нераспавшихся ядер",unit:"",min:1e10,max:1e20},initialNuclei:{name:"начальное число ядер",unit:"",min:1e12,max:1e20},time:{name:"время",unit:"с",min:1,max:1000},halfLife:{name:"период полураспада",unit:"с",min:1,max:1000}}}
+];
+
+// ============================================================================
+// ВОПРОСЫ НА ЕДИНИЦЫ ИЗМЕРЕНИЯ
+// ============================================================================
+const unitsQuestions=[
+{question:"В каких единицах измеряется скорость в СИ?",correct:"м/с",topic:"Тест 1. Равномерное прямолинейное движение",options:["м/с","км/ч","м/с²","Н","Дж"]},
+{question:"В каких единицах измеряется перемещение в СИ?",correct:"м",topic:"Тест 1. Равномерное прямолинейное движение",options:["м","км","с","м/с","Н"]},
+{question:"В каких единицах измеряется ускорение в СИ?",correct:"м/с²",topic:"Тест 2. Равноускоренное прямолинейное движение",options:["м/с","м/с²","Н","Дж","Вт"]},
+{question:"В каких единицах измеряется сила в СИ?",correct:"Н",topic:"Тест 5. Законы Ньютона",options:["Н","Дж","Вт","Па","кг"]},
+{question:"В каких единицах измеряется масса в СИ?",correct:"кг",topic:"Тест 5. Законы Ньютона",options:["кг","г","Н","Дж","м"]},
+{question:"В каких единицах измеряется импульс тела в СИ?",correct:"кг·м/с",topic:"Тест 9. Импульс тела",options:["кг·м/с","Н·с","Дж","Вт","кг·м/с²"]},
+{question:"В каких единицах измеряется механическая работа в СИ?",correct:"Дж",topic:"Тест 10. Механическая работа. Мощность",options:["Дж","Вт","Н","Па","Н·м"]},
+{question:"В каких единицах измеряется мощность в СИ?",correct:"Вт",topic:"Тест 10. Механическая работа. Мощность",options:["Вт","Дж","Н","Па","Дж/с"]},
+{question:"В каких единицах измеряется жёсткость пружины в СИ?",correct:"Н/м",topic:"Тест 7. Сила упругости. Закон Гука",options:["Н/м","Н·м","Па","Дж","Н"]},
+{question:"В каких единицах измеряется момент силы в СИ?",correct:"Н·м",topic:"Тест 13. Давление. Статика",options:["Н·м","Н/м","Дж","Вт","Па"]},
+{question:"В каких единицах измеряется давление в СИ?",correct:"Па",topic:"Тест 13. Давление. Статика",options:["Па","Н","Дж","Вт","атм"]},
+{question:"В каких единицах измеряется плотность в СИ?",correct:"кг/м³",topic:"Тест 13. Давление. Статика",options:["кг/м³","г/см³","кг/м²","Н/м³","м³/кг"]},
+{question:"В каких единицах измеряется количество вещества в СИ?",correct:"моль",topic:"Тест 14. Основное уравнение МКТ",options:["моль","кг","г","атом","молекула"]},
+{question:"В каких единицах измеряется температура в СИ?",correct:"К",topic:"Тест 14. Основное уравнение МКТ",options:["К","°C","°F","Дж","Па"]},
+{question:"В каких единицах измеряется количество теплоты в СИ?",correct:"Дж",topic:"Тест 19. Количество теплоты",options:["Дж","Вт","Дж/°C","Дж/(кг·°C)","кал"]},
+{question:"В каких единицах измеряется удельная теплоёмкость в СИ?",correct:"Дж/(кг·°C)",topic:"Тест 19. Количество теплоты",options:["Дж/(кг·°C)","Дж/°C","Дж/кг","Вт","Дж"]},
+{question:"В каких единицах измеряется сила тока в СИ?",correct:"А",topic:"Тест 25. Постоянный электрический ток",options:["А","В","Ом","Вт","Кл"]},
+{question:"В каких единицах измеряется напряжение в СИ?",correct:"В",topic:"Тест 25. Постоянный электрический ток",options:["В","А","Ом","Вт","В/м"]},
+{question:"В каких единицах измеряется сопротивление в СИ?",correct:"Ом",topic:"Тест 25. Постоянный электрический ток",options:["Ом","В","А","Вт","В/А"]},
+{question:"В каких единицах измеряется электрический заряд в СИ?",correct:"Кл",topic:"Тест 21. Закон Кулона",options:["Кл","А","В","Ом","А·с"]},
+{question:"В каких единицах измеряется электроемкость в СИ?",correct:"Ф",topic:"Тест 24. Конденсаторы",options:["Ф","В","Кл","Ом","В/Кл"]},
+{question:"В каких единицах измеряется напряжённость электрического поля в СИ?",correct:"В/м",topic:"Тест 22. Напряжённость электростатического поля",options:["В/м","В","Н/Кл","Тл","А/м"]},
+{question:"В каких единицах измеряется магнитная индукция в СИ?",correct:"Тл",topic:"Тест 28. Магнитное поле",options:["Тл","В/м","А/м","Гн","Вб"]},
+{question:"В каких единицах измеряется магнитный поток в СИ?",correct:"Вб",topic:"Тест 29. Электромагнитная индукция",options:["Вб","Тл","В","А","Гн"]},
+{question:"В каких единицах измеряется индуктивность в СИ?",correct:"Гн",topic:"Тест 29. Электромагнитная индукция",options:["Гн","Тл","Вб","В","А"]},
+{question:"В каких единицах измеряется частота колебаний в СИ?",correct:"Гц",topic:"Тест 30. Механические колебания и волны",options:["Гц","с","рад/с","м","об/мин"]},
+{question:"В каких единицах измеряется длина волны в СИ?",correct:"м",topic:"Тест 30. Механические колебания и волны",options:["м","Гц","с","рад","м/с"]},
+{question:"В каких единицах измеряется оптическая сила линзы?",correct:"дптр",topic:"Тест 33. Линзы",options:["дптр","м","см","Гц","Вт"]},
+{question:"В каких единицах измеряется постоянная Планка в СИ?",correct:"Дж·с",topic:"Тест 35. СТО. Фотоэффект",options:["Дж·с","Дж","Дж/с","эВ","Гц"]},
+{question:"В каких единицах измеряется работа выхода в СИ?",correct:"Дж",topic:"Тест 35. СТО. Фотоэффект",options:["Дж","эВ","Вт","Гц","В"]},
+{question:"В каких единицах измеряется период полураспада в СИ?",correct:"с",topic:"Тест 36. Атомная и ядерная физика",options:["с","Бк","Гр","мин","ч"]}
+];
+
+// ============================================================================
+// СОСТОЯНИЕ И ЛОГИКА
+// ============================================================================
+let state={selectedTopics:new Set(),level:null,type:'mixed',tasks:[]};
+
+function initTopics(){
+  const topics=[...new Set(formulas.map(f=>f.topic))];
+  const grid=document.getElementById('topics-grid');
+  grid.innerHTML='';
+  topics.forEach(t=>{
+    const item=document.createElement('div');
+    item.className='topic-item';
+    item.textContent=t;
+    item.onclick=()=>toggleTopic(t,item);
+    grid.appendChild(item);
+  });
+}
+function toggleTopic(t,el){
+  if(state.selectedTopics.has(t)){state.selectedTopics.delete(t);el.classList.remove('selected');}
+  else{state.selectedTopics.add(t);el.classList.add('selected');}
+}
+function selectAllTopics(){
+  [...new Set(formulas.map(f=>f.topic))].forEach(t=>state.selectedTopics.add(t));
+  document.querySelectorAll('.topic-item').forEach(el=>el.classList.add('selected'));
+}
+function deselectAllTopics(){
+  state.selectedTopics.clear();
+  document.querySelectorAll('.topic-item').forEach(el=>el.classList.remove('selected'));
+}
+function selectLevel(l){
+  state.level=l;
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.toggle('selected',parseInt(b.dataset.level)===l));
+}
+function selectType(t){
+  state.type=t;
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('selected',b.dataset.type===t));
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function randomChoice(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+// ============================================================
+// ГЕНЕРАЦИЯ ЗНАЧЕНИЙ
+// ============================================================
+function generateValues(formula,targetVar,maxAttempts=300){
+  const vars=formula.variables;
+  const otherVars=Object.keys(vars).filter(k=>k!==targetVar);
+  for(let attempt=0;attempt<maxAttempts;attempt++){
+    const values={};
+    for(const key of otherVars){
+      const def=vars[key];
+      values[key]=randomInt(Math.ceil(def.min),Math.floor(def.max));
+    }
+    let raw;
+    try{
+      if(targetVar===formula.mainVar){
+        if(typeof formula.calcMain!=='function')continue;
+        raw=formula.calcMain(values);
+      }else{
+        const fn=formula.calcOther&&formula.calcOther[targetVar];
+        if(typeof fn!=='function')continue;
+        raw=fn(values);
+      }
+    }catch(e){continue;}
+    if(typeof raw!=='number'||!Number.isFinite(raw))continue;
+    if(raw<=0)continue;
+    const answer=Math.round(raw*100)/100;
+    if(answer<=0||answer>1e9)continue;
+    values[targetVar]=answer;
+    return {values,answer,exactAnswer:raw};
+  }
+  return null;
+}
+
+function generateTask(formula,level){
+  let targetVar;
+  if(level===1){
+    targetVar=formula.mainVar;
+  }else{
+    const candidates=Object.keys(formula.variables)
+      .filter(v=>v!==formula.mainVar)
+      .filter(v=>formula.calcOther&&typeof formula.calcOther[v]==='function');
+    targetVar=candidates.length?randomChoice(candidates):formula.mainVar;
+  }
+  const result=generateValues(formula,targetVar);
+  if(!result)return null;
+  return {formula,level,targetVar,values:result.values,answer:result.answer,exactAnswer:result.exactAnswer};
+}
+
+function generateUnitQuestion(q){
+  const shuffled=[...q.options].sort(()=>Math.random()-0.5);
+  return {type:'unit',question:q.question,options:shuffled,correct:q.correct,userAnswer:null,topic:q.topic};
+}
+
+function generateTest(){
+  if(state.selectedTopics.size===0&&state.type!=='units'){alert('Выберите хотя бы одну тему!');return;}
+  if(!state.level&&state.type!=='units'){alert('Выберите уровень сложности!');return;}
+  const availableFormulas=state.selectedTopics.size===0?formulas:formulas.filter(f=>state.selectedTopics.has(f.topic));
+  state.tasks=[];
+  if(state.type==='tasks'||state.type==='mixed'){
+    for(const formula of availableFormulas){
+      const task=generateTask(formula,state.level);
+      if(task)state.tasks.push({type:'task',...task});
+    }
+  }
+  if(state.type==='units'||state.type==='mixed'){
+    let selected=state.selectedTopics.size===0?[...unitsQuestions]:unitsQuestions.filter(q=>state.selectedTopics.has(q.topic));
+    if(selected.length<3){
+      const others=unitsQuestions.filter(q=>!state.selectedTopics.has(q.topic));
+      while(selected.length<3&&others.length>0){
+        const idx=Math.floor(Math.random()*others.length);
+        selected.push(others.splice(idx,1)[0]);
+      }
+    }
+    selected.sort(()=>Math.random()-0.5);
+    for(const q of selected)state.tasks.push(generateUnitQuestion(q));
+  }
+  if(state.tasks.length===0){alert('Не удалось сгенерировать задания. Попробуйте другие темы или уровень.');return;}
+  renderTest();
+  showScreen('test-screen');
+}
+
+// ============================================================
+// ОТРИСОВКА
+// ============================================================
+function renderTest(){
+  const container=document.getElementById('tasks-container');
+  container.innerHTML='';
+  state.tasks.forEach((task,index)=>{
+    const div=document.createElement('div');
+    div.className='task';
+    div.id=`task-${index}`;
+    div.innerHTML=task.type==='task'?renderTaskQuestion(task,index):renderUnitQuestion(task,index);
+    container.appendChild(div);
+  });
+}
+function renderTaskQuestion(task,index){
+  const formula=task.formula;
+  const targetVar=task.targetVar;
+  const targetVarDef=formula.variables[targetVar];
+  let html=`
+    <div class="task-header">
+      <span class="task-number">Задание ${index+1}</span>
+      <span class="task-topic">${formula.topic} · Уровень ${task.level}</span>
+    </div>
+    <div class="task-question">
+      <strong>Найдите:</strong> ${targetVarDef.name}
+      <div style="font-style:italic;color:#7f8c8d;font-size:14px;margin-top:5px">(${formula.name})</div>
+    </div>
+    <div class="task-given">
+      <strong>Дано:</strong><br>`;
+  for(const [key,varDef] of Object.entries(formula.variables)){
+    if(key===targetVar)continue;
+    html+=`${varDef.name} = ${task.values[key]} ${varDef.unit}<br>`;
+  }
+  html+=`
+    </div>
+    <div class="answer-input">
+      <strong>Ответ:</strong>
+      <input type="number" id="answer-${index}" step="any" placeholder="Число">
+      <span class="answer-unit">${targetVarDef.unit}</span>
+    </div>
+    <div class="task-hint">Ответ округлите до сотых.</div>`;
+  return html;
+}
+function renderUnitQuestion(task,index){
+  const optionsHtml=(task.options||[]).map(o=>`<div class="unit-option" data-value="${o}" onclick="selectUnit(${index},this)">${o}</div>`).join('');
+  return `
+    <div class="task-header">
+      <span class="task-number">Задание ${index+1}</span>
+      <span class="task-topic">${task.topic}</span>
+    </div>
+    <div class="task-question">${task.question}</div>
+    <div class="unit-options" id="options-${index}">${optionsHtml}</div>
+    <div class="task-hint">Выберите один вариант ответа.</div>`;
+}
+function selectUnit(index,element){
+  const container=document.getElementById(`options-${index}`);
+  if(!container)return;
+  container.querySelectorAll('.unit-option').forEach(el=>el.classList.remove('selected'));
+  element.classList.add('selected');
+  if(state.tasks&&state.tasks[index])state.tasks[index].userAnswer=element.dataset.value;
+}
+
+// ============================================================
+// ПРОВЕРКА И РЕЗУЛЬТАТЫ
+// ============================================================
+function checkTest(){
+  let correct=0;
+  const total=state.tasks.length;
+  state.tasks.forEach((task,index)=>{
+    const taskDiv=document.getElementById(`task-${index}`);
+    let isCorrect=false,userAnswer=null,correctAnswer=null;
+    if(task.type==='task'){
+      const input=document.getElementById(`answer-${index}`);
+      const rawValue=input?input.value.trim():'';
+      userAnswer=rawValue===''?null:parseFloat(rawValue.replace(',','.'));
+      correctAnswer=Math.round(task.answer*100)/100;
+      if(userAnswer!==null&&!isNaN(userAnswer)){
+        userAnswer=Math.round(userAnswer*100)/100;
+        isCorrect=Math.abs(userAnswer-correctAnswer)<0.01;
+      }
+    }else{
+      userAnswer=task.userAnswer||'(не выбрано)';
+      correctAnswer=task.correct;
+      isCorrect=userAnswer===correctAnswer;
+    }
+    if(isCorrect){correct++;taskDiv.classList.add('correct');taskDiv.classList.remove('incorrect');}
+    else{taskDiv.classList.add('incorrect');taskDiv.classList.remove('correct');}
+    let resultHtml;
+    if(isCorrect){resultHtml=`<div class="task-result correct">✅ Правильно!</div>`;}
+    else{
+      const displayUserAns=userAnswer===null?'(пусто)':userAnswer;
+      resultHtml=`<div class="task-result incorrect">❌ Неправильно. Ваш ответ: <strong>${displayUserAns}</strong><br><span>Правильный ответ: <strong>${correctAnswer}</strong></span></div>`;
+    }
+    const oldResult=taskDiv.querySelector('.task-result');
+    if(oldResult)oldResult.remove();
+    taskDiv.insertAdjacentHTML('beforeend',resultHtml);
+    if(task.type==='task'){
+      const input=document.getElementById(`answer-${index}`);
+      if(input)input.disabled=true;
+    }else{
+      const container=document.getElementById(`options-${index}`);
+      if(container)container.querySelectorAll('.unit-option').forEach(el=>{el.style.pointerEvents='none';el.style.opacity='0.7';});
+    }
+  });
+  showResults(correct,total);
+}
+
+function renderKatex(tex){
+  try{
+    const clean=tex.replace(/^\$\$/,'').replace(/\$\$$/,'');
+    return katex.renderToString(clean,{displayMode:true,throwOnError:false});
+  }catch(e){return `<code>${tex}</code>`;}
+}
+
+function showResults(correct,total){
+  const percentage=total>0?Math.round(correct/total*100):0;
+  document.getElementById('score-text').textContent=`${correct} из ${total} (${percentage}%)`;
+  document.getElementById('score-fill').style.width=`${percentage}%`;
+  document.getElementById('correct-count').textContent=correct;
+  document.getElementById('incorrect-count').textContent=total-correct;
+  document.getElementById('total-count').textContent=total;
+  const detailedResults=document.getElementById('detailed-results');
+  const topicStats={};
+  state.tasks.forEach((task,index)=>{
+    const topic=task.topic||(task.formula&&task.formula.topic?task.formula.topic:'Общее');
+    if(!topicStats[topic])topicStats[topic]={correct:0,total:0};
+    topicStats[topic].total++;
+    const taskDiv=document.getElementById(`task-${index}`);
+    if(taskDiv&&taskDiv.classList.contains('correct'))topicStats[topic].correct++;
+  });
+  let html='<h3>Результаты по темам:</h3>';
+  for(const [topic,stats] of Object.entries(topicStats)){
+    const percent=Math.round(stats.correct/stats.total*100);
+    const barColor=percent>=80?'#4caf50':(percent>=50?'#ff9800':'#f44336');
+    html+=`
+      <div class="topic-stat-card">
+        <div class="topic-stat-header"><span><strong>${topic}</strong></span><span>${stats.correct} из ${stats.total} (${percent}%)</span></div>
+        <div class="topic-stat-bar-bg"><div class="topic-stat-bar-fill" style="width:${percent}%;background:${barColor};"></div></div>
+      </div>`;
+  }
+  html+='<h3 style="margin-top:30px">Подробный разбор заданий:</h3>';
+  state.tasks.forEach((task,index)=>{
+    let isCorrect=false,userAnsDisplay='',correctAnsDisplay='',questionText='',formulaHtml='';
+    if(task.type==='task'){
+      const input=document.getElementById(`answer-${index}`);
+      const rawValue=input?input.value.trim():'';
+      const userVal=rawValue===''?null:parseFloat(rawValue.replace(',','.'));
+      const expectedAnswer=task.answer!==undefined?Math.round(task.answer*100)/100:null;
+      isCorrect=userVal!==null&&!isNaN(userVal)&&expectedAnswer!==null&&Math.abs(Math.round(userVal*100)/100-expectedAnswer)<0.01;
+      userAnsDisplay=rawValue===''?'(пусто)':rawValue;
+      correctAnsDisplay=expectedAnswer!==null?expectedAnswer:'—';
+      const formula=task.formula;
+      const variables=formula&&formula.variables?formula.variables:{};
+      const mainVar=task.targetVar;
+      const givenVars=Object.entries(task.values||{}).filter(([key])=>key!==mainVar).map(([key,val])=>{
+        const varInfo=variables[key];
+        const name=varInfo&&varInfo.name?varInfo.name:key;
+        const unit=varInfo&&varInfo.unit?varInfo.unit:'';
+        return `${name} = ${val} ${unit}`.trim();
+      }).join(', ');
+      const targetVar=variables[mainVar];
+      const targetName=targetVar&&targetVar.name?targetVar.name:mainVar;
+      const targetUnit=targetVar&&targetVar.unit?targetVar.unit:'';
+      const formulaName=formula&&formula.name?formula.name:'Формула';
+      questionText=`<strong>${formulaName}</strong><br>Дано: ${givenVars}.<br>Найти: ${targetName} (${targetUnit})`;
+      // === ВЫВОД ПРАВИЛЬНОЙ ФОРМУЛЫ ===
+      if(formula&&formula.formula){
+        formulaHtml=`<div class="review-formula"><div class="review-formula-label">📐 Правильная формула:</div>${renderKatex(formula.formula)}</div>`;
+      }
+    }else{
+      isCorrect=task.userAnswer===task.correct;
+      userAnsDisplay=task.userAnswer||'(не выбрано)';
+      correctAnsDisplay=task.correct||'—';
+      questionText=task.question||'Вопрос о единицах измерения';
+    }
+    const statusClass=isCorrect?'correct':'incorrect';
+    const icon=isCorrect?'✅':'❌';
+    const topic=task.topic||(task.formula&&task.formula.topic?task.formula.topic:'Общее');
+    html+=`
+      <div class="review-card ${statusClass}">
+        <div class="review-header"><span style="font-size:18px">${icon}</span><span class="review-title">Задание ${index+1} • ${topic}</span></div>
+        <div class="review-question">${questionText}</div>
+        ${formulaHtml}
+        <div>
+          <div class="ans-row"><span class="ans-label">Ваш ответ:</span><span class="ans-value ${statusClass}">${userAnsDisplay}</span></div>
+          ${!isCorrect?`<div class="ans-row"><span class="ans-label">Правильный ответ:</span><span class="ans-value correct">${correctAnsDisplay}</span></div>`:''}
+        </div>
+      </div>`;
+  });
+  detailedResults.innerHTML=html;
+  showScreen('results-screen');
+}
+
+function restartTest(){
+  generateTest();
+}
+
+initTopics();
+</script>
+</body>
+</html>
