@@ -368,7 +368,7 @@
       }
       input[type="number"],
       input[type="text"] {
-          font-size: 16px !important;
+        font-size: 16px !important;
       }
       .unit-option {
         padding: 12px 20px;
@@ -376,17 +376,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-}
+      }
 
-.topic-item {
-    padding: 14px 15px;
-    min-height: 44px;
-}
+      .topic-item {
+        padding: 14px 15px;
+        min-height: 44px;
+      }
 
-.level-btn, .type-btn {
-    min-height: 48px;
-}
-
+      .level-btn,
+      .type-btn {
+        min-height: 48px;
+      }
     </style>
   </head>
   <body>
@@ -552,38 +552,6 @@
             time: { name: "время", unit: "с", min: 1, max: 60 },
           },
         },
-        // {
-        //   id: "galileo_velocity",
-        //   topic: "Кинематика",
-        //   name: "Сложение скоростей",
-        //   mainVar: "velocity",
-        //   formula: "$$\\vec{v} = \\vec{v}_0 + \\vec{v}_1$$",
-        //   calcMain: (v) => v.initialVelocity + v.transferVelocity,
-        //   calcOther: {
-        //     initialVelocity: (v) => v.velocity - v.transferVelocity,
-        //     transferVelocity: (v) => v.velocity - v.initialVelocity,
-        //   },
-        //   variables: {
-        //     velocity: {
-        //       name: "абсолютная скорость",
-        //       unit: "м/с",
-        //       min: 10,
-        //       max: 100,
-        //     },
-        //     initialVelocity: {
-        //       name: "относительная скорость",
-        //       unit: "м/с",
-        //       min: 1,
-        //       max: 50,
-        //     },
-        //     transferVelocity: {
-        //       name: "переносная скорость",
-        //       unit: "м/с",
-        //       min: 1,
-        //       max: 50,
-        //     },
-        //   },
-        // },
         {
           id: "average_speed",
           topic: "Кинематика",
@@ -813,140 +781,14 @@
             time: { name: "время", unit: "с", min: 1, max: 20 },
           },
         },
-        // // ТЕСТ 3
-        // {
-        //   id: "free_fall_velocity",
-        //   topic: "Тест 3. Свободное падение",
-        //   name: "Скорость при свободном падении",
-        //   mainVar: "speed",
-        //   formula: "$$\\vec{v} = \\vec{v}_0 + \\vec{g}t$$",
-        //   calcMain: (v) => v.initialSpeed + 10 * v.time,
-        //   calcOther: {
-        //     initialSpeed: (v) => v.speed - 10 * v.time,
-        //     time: (v) => (v.speed - v.initialSpeed) / 10,
-        //   },
-        //   variables: {
-        //     speed: { name: "скорость", unit: "м/с", min: 10, max: 100 },
-        //     initialSpeed: {
-        //       name: "начальная скорость",
-        //       unit: "м/с",
-        //       min: 0,
-        //       max: 30,
-        //     },
-        //     time: { name: "время", unit: "с", min: 1, max: 10 },
-        //   },
-        // },
-        // {
-        //   id: "free_fall_displacement",
-        //   topic: "Тест 3. Свободное падение",
-        //   name: "Перемещение при свободном падении",
-        //   mainVar: "displacement",
-        //   formula:
-        //     "$$\\Delta \\vec{r} = \\vec{v}_0 t + \\frac{\\vec{g}t^2}{2}$$",
-        //   calcMain: (v) => v.initialSpeed * v.time + (10 * v.time * v.time) / 2,
-        //   calcOther: {
-        //     initialSpeed: (v) =>
-        //       (v.displacement - (10 * v.time * v.time) / 2) / v.time,
-        //   },
-        //   variables: {
-        //     displacement: { name: "перемещение", unit: "м", min: 10, max: 500 },
-        //     initialSpeed: {
-        //       name: "начальная скорость",
-        //       unit: "м/с",
-        //       min: 0,
-        //       max: 30,
-        //     },
-        //     time: { name: "время", unit: "с", min: 1, max: 10 },
-        //   },
-        // },
-        // {
-        //   id: "projectile_time",
-        //   topic: "Тест 3. Свободное падение",
-        //   name: "Время полёта",
-        //   mainVar: "time",
-        //   formula: "$$t_{п} = \\frac{2v_0 \\sin\\alpha}{g}$$",
-        //   calcMain: (v) =>
-        //     (2 * v.initialSpeed * Math.sin((v.angle * Math.PI) / 180)) / 10,
-        //   calcOther: {
-        //     initialSpeed: (v) =>
-        //       (v.time * 10) / (2 * Math.sin((v.angle * Math.PI) / 180)),
-        //   },
-        //   variables: {
-        //     time: { name: "время полёта", unit: "с", min: 1, max: 20 },
-        //     initialSpeed: {
-        //       name: "начальная скорость",
-        //       unit: "м/с",
-        //       min: 20,
-        //       max: 100,
-        //     },
-        //     angle: { name: "угол броска", unit: "°", min: 30, max: 60 },
-        //   },
-        // },
-        // {
-        //   id: "projectile_max_height",
-        //   topic: "Тест 3. Свободное падение",
-        //   name: "Максимальная высота",
-        //   mainVar: "maxHeight",
-        //   formula: "$$h_{max} = \\frac{v_0^2 \\sin^2\\alpha}{2g}$$",
-        //   calcMain: (v) => {
-        //     const s = Math.sin((v.angle * Math.PI) / 180);
-        //     return (v.initialSpeed * v.initialSpeed * s * s) / 20;
-        //   },
-        //   calcOther: {
-        //     initialSpeed: (v) =>
-        //       Math.sqrt(v.maxHeight * 20) / Math.sin((v.angle * Math.PI) / 180),
-        //   },
-        //   variables: {
-        //     maxHeight: {
-        //       name: "максимальная высота",
-        //       unit: "м",
-        //       min: 5,
-        //       max: 200,
-        //     },
-        //     initialSpeed: {
-        //       name: "начальная скорость",
-        //       unit: "м/с",
-        //       min: 20,
-        //       max: 100,
-        //     },
-        //     angle: { name: "угол броска", unit: "°", min: 30, max: 60 },
-        //   },
-        // },
-        // {
-        //   id: "projectile_range",
-        //   topic: "Тест 3. Свободное падение",
-        //   name: "Дальность полёта",
-        //   mainVar: "range",
-        //   formula: "$$L = \\frac{v_0^2 \\sin 2\\alpha}{g}$$",
-        //   calcMain: (v) =>
-        //     (v.initialSpeed *
-        //       v.initialSpeed *
-        //       Math.sin((2 * v.angle * Math.PI) / 180)) /
-        //     10,
-        //   calcOther: {
-        //     initialSpeed: (v) =>
-        //       Math.sqrt(
-        //         (v.range * 10) / Math.sin((2 * v.angle * Math.PI) / 180),
-        //       ),
-        //   },
-        //   variables: {
-        //     range: { name: "дальность полёта", unit: "м", min: 10, max: 1000 },
-        //     initialSpeed: {
-        //       name: "начальная скорость",
-        //       unit: "м/с",
-        //       min: 20,
-        //       max: 100,
-        //     },
-        //     angle: { name: "угол броска", unit: "°", min: 30, max: 60 },
-        //   },
-        // },
         // ТЕСТ 4
+        // РАЗДЕЛЕНО из "period": T = t/N = 1/ν  →  две записи
         {
           id: "period",
           topic: "Кинематика",
-          name: "Период",
+          name: "Период (через время и число оборотов)",
           mainVar: "period",
-          formula: "$$T = \\frac{t}{N} = \\frac{1}{\\nu}$$",
+          formula: "$$T = \\frac{t}{N}$$",
           calcMain: (v) => v.time / v.revolutions,
           calcOther: {
             time: (v) => v.period * v.revolutions,
@@ -958,12 +800,29 @@
             revolutions: { name: "число оборотов", unit: "", min: 1, max: 100 },
           },
         },
+        // НОВАЯ ЗАПИСЬ: разделена из "period" (вторая формула)
+        {
+          id: "period_frequency",
+          topic: "Кинематика",
+          name: "Период (через частоту)",
+          mainVar: "period",
+          formula: "$$T = \\frac{1}{\\nu}$$",
+          calcMain: (v) => 1 / v.frequency,
+          calcOther: {
+            frequency: (v) => 1 / v.period,
+          },
+          variables: {
+            period: { name: "период", unit: "с", min: 1, max: 10 },
+            frequency: { name: "частота", unit: "Гц", min: 1, max: 10 },
+          },
+        },
+        // РАЗДЕЛЕНО из "frequency": ν = N/t = 1/T  →  две записи
         {
           id: "frequency",
           topic: "Кинематика",
-          name: "Частота",
+          name: "Частота (через число оборотов и время)",
           mainVar: "frequency",
-          formula: "$$\\nu = \\frac{N}{t} = \\frac{1}{T}$$",
+          formula: "$$\\nu = \\frac{N}{t}$$",
           calcMain: (v) => v.revolutions / v.time,
           calcOther: {
             revolutions: (v) => v.frequency * v.time,
@@ -975,12 +834,29 @@
             time: { name: "время", unit: "с", min: 1, max: 100 },
           },
         },
+        // НОВАЯ ЗАПИСЬ: разделена из "frequency" (вторая формула)
+        {
+          id: "frequency_period",
+          topic: "Кинематика",
+          name: "Частота (через период)",
+          mainVar: "frequency",
+          formula: "$$\\nu = \\frac{1}{T}$$",
+          calcMain: (v) => 1 / v.period,
+          calcOther: {
+            period: (v) => 1 / v.frequency,
+          },
+          variables: {
+            frequency: { name: "частота", unit: "Гц", min: 1, max: 10 },
+            period: { name: "период", unit: "с", min: 1, max: 10 },
+          },
+        },
+        // РАЗДЕЛЕНО из "angular_velocity": ω = 2π/T = 2πν  →  две записи
         {
           id: "angular_velocity",
           topic: "Кинематика",
-          name: "Угловая скорость",
+          name: "Угловая скорость (через период)",
           mainVar: "angularVelocity",
-          formula: "$$\\omega = \\frac{2\\pi}{T} = 2\\pi\\nu$$",
+          formula: "$$\\omega = \\frac{2\\pi}{T}$$",
           calcMain: (v) => (2 * Math.PI) / v.period,
           calcOther: { period: (v) => (2 * Math.PI) / v.angularVelocity },
           variables: {
@@ -993,12 +869,55 @@
             period: { name: "период", unit: "с", min: 1, max: 10 },
           },
         },
+        // НОВАЯ ЗАПИСЬ: разделена из "angular_velocity" (вторая формула)
+        {
+          id: "angular_velocity_frequency",
+          topic: "Кинематика",
+          name: "Угловая скорость (через частоту)",
+          mainVar: "angularVelocity",
+          formula: "$$\\omega = 2\\pi\\nu$$",
+          calcMain: (v) => 2 * Math.PI * v.frequency,
+          calcOther: { frequency: (v) => v.angularVelocity / (2 * Math.PI) },
+          variables: {
+            angularVelocity: {
+              name: "угловая скорость",
+              unit: "рад/с",
+              min: 1,
+              max: 20,
+            },
+            frequency: { name: "частота", unit: "Гц", min: 1, max: 10 },
+          },
+        },
+        // РАЗДЕЛЕНО из "linear_velocity": v = 2πR/T = ωR  →  две записи
         {
           id: "linear_velocity",
           topic: "Кинематика",
-          name: "Линейная скорость",
+          name: "Линейная скорость (через период и радиус)",
           mainVar: "velocity",
-          formula: "$$v = \\frac{2\\pi R}{T} = \\omega R$$",
+          formula: "$$v = \\frac{2\\pi R}{T}$$",
+          calcMain: (v) => (2 * Math.PI * v.radius) / v.period,
+          calcOther: {
+            period: (v) => (2 * Math.PI * v.radius) / v.velocity,
+            radius: (v) => (v.velocity * v.period) / (2 * Math.PI),
+          },
+          variables: {
+            velocity: {
+              name: "линейная скорость",
+              unit: "м/с",
+              min: 1,
+              max: 100,
+            },
+            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+            period: { name: "период", unit: "с", min: 1, max: 10 },
+          },
+        },
+        // НОВАЯ ЗАПИСЬ: разделена из "linear_velocity" (вторая формула)
+        {
+          id: "linear_velocity_angular",
+          topic: "Кинематика",
+          name: "Линейная скорость (через угловую скорость)",
+          mainVar: "velocity",
+          formula: "$$v = \\omega R$$",
           calcMain: (v) => v.angularVelocity * v.radius,
           calcOther: {
             angularVelocity: (v) => v.velocity / v.radius,
@@ -1020,12 +939,13 @@
             },
           },
         },
+        // РАЗДЕЛЕНО из "centripetal_acceleration": a = v²/R = ω²R  →  две записи
         {
           id: "centripetal_acceleration",
           topic: "Кинематика",
-          name: "Центростремительное ускорение",
+          name: "Центростремительное ускорение (через линейную скорость)",
           mainVar: "acceleration",
-          formula: "$$a = \\frac{v^2}{R} = \\omega^2 R$$",
+          formula: "$$a = \\frac{v^2}{R}$$",
           calcMain: (v) => (v.velocity * v.velocity) / v.radius,
           calcOther: {
             velocity: (v) => Math.sqrt(v.acceleration * v.radius),
@@ -1043,6 +963,35 @@
               unit: "м/с",
               min: 1,
               max: 100,
+            },
+            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+          },
+        },
+        // НОВАЯ ЗАПИСЬ: разделена из "centripetal_acceleration" (вторая формула)
+        {
+          id: "centripetal_acceleration_angular",
+          topic: "Кинематика",
+          name: "Центростремительное ускорение (через угловую скорость)",
+          mainVar: "acceleration",
+          formula: "$$a = \\omega^2 R$$",
+          calcMain: (v) => v.angularVelocity * v.angularVelocity * v.radius,
+          calcOther: {
+            angularVelocity: (v) => Math.sqrt(v.acceleration / v.radius),
+            radius: (v) =>
+              v.acceleration / (v.angularVelocity * v.angularVelocity),
+          },
+          variables: {
+            acceleration: {
+              name: "центростремительное ускорение",
+              unit: "м/с²",
+              min: 1,
+              max: 100,
+            },
+            angularVelocity: {
+              name: "угловая скорость",
+              unit: "рад/с",
+              min: 1,
+              max: 20,
             },
             radius: { name: "радиус", unit: "м", min: 1, max: 50 },
           },
@@ -1065,46 +1014,6 @@
             mass: { name: "масса", unit: "кг", min: 1, max: 100 },
           },
         },
-        // {
-        //   id: "net_force",
-        //   topic: "Динамика",
-        //   name: "Равнодействующая сила",
-        //   mainVar: "netForce",
-        //   formula: "$$\\vec{F} = \\vec{F}_1 + \\vec{F}_2$$",
-        //   calcMain: (v) => v.force1 + v.force2,
-        //   calcOther: {
-        //     force1: (v) => v.netForce - v.force2,
-        //     force2: (v) => v.netForce - v.force1,
-        //   },
-        //   variables: {
-        //     netForce: {
-        //       name: "равнодействующая сила",
-        //       unit: "Н",
-        //       min: 10,
-        //       max: 1000,
-        //     },
-        //     force1: { name: "сила 1", unit: "Н", min: 1, max: 500 },
-        //     force2: { name: "сила 2", unit: "Н", min: 1, max: 500 },
-        //   },
-        // },
-        // {
-        //   id: "newton_third",
-        //   topic: "Динамика",
-        //   name: "Третий закон Ньютона",
-        //   mainVar: "force2",
-        //   formula: "$$\\vec{F}_1 = -\\vec{F}_2$$",
-        //   calcMain: (v) => v.force1,
-        //   calcOther: { force1: (v) => v.force2 },
-        //   variables: {
-        //     force1: { name: "сила действия", unit: "Н", min: 1, max: 1000 },
-        //     force2: {
-        //       name: "сила противодействия",
-        //       unit: "Н",
-        //       min: 1,
-        //       max: 1000,
-        //     },
-        //   },
-        // },
         {
           id: "universal_gravitation",
           topic: "Динамика",
@@ -1114,8 +1023,7 @@
           calcMain: (v) =>
             (6.67e5 * v.mass1 * v.mass2) / (v.distance * v.distance),
           calcOther: {
-            distance: (v) =>
-              Math.sqrt((6.67e5 * v.mass1 * v.mass2) / v.force),
+            distance: (v) => Math.sqrt((6.67e5 * v.mass1 * v.mass2) / v.force),
           },
           variables: {
             force: { name: "сила притяжения", unit: "Н", min: 1e-8, max: 1e-4 },
@@ -1152,38 +1060,6 @@
             },
           },
         },
-        // {
-        //   id: "static_friction_max",
-        //   topic: "Динамика",
-        //   name: "Сила трения покоя (макс.)",
-        //   mainVar: "frictionForce",
-        //   formula: "$$F_{тр.п. max} = \\mu_{п} N$$",
-        //   calcMain: (v) => v.frictionCoeff * v.normalForce,
-        //   calcOther: {
-        //     frictionCoeff: (v) => v.frictionForce / v.normalForce,
-        //     normalForce: (v) => v.frictionForce / v.frictionCoeff,
-        //   },
-        //   variables: {
-        //     frictionForce: {
-        //       name: "макс. сила трения покоя",
-        //       unit: "Н",
-        //       min: 1,
-        //       max: 500,
-        //     },
-        //     frictionCoeff: {
-        //       name: "коэффициент трения покоя",
-        //       unit: "",
-        //       min: 0.1,
-        //       max: 0.9,
-        //     },
-        //     normalForce: {
-        //       name: "сила реакции опоры",
-        //       unit: "Н",
-        //       min: 10,
-        //       max: 1000,
-        //     },
-        //   },
-        // },
         // ТЕСТ 7
         {
           id: "hooke_law",
@@ -1207,35 +1083,14 @@
             elongation: { name: "удлинение", unit: "м", min: 0.01, max: 1 },
           },
         },
-        // {
-        //   id: "absolute_elongation",
-        //   topic: "Динамика",
-        //   name: "Абсолютное удлинение",
-        //   mainVar: "elongation",
-        //   formula: "$$\\Delta l = l - l_0$$",
-        //   calcMain: (v) => v.length - v.initialLength,
-        //   calcOther: {
-        //     length: (v) => v.elongation + v.initialLength,
-        //     initialLength: (v) => v.length - v.elongation,
-        //   },
-        //   variables: {
-        //     elongation: { name: "удлинение", unit: "м", min: 0.01, max: 1 },
-        //     length: { name: "конечная длина", unit: "м", min: 1, max: 5 },
-        //     initialLength: {
-        //       name: "начальная длина",
-        //       unit: "м",
-        //       min: 1,
-        //       max: 5,
-        //     },
-        //   },
-        // },
         // ТЕСТ 8
+        // РАЗДЕЛЕНО из "centripetal_force": Fц = mv²/R = mω²R  →  две записи
         {
           id: "centripetal_force",
           topic: "Динамика",
-          name: "Центростремительная сила",
+          name: "Центростремительная сила (через линейную скорость)",
           mainVar: "centripetalForce",
-          formula: "$$F_{ц} = m\\frac{v^2}{R} = m\\omega^2 R$$",
+          formula: "$$F_{ц} = m\\frac{v^2}{R}$$",
           calcMain: (v) => (v.mass * v.velocity * v.velocity) / v.radius,
           calcOther: {
             mass: (v) =>
@@ -1254,6 +1109,42 @@
             },
             mass: { name: "масса", unit: "кг", min: 1, max: 100 },
             velocity: { name: "скорость", unit: "м/с", min: 1, max: 50 },
+            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+          },
+        },
+        // НОВАЯ ЗАПИСЬ: разделена из "centripetal_force" (вторая формула)
+        {
+          id: "centripetal_force_angular",
+          topic: "Динамика",
+          name: "Центростремительная сила (через угловую скорость)",
+          mainVar: "centripetalForce",
+          formula: "$$F_{ц} = m\\omega^2 R$$",
+          calcMain: (v) =>
+            v.mass * v.angularVelocity * v.angularVelocity * v.radius,
+          calcOther: {
+            mass: (v) =>
+              v.centripetalForce /
+              (v.angularVelocity * v.angularVelocity * v.radius),
+            angularVelocity: (v) =>
+              Math.sqrt(v.centripetalForce / (v.mass * v.radius)),
+            radius: (v) =>
+              v.centripetalForce /
+              (v.mass * v.angularVelocity * v.angularVelocity),
+          },
+          variables: {
+            centripetalForce: {
+              name: "центростремительная сила",
+              unit: "Н",
+              min: 1,
+              max: 1000,
+            },
+            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
+            angularVelocity: {
+              name: "угловая скорость",
+              unit: "рад/с",
+              min: 1,
+              max: 20,
+            },
             radius: { name: "радиус", unit: "м", min: 1, max: 50 },
           },
         },
@@ -1292,29 +1183,6 @@
             time: { name: "время", unit: "с", min: 1, max: 10 },
           },
         },
-        // {
-        //   id: "momentum_conservation",
-        //   topic: "Законы сохранения",
-        //   name: "Закон сохранения импульса",
-        //   mainVar: "finalMomentum",
-        //   formula: "$$\\vec{p}_1 + \\vec{p}_2 = const$$",
-        //   calcMain: (v) => v.initialMomentum,
-        //   calcOther: { initialMomentum: (v) => v.finalMomentum },
-        //   variables: {
-        //     initialMomentum: {
-        //       name: "начальный импульс",
-        //       unit: "кг·м/с",
-        //       min: 1,
-        //       max: 1000,
-        //     },
-        //     finalMomentum: {
-        //       name: "конечный импульс",
-        //       unit: "кг·м/с",
-        //       min: 1,
-        //       max: 1000,
-        //     },
-        //   },
-        // },
         // ТЕСТ 10
         {
           id: "mechanical_work",
@@ -1377,33 +1245,6 @@
             velocity: { name: "скорость", unit: "м/с", min: 1, max: 50 },
           },
         },
-        // {
-        //   id: "work_energy_theorem",
-        //   topic: "Законы сохранения",
-        //   name: "Теорема о кинетической энергии",
-        //   mainVar: "work",
-        //   formula: "$$A = \\Delta E_k$$",
-        //   calcMain: (v) => v.finalEnergy - v.initialEnergy,
-        //   calcOther: {
-        //     initialEnergy: (v) => v.finalEnergy - v.work,
-        //     finalEnergy: (v) => v.initialEnergy + v.work,
-        //   },
-        //   variables: {
-        //     work: { name: "работа", unit: "Дж", min: 1, max: 10000 },
-        //     initialEnergy: {
-        //       name: "начальная кин. энергия",
-        //       unit: "Дж",
-        //       min: 0,
-        //       max: 5000,
-        //     },
-        //     finalEnergy: {
-        //       name: "конечная кин. энергия",
-        //       unit: "Дж",
-        //       min: 100,
-        //       max: 10000,
-        //     },
-        //   },
-        // },
         {
           id: "potential_energy_gravity",
           topic: "Законы сохранения",
@@ -1449,66 +1290,6 @@
             elongation: { name: "удлинение", unit: "м", min: 0.01, max: 1 },
           },
         },
-        // ТЕСТ 12
-        // {
-        //   id: "total_mechanical_energy",
-        //   topic: "Законы сохранения",
-        //   name: "Полная механическая энергия",
-        //   mainVar: "totalEnergy",
-        //   formula: "$$E = E_k + E_p$$",
-        //   calcMain: (v) => v.kineticEnergy + v.potentialEnergy,
-        //   calcOther: {
-        //     kineticEnergy: (v) => v.totalEnergy - v.potentialEnergy,
-        //     potentialEnergy: (v) => v.totalEnergy - v.kineticEnergy,
-        //   },
-        //   variables: {
-        //     totalEnergy: {
-        //       name: "полная энергия",
-        //       unit: "Дж",
-        //       min: 1,
-        //       max: 10000,
-        //     },
-        //     kineticEnergy: {
-        //       name: "кинетическая энергия",
-        //       unit: "Дж",
-        //       min: 0,
-        //       max: 10000,
-        //     },
-        //     potentialEnergy: {
-        //       name: "потенциальная энергия",
-        //       unit: "Дж",
-        //       min: 0,
-        //       max: 10000,
-        //     },
-        //   },
-        // },
-        // {
-        //   id: "inelastic_collision_heat",
-        //   topic: "Законы сохранения",
-        //   name: "Теплота при неупругом столкновении",
-        //   mainVar: "heat",
-        //   formula: "$$Q = -\\Delta E_{мех}$$",
-        //   calcMain: (v) => v.initialMechEnergy - v.finalMechEnergy,
-        //   calcOther: {
-        //     initialMechEnergy: (v) => v.heat + v.finalMechEnergy,
-        //     finalMechEnergy: (v) => v.initialMechEnergy - v.heat,
-        //   },
-        //   variables: {
-        //     heat: { name: "теплота", unit: "Дж", min: 1, max: 10000 },
-        //     initialMechEnergy: {
-        //       name: "начальная мех. энергия",
-        //       unit: "Дж",
-        //       min: 100,
-        //       max: 10000,
-        //     },
-        //     finalMechEnergy: {
-        //       name: "конечная мех. энергия",
-        //       unit: "Дж",
-        //       min: 1,
-        //       max: 5000,
-        //     },
-        //   },
-        // },
         // ТЕСТ 13
         {
           id: "pressure",
@@ -1648,24 +1429,24 @@
             },
           },
         },
-        // {
-        //   id: "absolute_temperature",
-        //   topic: "Основы МКТ",
-        //   name: "Абсолютная температура",
-        //   mainVar: "temperature",
-        //   formula: "$$T = t + 273$$",
-        //   calcMain: (v) => v.celsius + 273,
-        //   calcOther: { celsius: (v) => v.temperature - 273 },
-        //   variables: {
-        //     temperature: {
-        //       name: "температура",
-        //       unit: "К",
-        //       min: 100,
-        //       max: 1000,
-        //     },
-        //     celsius: { name: "температура", unit: "°C", min: -173, max: 727 },
-        //   },
-        // },
+        {
+          id: "absolute_temperature",
+          topic: "Основы МКТ",
+          name: "Абсолютная температура",
+          mainVar: "temperature",
+          formula: "$$T = t + 273$$",
+          calcMain: (v) => v.celsius + 273,
+          calcOther: { celsius: (v) => v.temperature - 273 },
+          variables: {
+            temperature: {
+              name: "температура",
+              unit: "К",
+              min: 100,
+              max: 1000,
+            },
+            celsius: { name: "температура", unit: "°C", min: -173, max: 727 },
+          },
+        },
         {
           id: "avg_kinetic_energy",
           topic: "Основы МКТ",
@@ -1757,38 +1538,6 @@
             },
           },
         },
-        // {
-        //   id: "dalton_law",
-        //   topic: "Основы МКТ",
-        //   name: "Закон Дальтона",
-        //   mainVar: "totalPressure",
-        //   formula: "$$p = p_1 + p_2 + ... + p_n$$",
-        //   calcMain: (v) => v.partialPressure1 + v.partialPressure2,
-        //   calcOther: {
-        //     partialPressure1: (v) => v.totalPressure - v.partialPressure2,
-        //     partialPressure2: (v) => v.totalPressure - v.partialPressure1,
-        //   },
-        //   variables: {
-        //     totalPressure: {
-        //       name: "общее давление",
-        //       unit: "Па",
-        //       min: 1000,
-        //       max: 1000000,
-        //     },
-        //     partialPressure1: {
-        //       name: "парциальное давление 1",
-        //       unit: "Па",
-        //       min: 100,
-        //       max: 500000,
-        //     },
-        //     partialPressure2: {
-        //       name: "парциальное давление 2",
-        //       unit: "Па",
-        //       min: 100,
-        //       max: 500000,
-        //     },
-        //   },
-        // },
         // ТЕСТ 16
         {
           id: "boyle_mariotte",
@@ -1909,57 +1658,6 @@
             },
           },
         },
-        // ТЕСТ 17
-        // {
-        //   id: "surface_tension",
-        //   topic: "Тест 17. Поверхностное натяжение",
-        //   name: "Поверхностное натяжение",
-        //   mainVar: "surfaceTension",
-        //   formula: "$$\\sigma = \\frac{F}{l}$$",
-        //   calcMain: (v) => v.force / v.length,
-        //   calcOther: {
-        //     force: (v) => v.surfaceTension * v.length,
-        //     length: (v) => v.force / v.surfaceTension,
-        //   },
-        //   variables: {
-        //     surfaceTension: {
-        //       name: "коэффициент поверхн. натяжения",
-        //       unit: "Н/м",
-        //       min: 0.01,
-        //       max: 1,
-        //     },
-        //     force: { name: "сила", unit: "Н", min: 1, max: 100 },
-        //     length: { name: "длина", unit: "м", min: 1, max: 100 },
-        //   },
-        // },
-        // {
-        //   id: "capillary_rise",
-        //   topic: "Тест 17. Поверхностное натяжение",
-        //   name: "Подъём жидкости в капилляре",
-        //   mainVar: "height",
-        //   formula: "$$h = \\frac{2\\sigma}{\\rho g r}$$",
-        //   calcMain: (v) => (2 * v.surfaceTension) / (v.density * 10 * v.radius),
-        //   calcOther: {
-        //     surfaceTension: (v) => (v.height * v.density * 10 * v.radius) / 2,
-        //     radius: (v) => (2 * v.surfaceTension) / (v.height * v.density * 10),
-        //   },
-        //   variables: {
-        //     height: { name: "высота подъёма", unit: "м", min: 0.001, max: 1 },
-        //     surfaceTension: {
-        //       name: "коэфф. поверхн. натяжения",
-        //       unit: "Н/м",
-        //       min: 0.01,
-        //       max: 1,
-        //     },
-        //     density: { name: "плотность", unit: "кг/м³", min: 500, max: 15000 },
-        //     radius: {
-        //       name: "радиус капилляра",
-        //       unit: "м",
-        //       min: 0.0001,
-        //       max: 0.01,
-        //     },
-        //   },
-        // },
         {
           id: "relative_humidity",
           topic: "Основы МКТ",
@@ -2191,83 +1889,6 @@
             mass: { name: "масса", unit: "кг", min: 1, max: 100 },
           },
         },
-        // ТЕСТ 20
-        // {
-        //   id: "cycle_work",
-        //   topic: "Термодинамика",
-        //   name: "Работа цикла",
-        //   mainVar: "work",
-        //   formula: "$$A = Q_1 - |Q_2|$$",
-        //   calcMain: (v) => v.heatHot - Math.abs(v.heatCold),
-        //   calcOther: {
-        //     heatHot: (v) => v.work + Math.abs(v.heatCold),
-        //     heatCold: (v) => v.heatHot - v.work,
-        //   },
-        //   variables: {
-        //     work: { name: "работа", unit: "Дж", min: 100, max: 10000 },
-        //     heatHot: {
-        //       name: "теплота от нагревателя",
-        //       unit: "Дж",
-        //       min: 1000,
-        //       max: 100000,
-        //     },
-        //     heatCold: {
-        //       name: "теплота холодильнику",
-        //       unit: "Дж",
-        //       min: 100,
-        //       max: 50000,
-        //     },
-        //   },
-        // },
-        // {
-        //   id: "cycle_efficiency",
-        //   topic: "Термодинамика",
-        //   name: "КПД теплового двигателя",
-        //   mainVar: "efficiency",
-        //   formula: "$$\\eta = \\frac{A}{Q_1} \\cdot 100\\%$$",
-        //   calcMain: (v) => (v.work / v.heatHot) * 100,
-        //   calcOther: {
-        //     work: (v) => (v.efficiency * v.heatHot) / 100,
-        //     heatHot: (v) => (v.work * 100) / v.efficiency,
-        //   },
-        //   variables: {
-        //     efficiency: { name: "КПД", unit: "%", min: 1, max: 90 },
-        //     work: { name: "работа", unit: "Дж", min: 100, max: 10000 },
-        //     heatHot: {
-        //       name: "теплота от нагревателя",
-        //       unit: "Дж",
-        //       min: 1000,
-        //       max: 100000,
-        //     },
-        //   },
-        // },
-        // {
-        //   id: "carnot_efficiency",
-        //   topic: "Термодинамика",
-        //   name: "КПД цикла Карно",
-        //   mainVar: "efficiency",
-        //   formula: "$$\\eta_K = \\frac{T_1 - T_2}{T_1} \\cdot 100\\%$$",
-        //   calcMain: (v) => ((v.tempHot - v.tempCold) / v.tempHot) * 100,
-        //   calcOther: {
-        //     tempHot: (v) => v.tempCold / (1 - v.efficiency / 100),
-        //     tempCold: (v) => v.tempHot * (1 - v.efficiency / 100),
-        //   },
-        //   variables: {
-        //     efficiency: { name: "КПД", unit: "%", min: 1, max: 90 },
-        //     tempHot: {
-        //       name: "температура нагревателя",
-        //       unit: "К",
-        //       min: 300,
-        //       max: 1000,
-        //     },
-        //     tempCold: {
-        //       name: "температура холодильника",
-        //       unit: "К",
-        //       min: 100,
-        //       max: 300,
-        //     },
-        //   },
-        // },
         // ТЕСТ 21
         {
           id: "coulomb_law_vacuum",
@@ -2276,14 +1897,15 @@
           mainVar: "force",
           formula: "$$F = k \\frac{|q_1 q_2|}{r^2}$$",
           calcMain: (v) =>
-            (9e-3 * Math.abs(v.charge1 * v.charge2)) / (v.distance * v.distance),
+            (9e-3 * Math.abs(v.charge1 * v.charge2)) /
+            (v.distance * v.distance),
           calcOther: {
             distance: (v) =>
               Math.sqrt((9e3 * Math.abs(v.charge1 * v.charge2)) / v.force),
           },
           variables: {
             force: { name: "сила", unit: "мкН", min: 1, max: 1000 },
-            charge1: { name: "заряд 1", unit: "мкКл", min: 1, max: 100},
+            charge1: { name: "заряд 1", unit: "мкКл", min: 1, max: 100 },
             charge2: { name: "заряд 2", unit: "мкКл", min: 1, max: 100 },
             distance: { name: "расстояние", unit: "м", min: 0.01, max: 10 },
           },
@@ -2334,28 +1956,6 @@
             distance: { name: "расстояние", unit: "м", min: 0.01, max: 10 },
           },
         },
-        // {
-        //   id: "superposition_principle",
-        //   topic: "Электростатика",
-        //   name: "Принцип суперпозиции",
-        //   mainVar: "totalField",
-        //   formula: "$$\\vec{E} = \\vec{E}_1 + \\vec{E}_2$$",
-        //   calcMain: (v) => v.field1 + v.field2,
-        //   calcOther: {
-        //     field1: (v) => v.totalField - v.field2,
-        //     field2: (v) => v.totalField - v.field1,
-        //   },
-        //   variables: {
-        //     totalField: {
-        //       name: "результирующая напряжённость",
-        //       unit: "В/м",
-        //       min: 1,
-        //       max: 10000,
-        //     },
-        //     field1: { name: "напряжённость 1", unit: "В/м", min: 1, max: 5000 },
-        //     field2: { name: "напряжённость 2", unit: "В/м", min: 1, max: 5000 },
-        //   },
-        // },
         // ТЕСТ 23
         {
           id: "potential",
@@ -2454,50 +2054,6 @@
             voltage: { name: "напряжение", unit: "В", min: 1, max: 1000 },
           },
         },
-        // {
-        //   id: "capacitors_series",
-        //   topic: "Электростатика",
-        //   name: "Последовательное соединение",
-        //   mainVar: "totalCapacitance",
-        //   formula: "$$\\frac{1}{C} = \\frac{1}{C_1} + \\frac{1}{C_2}$$",
-        //   calcMain: (v) => 1 / (1 / v.c1 + 1 / v.c2),
-        //   calcOther: {
-        //     c1: (v) => 1 / (1 / v.totalCapacitance - 1 / v.c2),
-        //     c2: (v) => 1 / (1 / v.totalCapacitance - 1 / v.c1),
-        //   },
-        //   variables: {
-        //     totalCapacitance: {
-        //       name: "общая ёмкость",
-        //       unit: "Ф",
-        //       min: 1e-6,
-        //       max: 1e-3,
-        //     },
-        //     c1: { name: "ёмкость 1", unit: "Ф", min: 1e-6, max: 1e-3 },
-        //     c2: { name: "ёмкость 2", unit: "Ф", min: 1e-6, max: 1e-3 },
-        //   },
-        // },
-        // {
-        //   id: "capacitors_parallel",
-        //   topic: "Электростатика",
-        //   name: "Параллельное соединение",
-        //   mainVar: "totalCapacitance",
-        //   formula: "$$C = C_1 + C_2$$",
-        //   calcMain: (v) => v.c1 + v.c2,
-        //   calcOther: {
-        //     c1: (v) => v.totalCapacitance - v.c2,
-        //     c2: (v) => v.totalCapacitance - v.c1,
-        //   },
-        //   variables: {
-        //     totalCapacitance: {
-        //       name: "общая ёмкость",
-        //       unit: "Ф",
-        //       min: 1e-6,
-        //       max: 1e-3,
-        //     },
-        //     c1: { name: "ёмкость 1", unit: "Ф", min: 1e-6, max: 1e-3 },
-        //     c2: { name: "ёмкость 2", unit: "Ф", min: 1e-6, max: 1e-3 },
-        //   },
-        // },
         {
           id: "capacitor_energy",
           topic: "Электростатика",
@@ -2734,34 +2290,6 @@
             time: { name: "время", unit: "с", min: 1, max: 1000 },
           },
         },
-        // {
-        //   id: "source_efficiency",
-        //   topic: "Постоянный ток",
-        //   name: "КПД источника тока",
-        //   mainVar: "efficiency",
-        //   formula: "$$\\eta = \\frac{R}{R + r} \\cdot 100\\%$$",
-        //   calcMain: (v) =>
-        //     (v.resistance / (v.resistance + v.internalResistance)) * 100,
-        //   calcOther: {
-        //     resistance: (v) =>
-        //       (v.efficiency * v.internalResistance) / (100 - v.efficiency),
-        //   },
-        //   variables: {
-        //     efficiency: { name: "КПД", unit: "%", min: 1, max: 99 },
-        //     resistance: {
-        //       name: "внешнее сопротивление",
-        //       unit: "Ом",
-        //       min: 1,
-        //       max: 1000,
-        //     },
-        //     internalResistance: {
-        //       name: "внутреннее сопротивление",
-        //       unit: "Ом",
-        //       min: 1,
-        //       max: 100,
-        //     },
-        //   },
-        // },
         // ТЕСТ 28
         {
           id: "amperes_force",
@@ -3068,38 +2596,6 @@
             },
           },
         },
-        // {
-        //   id: "transformer",
-        //   topic: "Колебания и волны",
-        //   name: "Трансформатор",
-        //   mainVar: "transformationRatio",
-        //   formula: "$$k = \\frac{N_1}{N_2} = \\frac{U_1}{U_2}$$",
-        //   calcMain: (v) => v.primaryVoltage / v.secondaryVoltage,
-        //   calcOther: {
-        //     primaryVoltage: (v) => v.transformationRatio * v.secondaryVoltage,
-        //     secondaryVoltage: (v) => v.primaryVoltage / v.transformationRatio,
-        //   },
-        //   variables: {
-        //     transformationRatio: {
-        //       name: "коэффициент трансформации",
-        //       unit: "",
-        //       min: 0.1,
-        //       max: 10,
-        //     },
-        //     primaryVoltage: {
-        //       name: "первичное напряжение",
-        //       unit: "В",
-        //       min: 10,
-        //       max: 10000,
-        //     },
-        //     secondaryVoltage: {
-        //       name: "вторичное напряжение",
-        //       unit: "В",
-        //       min: 10,
-        //       max: 10000,
-        //     },
-        //   },
-        // },
         {
           id: "em_wavelength",
           topic: "Колебания и волны",
@@ -3262,116 +2758,6 @@
             },
           },
         },
-        // ТЕСТ 34
-        // {
-        //   id: "interference_max",
-        //   topic: "Тест 34. Волновая оптика",
-        //   name: "Условие максимума",
-        //   mainVar: "pathDifference",
-        //   formula: "$$\\delta = m\\lambda$$",
-        //   calcMain: (v) => v.order * v.wavelength,
-        //   calcOther: {
-        //     order: (v) => v.pathDifference / v.wavelength,
-        //     wavelength: (v) => v.pathDifference / v.order,
-        //   },
-        //   variables: {
-        //     pathDifference: {
-        //       name: "оптическая разность хода",
-        //       unit: "м",
-        //       min: 1e-7,
-        //       max: 1e-5,
-        //     },
-        //     wavelength: {
-        //       name: "длина волны",
-        //       unit: "нм",
-        //       min: 300,
-        //       max: 770,
-        //     },
-        //     order: { name: "порядок максимума", unit: "", min: 1, max: 10 },
-        //   },
-        // },
-        // {
-        //   id: "diffraction_grating",
-        //   topic: "Тест 34. Волновая оптика",
-        //   name: "Дифракционная решётка",
-        //   mainVar: "angle",
-        //   formula: "$$d \\sin\\theta = m\\lambda$$",
-        //   calcMain: (v) =>
-        //     (Math.asin(
-        //       Math.min(1, (v.order * v.wavelength) / v.gratingPeriod),
-        //     ) *
-        //       180) /
-        //     Math.PI,
-        //   calcOther: {
-        //     gratingPeriod: (v) =>
-        //       (v.order * v.wavelength) / Math.sin((v.angle * Math.PI) / 180),
-        //     wavelength: (v) =>
-        //       (v.gratingPeriod * Math.sin((v.angle * Math.PI) / 180)) / v.order,
-        //   },
-        //   variables: {
-        //     angle: { name: "угол дифракции", unit: "°", min: 1, max: 89 },
-        //     gratingPeriod: {
-        //       name: "период решётки",
-        //       unit: "м",
-        //       min: 1e-6,
-        //       max: 1e-4,
-        //     },
-        //     order: { name: "порядок максимума", unit: "", min: 1, max: 10 },
-        //     wavelength: {
-        //       name: "длина волны",
-        //       unit: "м",
-        //       min: 4e-7,
-        //       max: 7e-7,
-        //     },
-        //   },
-        // },
-        // ТЕСТ 35
-        // {
-        //   id: "relativistic_length",
-        //   topic: "Атомная+",
-        //   name: "Релятивистское сокращение длины",
-        //   mainVar: "length",
-        //   formula: "$$l = l_0 \\sqrt{1 - \\frac{v^2}{c^2}}$$",
-        //   calcMain: (v) =>
-        //     v.properLength * Math.sqrt(1 - (v.velocity * v.velocity) / 9e16),
-        //   calcOther: {
-        //     properLength: (v) =>
-        //       v.length / Math.sqrt(1 - (v.velocity * v.velocity) / 9e16),
-        //   },
-        //   variables: {
-        //     length: { name: "длина", unit: "м", min: 0.1, max: 100 },
-        //     properLength: {
-        //       name: "собственная длина",
-        //       unit: "м",
-        //       min: 0.1,
-        //       max: 100,
-        //     },
-        //     velocity: { name: "скорость", unit: "м/с", min: 1e7, max: 2.9e8 },
-        //   },
-        // },
-        // {
-        //   id: "relativistic_time",
-        //   topic: "Атомная+",
-        //   name: "Релятивистское замедление времени",
-        //   mainVar: "time",
-        //   formula: "$$\\tau = \\frac{\\tau_0}{\\sqrt{1 - \\frac{v^2}{c^2}}}$$",
-        //   calcMain: (v) =>
-        //     v.properTime / Math.sqrt(1 - (v.velocity * v.velocity) / 9e16),
-        //   calcOther: {
-        //     properTime: (v) =>
-        //       v.time * Math.sqrt(1 - (v.velocity * v.velocity) / 9e16),
-        //   },
-        //   variables: {
-        //     time: { name: "время", unit: "с", min: 1, max: 1000 },
-        //     properTime: {
-        //       name: "собственное время",
-        //       unit: "с",
-        //       min: 1,
-        //       max: 1000,
-        //     },
-        //     velocity: { name: "скорость", unit: "м/с", min: 1e7, max: 2.9e8 },
-        //   },
-        // },
         {
           id: "rest_energy",
           topic: "Атомная+",
@@ -3446,8 +2832,10 @@
           name: "Красная граница фотоэффекта",
           mainVar: "thresholdFrequency",
           formula: "$$\\nu_{min} = \\frac{A_{вых}}{h}$$",
-          calcMain: (v) => 1.6e-19 * v.workFunction / 6.626e-34,
-          calcOther: { workFunction: (v) => 1e12 * v.thresholdFrequency * 6.626e-34 },
+          calcMain: (v) => (1.6e-19 * v.workFunction) / 6.626e-34,
+          calcOther: {
+            workFunction: (v) => 1e12 * v.thresholdFrequency * 6.626e-34,
+          },
           variables: {
             thresholdFrequency: {
               name: "красная граница (частота)",
@@ -3470,10 +2858,12 @@
           name: "Правило частот Бора",
           mainVar: "frequency",
           formula: "$$h\\nu = E_k - E_m$$",
-          calcMain: (v) => (v.initialEnergy - v.finalEnergy) * 1.6e10/ 6.626,
+          calcMain: (v) => ((v.initialEnergy - v.finalEnergy) * 1.6e10) / 6.626,
           calcOther: {
-            initialEnergy: (v) => v.finalEnergy + v.frequency * 6.626e-1 / 1.6,
-            finalEnergy: (v) => v.initialEnergy - v.frequency * 6.626e-1 / 1.6
+            initialEnergy: (v) =>
+              v.finalEnergy + (v.frequency * 6.626e-1) / 1.6,
+            finalEnergy: (v) =>
+              v.initialEnergy - (v.frequency * 6.626e-1) / 1.6,
           },
           variables: {
             frequency: {
@@ -3554,22 +2944,6 @@
             },
           },
         },
-        // ТЕСТ 13 - Условия равновесия
-        // {
-        //   id: "equilibrium_conditions",
-        //   topic: "Статика",
-        //   name: "Условия равновесия твердого тела",
-        //   mainVar: "netForce",
-        //   formula: "$$\\sum \\vec{F} = 0, \\quad \\sum M = 0$$",
-        //   calcMain: (v) => v.force1 - v.force2,
-        //   calcOther: { force1: (v) => v.force2, force2: (v) => v.force1 },
-        //   variables: {
-        //     netForce: { name: "сумма сил", unit: "Н", min: 0, max: 0 },
-        //     force1: { name: "сила 1", unit: "Н", min: 1, max: 500 },
-        //     force2: { name: "сила 2", unit: "Н", min: 1, max: 500 },
-        //   },
-        // },
-
         // ТЕСТ 14 - Молярная масса
         {
           id: "molar_mass",
@@ -3594,7 +2968,6 @@
             },
           },
         },
-
         // ТЕСТ 14 - Основное уравнение МКТ (первый вариант)
         {
           id: "mkt_equation_1",
@@ -3623,7 +2996,6 @@
             },
           },
         },
-
         // ТЕСТ 15 - Уравнение Клапейрона
         {
           id: "clapeyron",
@@ -3684,7 +3056,6 @@
             },
           },
         },
-
         // ТЕСТ 18 - Первый закон термодинамики (изобарный, 5/2)
         {
           id: "first_law_isobaric",
@@ -3718,7 +3089,6 @@
             },
           },
         },
-
         // ТЕСТ 18 - Первый закон термодинамики (изохорный, 3/2)
         {
           id: "first_law_isochoric",
@@ -3752,7 +3122,6 @@
             },
           },
         },
-
         // ТЕСТ 18 - Первый закон термодинамики (изотермический)
         {
           id: "first_law_isothermal",
@@ -3772,7 +3141,6 @@
             work: { name: "работа газа", unit: "Дж", min: 1, max: 10000 },
           },
         },
-
         // ТЕСТ 18 - Первый закон термодинамики (изохорный, Q=ΔU)
         {
           id: "first_law_isochoric_2",
@@ -3797,7 +3165,6 @@
             },
           },
         },
-
         // ТЕСТ 18 - Первый закон термодинамики (изобарный общий)
         {
           id: "first_law_isobaric_general",
@@ -3833,91 +3200,6 @@
             },
           },
         },
-
-        // ТЕСТ 19 - Уравнение теплового баланса
-        // {
-        //   id: "heat_balance",
-        //   topic: "Термодинамика",
-        //   name: "Уравнение теплового баланса",
-        //   mainVar: "heatGained",
-        //   formula: "$$Q_1 + Q_2 + ... + Q_n = 0$$",
-        //   calcMain: (v) => Math.abs(v.heatLost),
-        //   calcOther: { heatLost: (v) => v.heatGained },
-        //   variables: {
-        //     heatGained: {
-        //       name: "полученная теплота",
-        //       unit: "Дж",
-        //       min: 100,
-        //       max: 100000,
-        //     },
-        //     heatLost: {
-        //       name: "отданная теплота",
-        //       unit: "Дж",
-        //       min: 100,
-        //       max: 100000,
-        //     },
-        //   },
-        // },
-
-        // // ТЕСТ 20 - КПД теплового двигателя
-        // {
-        //   id: "cycle_efficiency",
-        //   topic: "Термодинамика",
-        //   name: "КПД теплового двигателя",
-        //   mainVar: "efficiency",
-        //   formula: "$$\\eta = \\frac{A}{Q_1} \\cdot 100\\%$$",
-        //   calcMain: (v) => (v.work / v.heatHot) * 100,
-        //   calcOther: {
-        //     work: (v) => (v.efficiency * v.heatHot) / 100,
-        //     heatHot: (v) => (v.work * 100) / v.efficiency,
-        //   },
-        //   variables: {
-        //     efficiency: { name: "КПД", unit: "%", min: 1, max: 90 },
-        //     work: { name: "работа", unit: "Дж", min: 100, max: 10000 },
-        //     heatHot: {
-        //       name: "теплота от нагревателя",
-        //       unit: "Дж",
-        //       min: 1000,
-        //       max: 100000,
-        //     },
-        //   },
-        // },
-
-        // ТЕСТ 21 - Закон Кулона в среде
-        // {
-        //   id: "coulomb_law_medium",
-        //   topic: "Электростатика",
-        //   name: "Закон Кулона в среде",
-        //   mainVar: "force",
-        //   formula:
-        //     "$$F = \\frac{1}{4\\pi\\varepsilon_0\\varepsilon} \\frac{|q_1 q_2|}{r^2}$$",
-        //   calcMain: (v) =>
-        //     (9e9 * Math.abs(v.charge1 * v.charge2)) /
-        //     (v.permittivity * v.distance * v.distance),
-        //   calcOther: {
-        //     permittivity: (v) =>
-        //       (9e9 * Math.abs(v.charge1 * v.charge2)) /
-        //       (v.force * v.distance * v.distance),
-        //     distance: (v) =>
-        //       Math.sqrt(
-        //         (9e9 * Math.abs(v.charge1 * v.charge2)) /
-        //           (v.permittivity * v.force),
-        //       ),
-        //   },
-        //   variables: {
-        //     force: { name: "сила", unit: "Н", min: 1e-6, max: 1e-2 },
-        //     charge1: { name: "заряд 1", unit: "Кл", min: 1e-6, max: 1e-4 },
-        //     charge2: { name: "заряд 2", unit: "Кл", min: 1e-6, max: 1e-4 },
-        //     distance: { name: "расстояние", unit: "м", min: 0.01, max: 10 },
-        //     permittivity: {
-        //       name: "диэлектрическая проницаемость",
-        //       unit: "",
-        //       min: 1,
-        //       max: 80,
-        //     },
-        //   },
-        // },
-
         // ТЕСТ 27 - Работа источника тока
         {
           id: "source_work",
@@ -3938,7 +3220,6 @@
             time: { name: "время", unit: "с", min: 1, max: 1000 },
           },
         },
-
         // ТЕСТ 27 - Мощность источника тока
         {
           id: "source_power",
@@ -3957,39 +3238,6 @@
             emf: { name: "ЭДС", unit: "В", min: 1, max: 100 },
           },
         },
-
-        // ТЕСТ 27 - КПД источника тока
-        // {
-        //   id: "source_efficiency",
-        //   topic: "Постоянный ток",
-        //   name: "КПД источника тока",
-        //   mainVar: "efficiency",
-        //   formula: "$$\\eta = \\frac{R}{R + r} \\cdot 100\\%$$",
-        //   calcMain: (v) =>
-        //     (v.resistance / (v.resistance + v.internalResistance)) * 100,
-        //   calcOther: {
-        //     resistance: (v) =>
-        //       (v.efficiency * v.internalResistance) / (100 - v.efficiency),
-        //     internalResistance: (v) =>
-        //       (v.resistance * (100 - v.efficiency)) / v.efficiency,
-        //   },
-        //   variables: {
-        //     efficiency: { name: "КПД", unit: "%", min: 1, max: 99 },
-        //     resistance: {
-        //       name: "внешнее сопротивление",
-        //       unit: "Ом",
-        //       min: 1,
-        //       max: 1000,
-        //     },
-        //     internalResistance: {
-        //       name: "внутреннее сопротивление",
-        //       unit: "Ом",
-        //       min: 1,
-        //       max: 100,
-        //     },
-        //   },
-        // },
-
         // ТЕСТ 30 - Уравнение гармонических колебаний
         {
           id: "harmonic_oscillations",
@@ -4018,7 +3266,6 @@
             phase: { name: "начальная фаза", unit: "рад", min: 0, max: 0 },
           },
         },
-
         // ТЕСТ 32 - Абсолютный показатель преломления
         {
           id: "refractive_index",
@@ -4043,46 +3290,6 @@
             },
           },
         },
-
-        // ТЕСТ 35 - Полная релятивистская энергия
-        // {
-        //   id: "relativistic_energy",
-        //   topic: "Атомная+",
-        //   name: "Полная релятивистская энергия",
-        //   mainVar: "energy",
-        //   formula: "$$E = \\frac{m_0 c^2}{\\sqrt{1 - \\frac{v^2}{c^2}}}$$",
-        //   calcMain: (v) =>
-        //     (v.restMass * 9e16) /
-        //     Math.sqrt(1 - (v.velocity * v.velocity) / 9e16),
-        //   calcOther: {
-        //     restMass: (v) =>
-        //       (v.energy * Math.sqrt(1 - (v.velocity * v.velocity) / 9e16)) /
-        //       9e16,
-        //     velocity: (v) =>
-        //       3e8 *
-        //       Math.sqrt(
-        //         1 -
-        //           ((v.restMass * 9e16) / v.energy) *
-        //             ((v.restMass * 9e16) / v.energy),
-        //       ),
-        //   },
-        //   variables: {
-        //     energy: {
-        //       name: "полная энергия",
-        //       unit: "Дж",
-        //       min: 1e-10,
-        //       max: 1e-5,
-        //     },
-        //     restMass: {
-        //       name: "масса покоя",
-        //       unit: "кг",
-        //       min: 1e-30,
-        //       max: 1e-27,
-        //     },
-        //     velocity: { name: "скорость", unit: "м/с", min: 1e7, max: 2.9e8 },
-        //   },
-        // },
-
         // ТЕСТ 35 - Максимальная кинетическая энергия фотоэлектронов
         {
           id: "photoelectric_kinetic",
@@ -4107,31 +3314,6 @@
             },
           },
         },
-
-        // ТЕСТ 36 - Дефект массы
-        // {
-        //   id: "mass_defect",
-        //   topic: "Атомная+",
-        //   name: "Дефект массы",
-        //   mainVar: "bindingEnergy",
-        //   formula: "$$E_{св} = \\Delta m c^2$$",
-        //   calcMain: (v) => v.massDefect * 9e16,
-        //   calcOther: { massDefect: (v) => v.bindingEnergy / 9e16 },
-        //   variables: {
-        //     bindingEnergy: {
-        //       name: "энергия связи",
-        //       unit: "Дж",
-        //       min: 1e-12,
-        //       max: 1e-10,
-        //     },
-        //     massDefect: {
-        //       name: "дефект массы",
-        //       unit: "кг",
-        //       min: 1e-29,
-        //       max: 1e-27,
-        //     },
-        //   },
-        // },
       ];
 
       // ============================================================================
