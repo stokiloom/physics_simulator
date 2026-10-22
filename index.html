@@ -1220,20 +1220,20 @@
           topic: "Законы сохранения",
           name: "Механическая работа",
           mainVar: "work",
-          formula: "$$A = F \\Delta r \\cos\\alpha$$",
+          formula: "$$A = F \\Delta r \\cos\\alpha$$", 
           calcMain: (v) =>
-            v.force * v.displacement * Math.cos((v.angle * Math.Pi) / 180),
+            v.force * v.displacement * Math.cos((v.angle * Math.PI) / 180),
           calcOther: {
             force: (v) =>
-              v.work / (v.displacement * Math.cos((v.angle * Math.Pi) / 180)),
+              v.work / (v.displacement * Math.cos((v.angle * Math.PI) / 180)),
             displacement: (v) =>
-              v.work / (v.force * Math.cos((v.angle * Math.Pi) / 180)),
+              v.work / (v.force * Math.cos((v.angle * Math.PI) / 180)),
           },
           variables: {
             work: { name: "работа", unit: "Дж", min: 1, max: 10000 },
             force: { name: "сила", unit: "Н", min: 1, max: 500 },
             displacement: { name: "перемещение", unit: "м", min: 1, max: 100 },
-            angle: { name: "угол", unit: "°", min: 0, max: 60 },
+            angle: { name: "угол", unit: "°", min: 0, max: 90 },
           },
         },
         {
@@ -2405,13 +2405,13 @@
           mainVar: "magneticFlux",
           formula: "$$\\Phi = BS \\cos\\alpha$$",
           calcMain: (v) =>
-            v.magneticField * v.area * Math.cos((v.angle * Math.Pi) / 180),
+            v.magneticField * v.area * Math.cos((v.angle * Math.PI) / 180),
           calcOther: {
             magneticField: (v) =>
-              v.magneticFlux / (v.area * Math.cos((v.angle * Math.Pi) / 180)),
+              v.magneticFlux / (v.area * Math.cos((v.angle * Math.PI) / 180)),
             area: (v) =>
               v.magneticFlux /
-              (v.magneticField * Math.cos((v.angle * Math.Pi) / 180)),
+              (v.magneticField * Math.cos((v.angle * Math.PI) / 180)),
           },
           variables: {
             magneticFlux: {
