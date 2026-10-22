@@ -888,8 +888,8 @@
           name: "Угловая скорость (через период)",
           mainVar: "angularVelocity",
           formula: "$$\\omega = \\frac{2\\pi}{T}$$",
-          calcMain: (v) => (2 * Math.PI) / v.period,
-          calcOther: { period: (v) => (2 * Math.PI) / v.angularVelocity },
+          calcMain: (v) => (2 * 3.14) / v.period,
+          calcOther: { period: (v) => (2 * 3.14) / v.angularVelocity },
           variables: {
             angularVelocity: {
               name: "угловая скорость",
@@ -907,8 +907,8 @@
           name: "Угловая скорость (через частоту)",
           mainVar: "angularVelocity",
           formula: "$$\\omega = 2\\pi\\nu$$",
-          calcMain: (v) => 2 * Math.PI * v.frequency,
-          calcOther: { frequency: (v) => v.angularVelocity / (2 * Math.PI) },
+          calcMain: (v) => 2 * 3.14 * v.frequency,
+          calcOther: { frequency: (v) => v.angularVelocity / (2 * 3.14) },
           variables: {
             angularVelocity: {
               name: "угловая скорость",
@@ -926,10 +926,10 @@
           name: "Линейная скорость (через период и радиус)",
           mainVar: "velocity",
           formula: "$$v = \\frac{2\\pi R}{T}$$",
-          calcMain: (v) => (2 * Math.PI * v.radius) / v.period,
+          calcMain: (v) => (2 * 3.14 * v.radius) / v.period,
           calcOther: {
-            period: (v) => (2 * Math.PI * v.radius) / v.velocity,
-            radius: (v) => (v.velocity * v.period) / (2 * Math.PI),
+            period: (v) => (2 * 3.14 * v.radius) / v.velocity,
+            radius: (v) => (v.velocity * v.period) / (2 * 3.14),
           },
           variables: {
             velocity: {
@@ -1222,12 +1222,12 @@
           mainVar: "work",
           formula: "$$A = F \\Delta r \\cos\\alpha$$",
           calcMain: (v) =>
-            v.force * v.displacement * Math.cos((v.angle * Math.PI) / 180),
+            v.force * v.displacement * Math.cos((v.angle * 3.14) / 180),
           calcOther: {
             force: (v) =>
-              v.work / (v.displacement * Math.cos((v.angle * Math.PI) / 180)),
+              v.work / (v.displacement * Math.cos((v.angle * 3.14) / 180)),
             displacement: (v) =>
-              v.work / (v.force * Math.cos((v.angle * Math.PI) / 180)),
+              v.work / (v.force * Math.cos((v.angle * 3.14) / 180)),
           },
           variables: {
             work: { name: "работа", unit: "Дж", min: 1, max: 10000 },
@@ -2332,21 +2332,21 @@
             v.current *
             v.magneticField *
             v.length *
-            Math.sin((v.angle * Math.PI) / 180),
+            Math.sin((v.angle * 3.14) / 180),
           calcOther: {
             current: (v) =>
               v.amperesForce /
               (v.magneticField *
                 v.length *
-                Math.sin((v.angle * Math.PI) / 180)),
+                Math.sin((v.angle * 3.14) / 180)),
             magneticField: (v) =>
               v.amperesForce /
-              (v.current * v.length * Math.sin((v.angle * Math.PI) / 180)),
+              (v.current * v.length * Math.sin((v.angle * 3.14) / 180)),
             length: (v) =>
               v.amperesForce /
               (v.current *
                 v.magneticField *
-                Math.sin((v.angle * Math.PI) / 180)),
+                Math.sin((v.angle * 3.14) / 180)),
           },
           variables: {
             amperesForce: {
@@ -2371,18 +2371,18 @@
             Math.abs(v.charge) *
             v.velocity *
             v.magneticField *
-            Math.sin((v.angle * Math.PI) / 180),
+            Math.sin((v.angle * 3.14) / 180),
           calcOther: {
             velocity: (v) =>
               v.lorentzForce /
               (Math.abs(v.charge) *
                 v.magneticField *
-                Math.sin((v.angle * Math.PI) / 180)),
+                Math.sin((v.angle * 3.14) / 180)),
             magneticField: (v) =>
               v.lorentzForce /
               (Math.abs(v.charge) *
                 v.velocity *
-                Math.sin((v.angle * Math.PI) / 180)),
+                Math.sin((v.angle * 3.14) / 180)),
           },
           variables: {
             lorentzForce: {
@@ -2391,8 +2391,8 @@
               min: 1,
               max: 1000,
             },
-            charge: { name: "заряд", unit: "мкКл", min: 1, max: 1000 },
-            velocity: { name: "скорость", unit: "м/с", min: 1, max: 1000000 },
+            charge: { name: "заряд", unit: "мкКл", min: 1, max: 100 },
+            velocity: { name: "скорость", unit: "м/с", min: 100, max: 10000 },
             magneticField: { name: "индукция", unit: "Тл", min: 0.01, max: 1 },
             angle: { name: "угол", unit: "°", min: 30, max: 90 },
           },
@@ -2405,13 +2405,13 @@
           mainVar: "magneticFlux",
           formula: "$$\\Phi = BS \\cos\\alpha$$",
           calcMain: (v) =>
-            v.magneticField * v.area * Math.cos((v.angle * Math.PI) / 180),
+            v.magneticField * v.area * Math.cos((v.angle * 3.14) / 180),
           calcOther: {
             magneticField: (v) =>
-              v.magneticFlux / (v.area * Math.cos((v.angle * Math.PI) / 180)),
+              v.magneticFlux / (v.area * Math.cos((v.angle * 3.14) / 180)),
             area: (v) =>
               v.magneticFlux /
-              (v.magneticField * Math.cos((v.angle * Math.PI) / 180)),
+              (v.magneticField * Math.cos((v.angle * 3.14) / 180)),
           },
           variables: {
             magneticFlux: {
@@ -2457,18 +2457,18 @@
             v.magneticField *
             v.length *
             v.velocity *
-            Math.sin((v.angle * Math.PI) / 180),
+            Math.sin((v.angle * 3.14) / 180),
           calcOther: {
             velocity: (v) =>
               v.emf /
               (v.magneticField *
                 v.length *
-                Math.sin((v.angle * Math.PI) / 180)),
+                Math.sin((v.angle * 3.14) / 180)),
             length: (v) =>
               v.emf /
               (v.magneticField *
                 v.velocity *
-                Math.sin((v.angle * Math.PI) / 180)),
+                Math.sin((v.angle * 3.14) / 180)),
           },
           variables: {
             emf: { name: "ЭДС", unit: "В", min: 0.01, max: 100 },
@@ -2535,9 +2535,9 @@
           name: "Период математического маятника",
           mainVar: "period",
           formula: "$$T = 2\\pi\\sqrt{\\frac{l}{g}}$$",
-          calcMain: (v) => 2 * Math.PI * Math.sqrt(v.length / 10),
+          calcMain: (v) => 2 * 3.14 * Math.sqrt(v.length / 10),
           calcOther: {
-            length: (v) => Math.pow(v.period / (2 * Math.PI), 2) * 10,
+            length: (v) => Math.pow(v.period / (2 * 3.14), 2) * 10,
           },
           variables: {
             period: { name: "период", unit: "с", min: 1, max: 10 },
@@ -2550,10 +2550,10 @@
           name: "Период пружинного маятника",
           mainVar: "period",
           formula: "$$T = 2\\pi\\sqrt{\\frac{m}{k}}$$",
-          calcMain: (v) => 2 * Math.PI * Math.sqrt(v.mass / v.stiffness),
+          calcMain: (v) => 2 * 3.14 * Math.sqrt(v.mass / v.stiffness),
           calcOther: {
-            mass: (v) => Math.pow(v.period / (2 * Math.PI), 2) * v.stiffness,
-            stiffness: (v) => v.mass / Math.pow(v.period / (2 * Math.PI), 2),
+            mass: (v) => Math.pow(v.period / (2 * 3.14), 2) * v.stiffness,
+            stiffness: (v) => v.mass / Math.pow(v.period / (2 * 3.14), 2),
           },
           variables: {
             period: { name: "период", unit: "с", min: 1, max: 10 },
@@ -2586,12 +2586,12 @@
           mainVar: "period",
           formula: "$$T = 2\\pi\\sqrt{LC}$$",
           calcMain: (v) =>
-            2 * Math.PI * Math.sqrt(v.inductance * v.capacitance),
+            2 * 3.14 * Math.sqrt(v.inductance * v.capacitance),
           calcOther: {
             inductance: (v) =>
-              Math.pow(v.period / (2 * Math.PI), 2) / v.capacitance,
+              Math.pow(v.period / (2 * 3.14), 2) / v.capacitance,
             capacitance: (v) =>
-              Math.pow(v.period / (2 * Math.PI), 2) / v.inductance,
+              Math.pow(v.period / (2 * 3.14), 2) / v.inductance,
           },
           variables: {
             period: { name: "период", unit: "мс", min: 0.001, max: 1 },
@@ -2654,10 +2654,10 @@
           formula: "$$\\sin\\alpha_0 = \\frac{n_2}{n_1}$$",
           calcMain: (v) =>
             (Math.asin(v.refractiveIndex2 / v.refractiveIndex1) * 180) /
-            Math.PI,
+            3.14,
           calcOther: {
             refractiveIndex1: (v) =>
-              v.refractiveIndex2 / Math.sin((v.criticalAngle * Math.PI) / 180),
+              v.refractiveIndex2 / Math.sin((v.criticalAngle * 3.14) / 180),
           },
           variables: {
             criticalAngle: {
@@ -2688,21 +2688,21 @@
           formula: "$$\\frac{\\sin\\alpha}{\\sin\\gamma} = \\frac{n_2}{n_1}$$",
           calcMain: (v) =>
             (Math.asin(
-              (Math.sin((v.angleIncidence * Math.PI) / 180) *
+              (Math.sin((v.angleIncidence * 3.14) / 180) *
                 v.refractiveIndex1) /
                 v.refractiveIndex2,
             ) *
               180) /
-            Math.PI,
+            3.14,
           calcOther: {
             angleIncidence: (v) =>
               (Math.asin(
-                (Math.sin((v.angleRefraction * Math.PI) / 180) *
+                (Math.sin((v.angleRefraction * 3.14) / 180) *
                   v.refractiveIndex2) /
                   v.refractiveIndex1,
               ) *
                 180) /
-              Math.PI,
+              3.14,
           },
           variables: {
             angleIncidence: {
