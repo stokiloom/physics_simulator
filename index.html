@@ -2813,8 +2813,8 @@
           name: "Энергия фотона",
           mainVar: "energy",
           formula: "$$E = h \\nu$$",
-          calcMain: (v) => 6.626e1 * v.frequency,
-          calcOther: { frequency: (v) => v.energy / 6.626e-34 },
+          calcMain: (v) => 6.63e1 * v.frequency,
+          calcOther: { frequency: (v) => v.energy / 6.63e-34 },
           variables: {
             energy: {
               name: "энергия фотона",
@@ -2863,9 +2863,9 @@
           name: "Красная граница фотоэффекта",
           mainVar: "thresholdFrequency",
           formula: "$$\\nu_{min} = \\frac{A_{вых}}{h}$$",
-          calcMain: (v) => (1.6e-19 * v.workFunction) / 6.626e-34,
+          calcMain: (v) => (1.6e-19 * v.workFunction) / 6.63e-34,
           calcOther: {
-            workFunction: (v) => 1e12 * v.thresholdFrequency * 6.626e-34,
+            workFunction: (v) => 1e12 * v.thresholdFrequency * 6.63e-34,
           },
           variables: {
             thresholdFrequency: {
@@ -2889,12 +2889,12 @@
           name: "Правило частот Бора",
           mainVar: "frequency",
           formula: "$$h\\nu = E_k - E_m$$",
-          calcMain: (v) => ((v.initialEnergy - v.finalEnergy) * 1.6e10) / 6.626,
+          calcMain: (v) => ((v.initialEnergy - v.finalEnergy) * 1.6e10) / 6.63,
           calcOther: {
             initialEnergy: (v) =>
-              v.finalEnergy + (v.frequency * 6.626e-1) / 1.6,
+              v.finalEnergy + (v.frequency * 6.63e-1) / 1.6,
             finalEnergy: (v) =>
-              v.initialEnergy - (v.frequency * 6.626e-1) / 1.6,
+              v.initialEnergy - (v.frequency * 6.63e-1) / 1.6,
           },
           variables: {
             frequency: {
@@ -2982,8 +2982,8 @@
           name: "Молярная масса",
           mainVar: "molarMass",
           formula: "$$M = m_0 N_A$$",
-          calcMain: (v) => v.moleculeMass * 6.022e-2,
-          calcOther: { moleculeMass: (v) => v.molarMass / 6.022e-2 },
+          calcMain: (v) => v.moleculeMass * 6.02e-2,
+          calcOther: { moleculeMass: (v) => v.molarMass / 6.02e-2 },
           variables: {
             molarMass: {
               name: "молярная масса",
