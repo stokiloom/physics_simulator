@@ -17,40 +17,46 @@
         box-sizing: border-box;
       }
       .hint-btn {
-  background-color: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeeba;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  margin-top: 10px;
-  width: 100%;
-  text-align: left;
-}
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        margin-top: 10px;
+        width: 100%;
+        text-align: left;
+      }
 
-.hint-btn:hover:not(:disabled) {
-  background-color: #ffe8a1;
-  border-color: #ffd54f;
-}
+      .hint-btn:hover:not(:disabled) {
+        background-color: #ffe8a1;
+        border-color: #ffd54f;
+      }
 
-.hint-btn:disabled {
-  background-color: #e9ecef;
-  color: #6c757d;
-  border-color: #dee2e6;
-  cursor: default;
-}
+      .hint-btn:disabled {
+        background-color: #e9ecef;
+        color: #6c757d;
+        border-color: #dee2e6;
+        cursor: default;
+      }
 
-.hint-content {
-  animation: fadeIn 0.3s ease-in-out;
-}
+      .hint-content {
+        animation: fadeIn 0.3s ease-in-out;
+      }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
       body {
         font-family:
@@ -1256,7 +1262,7 @@
           topic: "Законы сохранения",
           name: "Механическая работа",
           mainVar: "work",
-          formula: "$$A = F \\Delta r \\cos\\alpha$$", 
+          formula: "$$A = F \\Delta r \\cos\\alpha$$",
           calcMain: (v) =>
             v.force * v.displacement * Math.cos((v.angle * Math.PI) / 180),
           calcOther: {
@@ -2372,17 +2378,13 @@
           calcOther: {
             current: (v) =>
               v.amperesForce /
-              (v.magneticField *
-                v.length *
-                Math.sin((v.angle * 3.14) / 180)),
+              (v.magneticField * v.length * Math.sin((v.angle * 3.14) / 180)),
             magneticField: (v) =>
               v.amperesForce /
               (v.current * v.length * Math.sin((v.angle * 3.14) / 180)),
             length: (v) =>
               v.amperesForce /
-              (v.current *
-                v.magneticField *
-                Math.sin((v.angle * 3.14) / 180)),
+              (v.current * v.magneticField * Math.sin((v.angle * 3.14) / 180)),
           },
           variables: {
             amperesForce: {
@@ -2497,14 +2499,10 @@
           calcOther: {
             velocity: (v) =>
               v.emf /
-              (v.magneticField *
-                v.length *
-                Math.sin((v.angle * 3.14) / 180)),
+              (v.magneticField * v.length * Math.sin((v.angle * 3.14) / 180)),
             length: (v) =>
               v.emf /
-              (v.magneticField *
-                v.velocity *
-                Math.sin((v.angle * 3.14) / 180)),
+              (v.magneticField * v.velocity * Math.sin((v.angle * 3.14) / 180)),
           },
           variables: {
             emf: { name: "ЭДС", unit: "В", min: 0.01, max: 100 },
@@ -2621,8 +2619,7 @@
           name: "Формула Томсона",
           mainVar: "period",
           formula: "$$T = 2\\pi\\sqrt{LC}$$",
-          calcMain: (v) =>
-            2 * 3.14 * Math.sqrt(v.inductance * v.capacitance),
+          calcMain: (v) => 2 * 3.14 * Math.sqrt(v.inductance * v.capacitance),
           calcOther: {
             inductance: (v) =>
               Math.pow(v.period / (2 * 3.14), 2) / v.capacitance,
@@ -2689,8 +2686,7 @@
           mainVar: "criticalAngle",
           formula: "$$\\sin\\alpha_0 = \\frac{n_2}{n_1}$$",
           calcMain: (v) =>
-            (Math.asin(v.refractiveIndex2 / v.refractiveIndex1) * 180) /
-            3.14,
+            (Math.asin(v.refractiveIndex2 / v.refractiveIndex1) * 180) / 3.14,
           calcOther: {
             refractiveIndex1: (v) =>
               v.refractiveIndex2 / Math.sin((v.criticalAngle * 3.14) / 180),
@@ -2724,8 +2720,7 @@
           formula: "$$\\frac{\\sin\\alpha}{\\sin\\gamma} = \\frac{n_2}{n_1}$$",
           calcMain: (v) =>
             (Math.asin(
-              (Math.sin((v.angleIncidence * 3.14) / 180) *
-                v.refractiveIndex1) /
+              (Math.sin((v.angleIncidence * 3.14) / 180) * v.refractiveIndex1) /
                 v.refractiveIndex2,
             ) *
               180) /
@@ -2927,10 +2922,8 @@
           formula: "$$h\\nu = E_k - E_m$$",
           calcMain: (v) => ((v.initialEnergy - v.finalEnergy) * 1.6e10) / 6.63,
           calcOther: {
-            initialEnergy: (v) =>
-              v.finalEnergy + (v.frequency * 6.63e-1) / 1.6,
-            finalEnergy: (v) =>
-              v.initialEnergy - (v.frequency * 6.63e-1) / 1.6,
+            initialEnergy: (v) => v.finalEnergy + (v.frequency * 6.63e-1) / 1.6,
+            finalEnergy: (v) => v.initialEnergy - (v.frequency * 6.63e-1) / 1.6,
           },
           variables: {
             frequency: {
@@ -3600,15 +3593,14 @@
       function showHint(index) {
         const hintContent = document.getElementById(`hint-content-${index}`);
         const hintBtn = document.getElementById(`hint-btn-${index}`);
-        
+
         if (hintContent && hintBtn) {
           hintContent.style.display = "block";
           hintBtn.disabled = true;
           hintBtn.textContent = "💡 Подсказка показана (балл снижен)";
           hintBtn.style.opacity = "0.6";
           hintBtn.style.cursor = "default";
-          
-          // Фиксируем использование подсказки в состоянии
+
           if (state.tasks[index]) {
             state.tasks[index].hintUsed = true;
           }
@@ -3776,7 +3768,10 @@
         if (state.type === "tasks" || state.type === "mixed") {
           for (const formula of availableFormulas) {
             const task = generateTask(formula, state.level);
-            if (task) state.tasks.push({ type: "task", ...task });
+            if (task) {
+              task.hintUsed = false;
+              state.tasks.push({ type: "task", ...task });
+            }
           }
         }
         if (state.type === "units" || state.type === "mixed") {
@@ -3785,17 +3780,17 @@
               ? [...unitsQuestions]
               : unitsQuestions.filter((q) => state.selectedTopics.has(q.topic));
 
-          // --- ИСПРАВЛЕНИЕ ЗДЕСЬ ---
-          // Убран цикл добора из невыбранных тем.
-          // Теперь берутся только вопросы из выбранных тем.
           if (selected.length === 0 && state.type === "units") {
             alert("В выбранных темах нет задач на единицы измерения.");
             return;
           }
-          // ---------------------------
 
           selected.sort(() => Math.random() - 0.5);
-          for (const q of selected) state.tasks.push(generateUnitQuestion(q));
+          for (const q of selected) {
+            const unitTask = generateUnitQuestion(q);
+            unitTask.hintUsed = false;
+            state.tasks.push(unitTask);
+          }
         }
         if (state.tasks.length === 0) {
           alert(
@@ -3828,15 +3823,15 @@
         const formula = task.formula;
         const targetVar = task.targetVar;
         const targetVarDef = formula.variables[targetVar];
-        
-        // Формируем строку с формулой через KaTeX
-        const formulaDisplay = formula.formula 
-          ? renderKatex(formula.formula) 
+        const totalTasks = state.tasks.length;
+
+        const formulaDisplay = formula.formula
+          ? renderKatex(formula.formula)
           : "<em>Формула не найдена</em>";
 
         let html = `
     <div class="task-header">
-      <span class="task-number">Задание ${index + 1}</span>
+      <span class="task-number">Задание ${index + 1} из ${totalTasks}</span>
       <span class="task-topic">${formula.topic} · Уровень ${task.level}</span>
     </div>
     <div class="task-question">
@@ -3869,7 +3864,9 @@
     <div class="task-hint">Ответ округлите до сотых.</div>`;
         return html;
       }
+
       function renderUnitQuestion(task, index) {
+        const totalTasks = state.tasks.length;
         const optionsHtml = (task.options || [])
           .map(
             (o) =>
@@ -3878,7 +3875,7 @@
           .join("");
         return `
     <div class="task-header">
-      <span class="task-number">Задание ${index + 1}</span>
+      <span class="task-number">Задание ${index + 1} из ${totalTasks}</span>
       <span class="task-topic">${task.topic}</span>
     </div>
     <div class="task-question">${task.question}</div>
@@ -3900,18 +3897,21 @@
       // ПРОВЕРКА И РЕЗУЛЬТАТЫ
       // ============================================================
       function checkTest() {
-        let earnedPoints = 0; // Заработанные баллы
-        let maxPoints = 0;    // Максимально возможные баллы
-        
+        let earnedPoints = 0;
+        let maxPoints = 0;
+
         state.tasks.forEach((task, index) => {
-          maxPoints += 1; // Каждая задача стоит 1 балл
+          maxPoints += 1;
           const taskDiv = document.getElementById(`task-${index}`);
-          let isCorrect = false, userAnswer = null, correctAnswer = null;
-          
+          let isCorrect = false,
+            userAnswer = null,
+            correctAnswer = null;
+
           if (task.type === "task") {
             const input = document.getElementById(`answer-${index}`);
             const rawValue = input ? input.value.trim() : "";
-            userAnswer = rawValue === "" ? null : parseFloat(rawValue.replace(",", "."));
+            userAnswer =
+              rawValue === "" ? null : parseFloat(rawValue.replace(",", "."));
             correctAnswer = Math.round(task.answer * 100) / 100;
             if (userAnswer !== null && !isNaN(userAnswer)) {
               userAnswer = Math.round(userAnswer * 100) / 100;
@@ -3922,9 +3922,8 @@
             correctAnswer = task.correct;
             isCorrect = userAnswer === correctAnswer;
           }
-          
+
           if (isCorrect) {
-            // Если подсказка была использована, даем только 0.5 балла
             const points = task.hintUsed ? 0.5 : 1;
             earnedPoints += points;
             taskDiv.classList.add("correct");
@@ -3933,12 +3932,12 @@
             taskDiv.classList.add("incorrect");
             taskDiv.classList.remove("correct");
           }
-          
+
           let resultHtml;
-          const hintWarning = task.hintUsed 
-            ? `<div style="color:#e67e22; font-size:13px; margin-top:6px;">⚠️ Использована подсказка, балл за задание снижен на 50%</div>` 
+          const hintWarning = task.hintUsed
+            ? `<div style="color:#e67e22; font-size:13px; margin-top:6px;">⚠️ Использована подсказка, балл за задание снижен на 50%</div>`
             : "";
-            
+
           if (isCorrect) {
             const pointsText = task.hintUsed ? "(0.5 балла)" : "(1 балл)";
             resultHtml = `<div class="task-result correct">✅ Правильно! ${pointsText}</div>${hintWarning}`;
@@ -3946,11 +3945,11 @@
             const displayUserAns = userAnswer === null ? "(пусто)" : userAnswer;
             resultHtml = `<div class="task-result incorrect">❌ Неправильно. Ваш ответ: <strong>${displayUserAns}</strong><br><span>Правильный ответ: <strong>${correctAnswer}</strong></span></div>${hintWarning}`;
           }
-          
+
           const oldResult = taskDiv.querySelector(".task-result");
           if (oldResult) oldResult.remove();
           taskDiv.insertAdjacentHTML("beforeend", resultHtml);
-          
+
           if (task.type === "task") {
             const input = document.getElementById(`answer-${index}`);
             if (input) input.disabled = true;
@@ -3979,76 +3978,151 @@
       }
 
       function showResults(earnedPoints, maxPoints) {
-        const levelNames = { 1: "Подставить в формулу", 2: "Выразить из формулы", 3: "Сложный" };
+        const levelNames = {
+          1: "Подставить в формулу",
+          2: "Выразить из формулы",
+          3: "Сложный",
+        };
         const levelText = state.level
           ? levelNames[state.level] || `Уровень ${state.level}`
           : "Только единицы измерения";
 
         const now = new Date();
         const dateText = now.toLocaleDateString("ru-RU", {
-          day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
         });
 
         const metaDiv = document.getElementById("test-meta");
         if (metaDiv) {
           metaDiv.innerHTML = `
-            <div class="meta-item"><span class="meta-label">📊 Уровень сложности:</span><span class="meta-value">${levelText}</span></div>
-            <div class="meta-item"><span class="meta-label">📅 Дата прохождения:</span><span class="meta-value">${dateText}</span></div>
-          `;
+      <div class="meta-item"><span class="meta-label">📊 Уровень сложности:</span><span class="meta-value">${levelText}</span></div>
+      <div class="meta-item"><span class="meta-label">📅 Дата прохождения:</span><span class="meta-value">${dateText}</span></div>
+    `;
         }
 
-        const percentage = maxPoints > 0 ? Math.round((earnedPoints / maxPoints) * 100) : 0;
-        
-        // Обновляем текст результата, чтобы было понятно, что это баллы
-        document.getElementById("score-text").textContent = `${earnedPoints} из ${maxPoints} баллов (${percentage}%)`;
+        const percentage =
+          maxPoints > 0 ? Math.round((earnedPoints / maxPoints) * 100) : 0;
+
+        document.getElementById("score-text").textContent =
+          `${earnedPoints} из ${maxPoints} баллов (${percentage}%)`;
         document.getElementById("score-fill").style.width = `${percentage}%`;
-        
-        // Округляем для счетчиков, если нужно, или оставляем как есть
-        document.getElementById("correct-count").textContent = Math.round(earnedPoints); 
-        document.getElementById("incorrect-count").textContent = Math.round(maxPoints - earnedPoints);
+        document.getElementById("correct-count").textContent =
+          Math.round(earnedPoints);
+        document.getElementById("incorrect-count").textContent = Math.round(
+          maxPoints - earnedPoints,
+        );
         document.getElementById("total-count").textContent = maxPoints;
-        
+
         const detailedResults = document.getElementById("detailed-results");
         const topicStats = {};
-        
+
         state.tasks.forEach((task, index) => {
-          const topic = task.topic || (task.formula && task.formula.topic ? task.formula.topic : "Общее");
-          if (!topicStats[topic]) topicStats[topic] = { points: 0, max: 0 };
+          const topic =
+            task.topic ||
+            (task.formula && task.formula.topic ? task.formula.topic : "Общее");
+          if (!topicStats[topic])
+            topicStats[topic] = {
+              points: 0,
+              max: 0,
+              hasHint: false,
+              hasError: false,
+            };
           topicStats[topic].max += 1;
-          
+
           const taskDiv = document.getElementById(`task-${index}`);
           if (taskDiv && taskDiv.classList.contains("correct")) {
             topicStats[topic].points += task.hintUsed ? 0.5 : 1;
+            if (task.hintUsed) topicStats[topic].hasHint = true;
+          } else {
+            topicStats[topic].hasError = true;
           }
         });
-        
-        let html = "<h3>Результаты по темам:</h3>";
+
+        let html = "<h3>🎯 Твой результат</h3>";
+
+        // Блок рекомендаций для самоподготовки
+        const weakTopics = [];
+        for (const [topic, stats] of Object.entries(topicStats)) {
+          if (stats.hasError) {
+            weakTopics.push({
+              topic,
+              status: "error",
+              percent: Math.round((stats.points / stats.max) * 100),
+            });
+          } else if (stats.hasHint) {
+            weakTopics.push({
+              topic,
+              status: "hint",
+              percent: Math.round((stats.points / stats.max) * 100),
+            });
+          }
+        }
+
+        if (weakTopics.length > 0) {
+          html += `<div style="background:#fff3cd; padding:15px; border-radius:8px; margin:15px 0; border-left:4px solid #ffc107;">`;
+          html += `<strong>📚 Что нужно повторить:</strong><ul style="margin:10px 0 0 20px;">`;
+          weakTopics.forEach((item) => {
+            const icon = item.status === "error" ? "🔴" : "🟡";
+            const note =
+              item.status === "error"
+                ? "(допущена ошибка)"
+                : "(использована подсказка)";
+            html += `<li>${icon} <strong>${item.topic}</strong> ${note}</li>`;
+          });
+          html += `</ul>`;
+          html += `<div style="margin-top:10px; font-size:14px; color:#856404;">💡 <em>Совет: Перед следующим тестом повтори формулы по этим темам. Ты на верном пути!</em></div>`;
+          html += `</div>`;
+        } else {
+          html += `<div style="background:#d4edda; padding:15px; border-radius:8px; margin:15px 0; border-left:4px solid #28a745;">`;
+          html += `<strong>🎉 Отличная работа!</strong> Все темы усвоены. Продолжай в том же духе!`;
+          html += `</div>`;
+        }
+
+        html += "<h3>Результаты по темам:</h3>";
         for (const [topic, stats] of Object.entries(topicStats)) {
           const percent = Math.round((stats.points / stats.max) * 100);
-          const barColor = percent >= 80 ? "#4caf50" : percent >= 50 ? "#ff9800" : "#f44336";
+          const barColor =
+            percent >= 80 ? "#4caf50" : percent >= 50 ? "#ff9800" : "#f44336";
           html += `
-            <div class="topic-stat-card">
-              <div class="topic-stat-header"><span><strong>${topic}</strong></span><span>${stats.points} из ${stats.max} баллов (${percent}%)</span></div>
-              <div class="topic-stat-bar-bg"><div class="topic-stat-bar-fill" style="width:${percent}%;background:${barColor};"></div></div>
-            </div>`;
+      <div class="topic-stat-card">
+        <div class="topic-stat-header"><span><strong>${topic}</strong></span><span>${stats.points} из ${stats.max} баллов (${percent}%)</span></div>
+        <div class="topic-stat-bar-bg"><div class="topic-stat-bar-fill" style="width:${percent}%;background:${barColor};"></div></div>
+      </div>`;
         }
-        
+
         html += '<h3 style="margin-top:30px">Подробный разбор заданий:</h3>';
         state.tasks.forEach((task, index) => {
-          let isCorrect = false, userAnsDisplay = "", correctAnsDisplay = "", questionText = "", formulaHtml = "";
-          
+          let isCorrect = false,
+            userAnsDisplay = "",
+            correctAnsDisplay = "",
+            questionText = "",
+            formulaHtml = "";
+
           if (task.type === "task") {
             const input = document.getElementById(`answer-${index}`);
             const rawValue = input ? input.value.trim() : "";
-            const userVal = rawValue === "" ? null : parseFloat(rawValue.replace(",", "."));
-            const expectedAnswer = task.answer !== undefined ? Math.round(task.answer * 100) / 100 : null;
-            isCorrect = userVal !== null && !isNaN(userVal) && expectedAnswer !== null && Math.abs(Math.round(userVal * 100) / 100 - expectedAnswer) < 0.01;
-            
+            const userVal =
+              rawValue === "" ? null : parseFloat(rawValue.replace(",", "."));
+            const expectedAnswer =
+              task.answer !== undefined
+                ? Math.round(task.answer * 100) / 100
+                : null;
+            isCorrect =
+              userVal !== null &&
+              !isNaN(userVal) &&
+              expectedAnswer !== null &&
+              Math.abs(Math.round(userVal * 100) / 100 - expectedAnswer) < 0.01;
+
             userAnsDisplay = rawValue === "" ? "(пусто)" : rawValue;
             correctAnsDisplay = expectedAnswer !== null ? expectedAnswer : "—";
-            
+
             const formula = task.formula;
-            const variables = formula && formula.variables ? formula.variables : {};
+            const variables =
+              formula && formula.variables ? formula.variables : {};
             const mainVar = task.targetVar;
             const givenVars = Object.entries(task.values || {})
               .filter(([key]) => key !== mainVar)
@@ -4059,13 +4133,16 @@
                 return `${name} = ${val} ${unit}`.trim();
               })
               .join(", ");
-              
+
             const targetVar = variables[mainVar];
-            const targetName = targetVar && targetVar.name ? targetVar.name : mainVar;
-            const targetUnit = targetVar && targetVar.unit ? targetVar.unit : "";
-            const formulaName = formula && formula.name ? formula.name : "Формула";
+            const targetName =
+              targetVar && targetVar.name ? targetVar.name : mainVar;
+            const targetUnit =
+              targetVar && targetVar.unit ? targetVar.unit : "";
+            const formulaName =
+              formula && formula.name ? formula.name : "Формула";
             questionText = `<strong>${formulaName}</strong><br>Дано: ${givenVars}.<br>Найти: ${targetName} (${targetUnit})`;
-            
+
             if (formula && formula.formula) {
               formulaHtml = `<div class="review-formula"><div class="review-formula-label">📐 Правильная формула:</div>${renderKatex(formula.formula)}</div>`;
             }
@@ -4075,26 +4152,28 @@
             correctAnsDisplay = task.correct || "—";
             questionText = task.question || "Вопрос о единицах измерения";
           }
-          
+
           const statusClass = isCorrect ? "correct" : "incorrect";
           const icon = isCorrect ? "✅" : "❌";
-          const topic = task.topic || (task.formula && task.formula.topic ? task.formula.topic : "Общее");
+          const topic =
+            task.topic ||
+            (task.formula && task.formula.topic ? task.formula.topic : "Общее");
           const pointsEarned = isCorrect ? (task.hintUsed ? 0.5 : 1) : 0;
-          
+
           html += `
-            <div class="review-card ${statusClass}">
-              <div class="review-header">
-                <span style="font-size:18px">${icon}</span>
-                <span class="review-title">Задание ${index + 1} • ${topic} • Получено баллов: <strong>${pointsEarned}</strong></span>
-              </div>
-              <div class="review-question">${questionText}</div>
-              ${formulaHtml}
-              <div>
-                <div class="ans-row"><span class="ans-label">Ваш ответ:</span><span class="ans-value ${statusClass}">${userAnsDisplay}</span></div>
-                ${!isCorrect ? `<div class="ans-row"><span class="ans-label">Правильный ответ:</span><span class="ans-value correct">${correctAnsDisplay}</span></div>` : ""}
-                ${task.hintUsed ? `<div style="color:#e67e22; font-size:13px; margin-top:5px;">⚠️ Была использована подсказка</div>` : ""}
-              </div>
-            </div>`;
+      <div class="review-card ${statusClass}">
+        <div class="review-header">
+          <span style="font-size:18px">${icon}</span>
+          <span class="review-title">Задание ${index + 1} из ${state.tasks.length} • ${topic} • Получено баллов: <strong>${pointsEarned}</strong></span>
+        </div>
+        <div class="review-question">${questionText}</div>
+        ${formulaHtml}
+        <div>
+          <div class="ans-row"><span class="ans-label">Ваш ответ:</span><span class="ans-value ${statusClass}">${userAnsDisplay}</span></div>
+          ${!isCorrect ? `<div class="ans-row"><span class="ans-label">Правильный ответ:</span><span class="ans-value correct">${correctAnsDisplay}</span></div>` : ""}
+          ${task.hintUsed ? `<div style="color:#e67e22; font-size:13px; margin-top:5px;">⚠️ Была использована подсказка</div>` : ""}
+        </div>
+      </div>`;
         });
         detailedResults.innerHTML = html;
         showScreen("results-screen");
