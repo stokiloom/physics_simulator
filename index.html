@@ -596,9 +596,9 @@
             time: (v) => v.displacement / v.velocity,
           },
           variables: {
-            velocity: { name: "скорость", unit: "м/с", min: 5, max: 50 },
-            displacement: { name: "перемещение", unit: "м", min: 10, max: 500 },
-            time: { name: "время", unit: "с", min: 1, max: 60 },
+            velocity: { name: "скорость", unit: "м/с", min: 10, max: 30 },
+            displacement: { name: "перемещение", unit: "м", min: 100, max: 1800 },
+            time: { name: "время", unit: "с", min: 10, max: 60 },
           },
         },
         {
@@ -614,15 +614,15 @@
             time: (v) => (v.position - v.initialPosition) / v.velocity,
           },
           variables: {
-            position: { name: "координата", unit: "м", min: 0, max: 1000 },
+            position: { name: "координата", unit: "м", min: 100, max: 1900 },
             initialPosition: {
               name: "начальная координата",
               unit: "м",
               min: 0,
               max: 100,
             },
-            velocity: { name: "скорость", unit: "м/с", min: 1, max: 50 },
-            time: { name: "время", unit: "с", min: 1, max: 60 },
+            velocity: { name: "скорость", unit: "м/с", min: 10, max: 30 },
+            time: { name: "время", unit: "с", min: 10, max: 60 },
           },
         },
         {
@@ -661,11 +661,11 @@
             time: (v) => (v.speed - v.initialSpeed) / v.acceleration,
           },
           variables: {
-            acceleration: { name: "ускорение", unit: "м/с²", min: 1, max: 20 },
+            acceleration: { name: "ускорение", unit: "м/с²", min: 1, max: 50 },
             speed: {
               name: "конечная скорость",
               unit: "м/с",
-              min: 11,
+              min: 10,
               max: 100,
             },
             initialSpeed: {
@@ -674,7 +674,7 @@
               min: 0,
               max: 10,
             },
-            time: { name: "время", unit: "с", min: 1, max: 20 },
+            time: { name: "время", unit: "с", min: 2, max: 10 },
           },
         },
         {
@@ -693,17 +693,17 @@
             speed: {
               name: "конечная скорость",
               unit: "м/с",
-              min: 10,
-              max: 100,
+              min: 2,
+              max: 210,
             },
             initialSpeed: {
               name: "начальная скорость",
               unit: "м/с",
               min: 0,
-              max: 20,
+              max: 10,
             },
-            acceleration: { name: "ускорение", unit: "м/с²", min: 1, max: 20 },
-            time: { name: "время", unit: "с", min: 1, max: 20 },
+            acceleration: { name: "ускорение", unit: "м/с²", min: 1, max: 10 },
+            time: { name: "время", unit: "с", min: 2, max: 20 },
           },
         },
         {
@@ -727,8 +727,8 @@
             displacement: {
               name: "перемещение",
               unit: "м",
-              min: 10,
-              max: 1000,
+              min: 4,
+              max: 2200,
             },
             initialSpeed: {
               name: "начальная скорость",
@@ -736,8 +736,8 @@
               min: 0,
               max: 20,
             },
-            acceleration: { name: "ускорение", unit: "м/с²", min: 1, max: 20 },
-            time: { name: "время", unit: "с", min: 1, max: 20 },
+            acceleration: { name: "ускорение", unit: "м/с²", min: 2, max: 10 },
+            time: { name: "время", unit: "с", min: 2, max: 20 },
           },
         },
         {
@@ -763,22 +763,22 @@
             displacement: {
               name: "перемещение",
               unit: "м",
-              min: 10,
-              max: 1000,
+              min: 15,
+              max: 450,
             },
             speed: {
               name: "конечная скорость",
               unit: "м/с",
-              min: 10,
-              max: 100,
+              min: 20,
+              max: 30,
             },
             initialSpeed: {
               name: "начальная скорость",
               unit: "м/с",
               min: 0,
-              max: 20,
+              max: 10,
             },
-            acceleration: { name: "ускорение", unit: "м/с²", min: 1, max: 20 },
+            acceleration: { name: "ускорение", unit: "м/с²", min: 2, max: 10 },
           },
         },
         {
@@ -798,21 +798,21 @@
               name: "перемещение",
               unit: "м",
               min: 10,
-              max: 1000,
+              max: 400,
             },
             initialSpeed: {
               name: "начальная скорость",
               unit: "м/с",
               min: 0,
-              max: 20,
+              max: 10,
             },
             speed: {
               name: "конечная скорость",
               unit: "м/с",
               min: 10,
-              max: 100,
+              max: 30,
             },
-            time: { name: "время", unit: "с", min: 1, max: 20 },
+            time: { name: "время", unit: "с", min: 2, max: 20 },
           },
         },
         {
@@ -855,7 +855,6 @@
           },
         },
         // ТЕСТ 4
-        // РАЗДЕЛЕНО из "period": T = t/N = 1/ν  →  две записи
         {
           id: "period",
           topic: "Кинематика",
@@ -868,12 +867,11 @@
             revolutions: (v) => v.time / v.period,
           },
           variables: {
-            period: { name: "период", unit: "с", min: 1, max: 10 },
-            time: { name: "время", unit: "с", min: 1, max: 100 },
-            revolutions: { name: "число оборотов", unit: "", min: 1, max: 100 },
+            period: { name: "период", unit: "с", min: 2, max: 50 },
+            time: { name: "время", unit: "с", min: 20, max: 100 },
+            revolutions: { name: "число оборотов", unit: "", min: 2, max: 10 },
           },
         },
-        // НОВАЯ ЗАПИСЬ: разделена из "period" (вторая формула)
         {
           id: "period_frequency",
           topic: "Кинематика",
@@ -885,11 +883,10 @@
             frequency: (v) => 1 / v.period,
           },
           variables: {
-            period: { name: "период", unit: "с", min: 1, max: 10 },
-            frequency: { name: "частота", unit: "Гц", min: 1, max: 10 },
+            period: { name: "период", unit: "с", min: 0.1, max: 0.5 },
+            frequency: { name: "частота", unit: "Гц", min: 2, max: 10 },
           },
         },
-        // РАЗДЕЛЕНО из "frequency": ν = N/t = 1/T  →  две записи
         {
           id: "frequency",
           topic: "Кинематика",
@@ -902,12 +899,11 @@
             time: (v) => v.revolutions / v.frequency,
           },
           variables: {
-            frequency: { name: "частота", unit: "Гц", min: 1, max: 10 },
-            revolutions: { name: "число оборотов", unit: "", min: 1, max: 100 },
-            time: { name: "время", unit: "с", min: 1, max: 100 },
+            frequency: { name: "частота", unit: "Гц", min: 0.1, max: 50 },
+            revolutions: { name: "число оборотов", unit: "", min: 5, max: 100 },
+            time: { name: "время", unit: "с", min: 2, max: 50 },
           },
         },
-        // НОВАЯ ЗАПИСЬ: разделена из "frequency" (вторая формула)
         {
           id: "frequency_period",
           topic: "Кинематика",
@@ -919,11 +915,10 @@
             period: (v) => 1 / v.frequency,
           },
           variables: {
-            frequency: { name: "частота", unit: "Гц", min: 1, max: 10 },
-            period: { name: "период", unit: "с", min: 1, max: 10 },
+            frequency: { name: "частота", unit: "Гц", min: 0.5, max: 10 },
+            period: { name: "период", unit: "с", min: 0.1, max: 2 },
           },
         },
-        // РАЗДЕЛЕНО из "angular_velocity": ω = 2π/T = 2πν  →  две записи
         {
           id: "angular_velocity",
           topic: "Кинематика",
@@ -936,13 +931,12 @@
             angularVelocity: {
               name: "угловая скорость",
               unit: "рад/с",
-              min: 1,
-              max: 20,
+              min: 0.63,
+              max: 6.28,
             },
             period: { name: "период", unit: "с", min: 1, max: 10 },
           },
         },
-        // НОВАЯ ЗАПИСЬ: разделена из "angular_velocity" (вторая формула)
         {
           id: "angular_velocity_frequency",
           topic: "Кинематика",
@@ -955,13 +949,12 @@
             angularVelocity: {
               name: "угловая скорость",
               unit: "рад/с",
-              min: 1,
-              max: 20,
+              min: 12.56,
+              max: 62.8,
             },
-            frequency: { name: "частота", unit: "Гц", min: 1, max: 10 },
+            frequency: { name: "частота", unit: "Гц", min: 2, max: 10 },
           },
         },
-        // РАЗДЕЛЕНО из "linear_velocity": v = 2πR/T = ωR  →  две записи
         {
           id: "linear_velocity",
           topic: "Кинематика",
@@ -977,14 +970,13 @@
             velocity: {
               name: "линейная скорость",
               unit: "м/с",
-              min: 1,
-              max: 100,
+              min: 0.13,
+              max: 157,
             },
-            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
-            period: { name: "период", unit: "с", min: 1, max: 10 },
+            radius: { name: "радиус", unit: "м", min: 0.1, max: 50 },
+            period: { name: "период", unit: "с", min: 2, max: 5 },
           },
         },
-        // НОВАЯ ЗАПИСЬ: разделена из "linear_velocity" (вторая формула)
         {
           id: "linear_velocity_angular",
           topic: "Кинематика",
@@ -1000,19 +992,18 @@
             velocity: {
               name: "линейная скорость",
               unit: "м/с",
-              min: 1,
+              min: 0.2,
               max: 100,
             },
-            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+            radius: { name: "радиус", unit: "м", min: 0.1, max: 10 },
             angularVelocity: {
               name: "угловая скорость",
               unit: "рад/с",
-              min: 1,
-              max: 20,
+              min: 2,
+              max: 10,
             },
           },
         },
-        // РАЗДЕЛЕНО из "centripetal_acceleration": a = v²/R = ω²R  →  две записи
         {
           id: "centripetal_acceleration",
           topic: "Кинематика",
@@ -1028,19 +1019,18 @@
             acceleration: {
               name: "центростремительное ускорение",
               unit: "м/с²",
-              min: 1,
-              max: 100,
+              min: 0.5,
+              max: 80,
             },
             velocity: {
               name: "линейная скорость",
               unit: "м/с",
-              min: 1,
-              max: 100,
+              min: 5,
+              max: 20,
             },
-            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+            radius: { name: "радиус", unit: "м", min: 5, max: 50 },
           },
         },
-        // НОВАЯ ЗАПИСЬ: разделена из "centripetal_acceleration" (вторая формула)
         {
           id: "centripetal_acceleration_angular",
           topic: "Кинематика",
@@ -1057,16 +1047,16 @@
             acceleration: {
               name: "центростремительное ускорение",
               unit: "м/с²",
-              min: 1,
-              max: 100,
+              min: 0.8,
+              max: 200,
             },
             angularVelocity: {
               name: "угловая скорость",
               unit: "рад/с",
-              min: 1,
-              max: 20,
+              min: 2,
+              max: 10,
             },
-            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+            radius: { name: "радиус", unit: "м", min: 0.2, max: 2 },
           },
         },
         // ТЕСТ 5
@@ -1083,8 +1073,8 @@
           },
           variables: {
             acceleration: { name: "ускорение", unit: "м/с²", min: 1, max: 50 },
-            force: { name: "сила", unit: "Н", min: 10, max: 1000 },
-            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
+            force: { name: "сила", unit: "Н", min: 10, max: 100 },
+            mass: { name: "масса", unit: "кг", min: 2, max: 10 },
           },
         },
         {
@@ -1094,15 +1084,16 @@
           mainVar: "force",
           formula: "$$F = G\\frac{m_1 m_2}{r^2}$$",
           calcMain: (v) =>
-            (6.67e5 * v.mass1 * v.mass2) / (v.distance * v.distance),
+            (6.67e-1 * v.mass1 * v.mass2) / (v.distance * v.distance),
           calcOther: {
-            distance: (v) => Math.sqrt((6.67e5 * v.mass1 * v.mass2) / v.force),
+            distance: (v) => Math.sqrt((6.67e-1 * v.mass1 * v.mass2) / v.force),
           },
           variables: {
-            force: { name: "сила притяжения", unit: "Н", min: 1e-8, max: 1e-4 },
-            mass1: { name: "масса тела 1", unit: "10¹¹ кг", min: 1, max: 100 },
-            mass2: { name: "масса тела 2", unit: "10¹¹ кг", min: 1, max: 100 },
-            distance: { name: "расстояние", unit: "10³м", min: 1, max: 1000 },
+            G: {name: "гравитационная постоянная", unit: "H・м²/кг²", min: "6.67 × 10¹¹", max: "6.67 × 10¹¹" },
+            force: { name: "сила притяжения", unit: "Н", min: 0.7, max: 7000 },
+            mass1: { name: "масса тела 1", unit: " × 10⁵ кг", min: 10, max: 100 },
+            mass2: { name: "масса тела 2", unit: " × 10⁵ кг", min: 10, max: 100 },
+            distance: { name: "расстояние", unit: "м", min: 1, max: 10 },
           },
         },
         // ТЕСТ 6
@@ -1118,7 +1109,7 @@
             normalForce: (v) => v.frictionForce / v.frictionCoeff,
           },
           variables: {
-            frictionForce: { name: "сила трения", unit: "Н", min: 1, max: 500 },
+            frictionForce: { name: "сила трения", unit: "Н", min: 1, max: 900 },
             frictionCoeff: {
               name: "коэффициент трения",
               unit: "",
@@ -1149,15 +1140,14 @@
             elasticForce: {
               name: "сила упругости",
               unit: "Н",
-              min: 1,
-              max: 500,
+              min: 0.1,
+              max: 100,
             },
-            stiffness: { name: "жёсткость", unit: "Н/м", min: 10, max: 10000 },
+            stiffness: { name: "жёсткость", unit: "Н/м", min: 10, max: 100 },
             elongation: { name: "удлинение", unit: "м", min: 0.01, max: 1 },
           },
         },
         // ТЕСТ 8
-        // РАЗДЕЛЕНО из "centripetal_force": Fц = mv²/R = mω²R  →  две записи
         {
           id: "centripetal_force",
           topic: "Динамика",
@@ -1178,14 +1168,13 @@
               name: "центростремительная сила",
               unit: "Н",
               min: 1,
-              max: 1000,
+              max: 400,
             },
-            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
-            velocity: { name: "скорость", unit: "м/с", min: 1, max: 50 },
-            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+            mass: { name: "масса", unit: "кг", min: 2, max: 10 },
+            velocity: { name: "скорость", unit: "м/с", min: 5, max: 20 },
+            radius: { name: "радиус", unit: "м", min: 10, max: 50 },
           },
         },
-        // НОВАЯ ЗАПИСЬ: разделена из "centripetal_force" (вторая формула)
         {
           id: "centripetal_force_angular",
           topic: "Динамика",
@@ -1208,20 +1197,20 @@
             centripetalForce: {
               name: "центростремительная сила",
               unit: "Н",
-              min: 1,
-              max: 1000,
+              min: 1.6,
+              max: 10000,
             },
-            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
+            mass: { name: "масса", unit: "кг", min: 2, max: 10 },
             angularVelocity: {
               name: "угловая скорость",
               unit: "рад/с",
-              min: 1,
-              max: 20,
+              min: 2,
+              max: 10,
             },
-            radius: { name: "радиус", unit: "м", min: 1, max: 50 },
+            radius: { name: "радиус", unit: "м", min: 0.2, max: 10 },
           },
         },
-        // ТЕСТ 9
+        // ТЕСТ 9 тут!!!
         {
           id: "momentum",
           topic: "Законы сохранения",
@@ -3680,6 +3669,7 @@
       // ============================================================
       // ГЕНЕРАЦИЯ ЗНАЧЕНИЙ
       // ============================================================
+
       function generateValues(formula, targetVar, maxAttempts = 300) {
         const vars = formula.variables;
         const otherVars = Object.keys(vars).filter((k) => k !== targetVar);
@@ -3687,7 +3677,11 @@
           const values = {};
           for (const key of otherVars) {
             const def = vars[key];
-            values[key] = randomInt(Math.ceil(def.min), Math.floor(def.max));
+            if (def.min >= 0.01){
+              values[key] = Math.round((Math.random() * (def.max - def.min) + def.min) * 100) / 100;
+            } else {
+              values[key] = def.min;  
+            }
           }
           let raw;
           try {
