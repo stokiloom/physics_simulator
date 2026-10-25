@@ -928,6 +928,7 @@
           calcMain: (v) => (2 * 3.14) / v.period,
           calcOther: { period: (v) => (2 * 3.14) / v.angularVelocity },
           variables: {
+            pi: { name: "𝜋", unit: "", min: 3.14, max: 3.14 },
             angularVelocity: {
               name: "угловая скорость",
               unit: "рад/с",
@@ -946,6 +947,7 @@
           calcMain: (v) => 2 * 3.14 * v.frequency,
           calcOther: { frequency: (v) => v.angularVelocity / (2 * 3.14) },
           variables: {
+            pi: { name: "𝜋", unit: "", min: 3.14, max: 3.14 },
             angularVelocity: {
               name: "угловая скорость",
               unit: "рад/с",
@@ -967,6 +969,7 @@
             radius: (v) => (v.velocity * v.period) / (2 * 3.14),
           },
           variables: {
+            pi: { name: "𝜋", unit: "", min: 3.14, max: 3.14 },
             velocity: {
               name: "линейная скорость",
               unit: "м/с",
@@ -1089,7 +1092,7 @@
             distance: (v) => Math.sqrt((6.67e-1 * v.mass1 * v.mass2) / v.force),
           },
           variables: {
-            G: {name: "гравитационная постоянная", unit: "H・м²/кг²", min: "6.67 × 10¹¹", max: "6.67 × 10¹¹" },
+            G: {name: "гравитационная постоянная", unit: " × 10⁻¹¹ H・м²/кг²", min: 6.67, max: 6.67 },
             force: { name: "сила притяжения", unit: "Н", min: 0.7, max: 7000 },
             mass1: { name: "масса тела 1", unit: " × 10⁵ кг", min: 10, max: 100 },
             mass2: { name: "масса тела 2", unit: " × 10⁵ кг", min: 10, max: 100 },
@@ -3677,11 +3680,7 @@
           const values = {};
           for (const key of otherVars) {
             const def = vars[key];
-            if (def.min >= 0.01){
-              values[key] = Math.round((Math.random() * (def.max - def.min) + def.min) * 100) / 100;
-            } else {
-              values[key] = def.min;  
-            }
+            values[key] = Math.round((Math.random() * (def.max - def.min) + def.min) * 100) / 100;
           }
           let raw;
           try {
