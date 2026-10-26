@@ -1213,7 +1213,7 @@
             radius: { name: "радиус", unit: "м", min: 0.2, max: 10 },
           },
         },
-        // ТЕСТ 9 тут!!!
+        // ТЕСТ 9 
         {
           id: "momentum",
           topic: "Законы сохранения",
@@ -1226,9 +1226,9 @@
             velocity: (v) => v.momentum / v.mass,
           },
           variables: {
-            momentum: { name: "импульс", unit: "кг·м/с", min: 1, max: 1000 },
-            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
-            velocity: { name: "скорость", unit: "м/с", min: 1, max: 50 },
+            momentum: { name: "импульс", unit: "кг·м/с", min: 20, max: 500 },
+            mass: { name: "масса", unit: "кг", min: 2, max: 10 },
+            velocity: { name: "скорость", unit: "м/с", min: 10, max: 50 },
           },
         },
         {
@@ -1244,8 +1244,8 @@
           },
           variables: {
             impulse: { name: "импульс силы", unit: "Н·с", min: 1, max: 1000 },
-            force: { name: "сила", unit: "Н", min: 1, max: 500 },
-            time: { name: "время", unit: "с", min: 1, max: 10 },
+            force: { name: "сила", unit: "Н", min: 10, max: 100 },
+            time: { name: "время", unit: "с", min: 0.1, max: 10 },
           },
         },
         // ТЕСТ 10
@@ -1264,9 +1264,9 @@
               v.work / (v.force * Math.cos((v.angle * Math.PI) / 180)),
           },
           variables: {
-            work: { name: "работа", unit: "Дж", min: 1, max: 10000 },
-            force: { name: "сила", unit: "Н", min: 1, max: 500 },
-            displacement: { name: "перемещение", unit: "м", min: 1, max: 100 },
+            work: { name: "работа", unit: "Дж", min: 0, max: 5000 },
+            force: { name: "сила", unit: "Н", min: 10, max: 500 },
+            displacement: { name: "перемещение", unit: "м", min: 1, max: 10 },
             angle: { name: "угол", unit: "°", min: 0, max: 90 },
           },
         },
@@ -1282,9 +1282,9 @@
             time: (v) => v.work / v.power,
           },
           variables: {
-            power: { name: "мощность", unit: "Вт", min: 1, max: 10000 },
-            work: { name: "работа", unit: "Дж", min: 1, max: 10000 },
-            time: { name: "время", unit: "с", min: 1, max: 100 },
+            power: { name: "мощность", unit: "Вт", min: 5, max: 5000 },
+            work: { name: "работа", unit: "Дж", min: 10, max: 10000 },
+            time: { name: "время", unit: "с", min: 2, max: 100 },
           },
         },
         // ТЕСТ 11
@@ -1303,11 +1303,11 @@
             kineticEnergy: {
               name: "кинетическая энергия",
               unit: "Дж",
-              min: 1,
-              max: 10000,
+              min: 100,
+              max: 12500,
             },
-            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
-            velocity: { name: "скорость", unit: "м/с", min: 1, max: 50 },
+            mass: { name: "масса", unit: "кг", min: 2, max: 10 },
+            velocity: { name: "скорость", unit: "м/с", min: 10, max: 50 },
           },
         },
         {
@@ -1325,11 +1325,12 @@
             potentialEnergy: {
               name: "потенциальная энергия",
               unit: "Дж",
-              min: 1,
-              max: 10000,
+              min: 40,
+              max: 1000,
             },
-            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
-            height: { name: "высота", unit: "м", min: 1, max: 100 },
+            mass: { name: "масса", unit: "кг", min: 2, max: 10 },
+            height: { name: "высота", unit: "м", min: 2, max: 10 },
+            g: { name: "ускорение свободного падения", unit: "м/с²", min: 10, max: 10 }
           },
         },
         {
@@ -1348,11 +1349,11 @@
             potentialEnergy: {
               name: "потенциальная энергия",
               unit: "Дж",
-              min: 1,
-              max: 10000,
+              min: 0.05,
+              max: 50,
             },
-            stiffness: { name: "жёсткость", unit: "Н/м", min: 10, max: 10000 },
-            elongation: { name: "удлинение", unit: "м", min: 0.01, max: 1 },
+            stiffness: { name: "жёсткость", unit: "Н/м", min: 10, max: 100 },
+            elongation: { name: "удлинение", unit: "м", min: 0.1, max: 1 },
           },
         },
         // ТЕСТ 13
@@ -1368,8 +1369,8 @@
             area: (v) => v.force / v.pressure,
           },
           variables: {
-            pressure: { name: "давление", unit: "Па", min: 10, max: 100000 },
-            force: { name: "сила", unit: "Н", min: 10, max: 10000 },
+            pressure: { name: "давление", unit: "Па", min: 1, max: 10000 },
+            force: { name: "сила", unit: "Н", min: 10, max: 100 },
             area: { name: "площадь", unit: "м²", min: 0.01, max: 10 },
           },
         },
@@ -1385,9 +1386,10 @@
             height: (v) => v.pressure / (v.density * 10),
           },
           variables: {
-            pressure: { name: "давление", unit: "Па", min: 100, max: 100000 },
-            density: { name: "плотность", unit: "кг/м³", min: 500, max: 15000 },
+            pressure: { name: "давление", unit: "Па", min: 5, max: 1500 },
+            density: { name: "плотность", unit: "кг/м³", min: 500, max: 1500 },
             height: { name: "высота столба", unit: "м", min: 1, max: 100 },
+            g: { name: "ускорение свободного падения", unit: "м/с²", min: 10, max: 10 }
           },
         },
         {
@@ -1405,21 +1407,22 @@
             archimedesForce: {
               name: "сила Архимеда",
               unit: "Н",
-              min: 1,
-              max: 10000,
+              min: 500,
+              max: 15000,
             },
             density: {
               name: "плотность жидкости",
               unit: "кг/м³",
               min: 500,
-              max: 15000,
+              max: 1500,
             },
             volume: {
               name: "объём погруженной части",
               unit: "м³",
-              min: 0.001,
-              max: 10,
+              min: 0.1,
+              max: 1,
             },
+            g: { name: "ускорение свободного падения", unit: "м/с²", min: 10, max: 10 }
           },
         },
         {
@@ -1434,12 +1437,12 @@
             leverArm: (v) => v.torque / v.force,
           },
           variables: {
-            torque: { name: "момент силы", unit: "Н·м", min: 1, max: 1000 },
-            force: { name: "сила", unit: "Н", min: 1, max: 500 },
-            leverArm: { name: "плечо силы", unit: "м", min: 1, max: 10 },
+            torque: { name: "момент силы", unit: "Н·м", min: 0.2, max: 500 },
+            force: { name: "сила", unit: "Н", min: 2, max: 500 },
+            leverArm: { name: "плечо силы", unit: "м", min: 0.1, max: 1 },
           },
         },
-        // ТЕСТ 14
+        // ТЕСТ 14 
         {
           id: "amount_of_substance",
           topic: "Основы МКТ",
@@ -1458,7 +1461,7 @@
               min: 1,
               max: 100,
             },
-            mass: { name: "масса", unit: "кг", min: 1, max: 10000 },
+            mass: { name: "масса", unit: "кг", min: 1, max: 100 },
             molarMass: {
               name: "молярная масса",
               unit: "кг/моль",
@@ -1482,7 +1485,7 @@
             pressure: { name: "давление", unit: "Па", min: 1000, max: 1000000 },
             concentration: {
               name: "концентрация",
-              unit: "10²⁴ м⁻³",
+              unit: "x10²⁴ м⁻³",
               min: 1,
               max: 100,
             },
@@ -1492,6 +1495,7 @@
               min: 100,
               max: 1000,
             },
+            k: {name: "постоянная Больцмана", unit:"x10⁻²³ Дж/К", min: 1.38, max: 1.38}
           },
         },
         {
@@ -1525,7 +1529,7 @@
           variables: {
             avgKineticEnergy: {
               name: "средняя кин. энергия",
-              unit: "10⁻²⁰Дж",
+              unit: "x10⁻²⁰ Дж",
               min: 0.1,
               max: 100,
             },
@@ -1535,7 +1539,9 @@
               min: 100,
               max: 1000,
             },
+            k: {name: "постоянная Больцмана", unit:" x10⁻²³ Дж/К", min: 1.38, max: 1.38}
           },
+          
         },
         {
           id: "rms_velocity",
@@ -1564,10 +1570,11 @@
             },
             moleculeMass: {
               name: "масса молекулы",
-              unit: "10⁻²⁵кг",
+              unit: "x10⁻²⁵кг",
               min: 0.01,
               max: 1,
             },
+            k: {name: "постоянная Больцмана", unit:" x10⁻²³ Дж/К", min: 1.38, max: 1.38}
           },
         },
         // ТЕСТ 15
@@ -1588,7 +1595,7 @@
           variables: {
             pressure: { name: "давление", unit: "Па", min: 1000, max: 1000000 },
             volume: { name: "объём", unit: "м³", min: 0.01, max: 10 },
-            mass: { name: "масса", unit: "кг", min: 0.01, max: 100 },
+            mass: { name: "масса", unit: "кг", min: 0.01, max: 10 },
             molarMass: {
               name: "молярная масса",
               unit: "кг/моль",
@@ -1601,6 +1608,7 @@
               min: 100,
               max: 1000,
             },
+            R: {name: "универсальная газовая постоянная", unit: "Дж/моль・К", min: 8.31, max: 8.31}
           },
         },
         // ТЕСТ 16
@@ -1745,7 +1753,7 @@
               name: "парциальное давление",
               unit: "Па",
               min: 100,
-              max: 5000,
+              max: 1000,
             },
             saturatedPressure: {
               name: "давление насыщ. пара",
@@ -1755,7 +1763,39 @@
             },
           },
         },
-        // ТЕСТ 18
+        {
+          id: "relative_humidity",
+          topic: "Основы МКТ",
+          name: "Относительная влажность",
+          mainVar: "humidity",
+          formula: "$$\\varphi = \\frac{p}{p_н} \\cdot 100\\%$$",
+          calcMain: (v) => (v.partialPressure / v.saturatedPressure) * 100,
+          calcOther: {
+            partialPressure: (v) => (v.humidity * v.saturatedPressure) / 100,
+            saturatedPressure: (v) => (v.partialPressure * 100) / v.humidity,
+          },
+          variables: {
+            humidity: {
+              name: "относительная влажность",
+              unit: "%",
+              min: 10,
+              max: 100,
+            },
+            partialPressure: {
+              name: "плотность пара",
+              unit: "г/см³",
+              min: 1,
+              max: 15,
+            },
+            saturatedPressure: {
+              name: "плотность насыщ. пара",
+              unit: "г/см³",
+              min: 15,
+              max: 50,
+            },
+          },
+        },
+        // ТЕСТ 18 
         {
           id: "internal_energy",
           topic: "Термодинамика",
@@ -1778,7 +1818,7 @@
             molarMass: {
               name: "молярная масса",
               unit: "кг/моль",
-              min: 0.001,
+              min: 0.01,
               max: 0.5,
             },
             temperature: {
@@ -1787,6 +1827,7 @@
               min: 100,
               max: 1000,
             },
+            R: {name: "универсальная газовая постоянная", unit: "Дж/моль・К", min: 8.31, max: 8.31}
           },
         },
         {
@@ -1954,7 +1995,7 @@
             mass: { name: "масса", unit: "кг", min: 1, max: 100 },
           },
         },
-        // ТЕСТ 21
+        // ТЕСТ 21 тут!!!
         {
           id: "coulomb_law_vacuum",
           topic: "Электростатика",
@@ -3009,15 +3050,16 @@
             molarMass: {
               name: "молярная масса",
               unit: "кг/моль",
-              min: 0.001,
-              max: 0.3,
+              min: 0.07,
+              max: 0.7,
             },
             moleculeMass: {
               name: "масса молекулы",
-              unit: "10⁻²⁵кг",
+              unit: "x10⁻²⁵ кг",
               min: 1,
               max: 10,
             },
+            NA: {name: "постоянная Авогадро", unit: "x10²³ моль⁻¹", min: 6.02, max: 6.02}
           },
         },
         // ТЕСТ 14 - Основное уравнение МКТ (первый вариант)
@@ -3033,7 +3075,7 @@
             avgKineticEnergy: (v) => v.pressure / ((2 / 3) * v.concentration),
           },
           variables: {
-            pressure: { name: "давление", unit: "Па", min: 1000, max: 1000000 },
+            pressure: { name: "давление", unit: "Па", min: 0.6, max: 7000 },
             concentration: {
               name: "концентрация",
               unit: "10²¹ м⁻³",
@@ -3045,6 +3087,39 @@
               unit: "10⁻²¹ Дж",
               min: 1,
               max: 100,
+            },
+          },
+        },
+        {
+          id: "mkt_equation_2",
+          topic: "Основы МКТ",
+          name: "Основное уравнение МКТ",
+          mainVar: "pressure",
+          formula: "$$p = \\frac{1}{3} n m \\overline{v^2} $$",
+          calcMain: (v) => 1e-4 * (1 / 3) * v.concentration * v.avgSpeed**2 * v.moleculeMass,
+          calcOther: {
+            concentration: (v) => 3 * v.pressure / (v.moleculeMass * v.avgSpeed**2) * 1e25,
+            avgSpeed: (v) => Math.sqrt(3 * v.pressure / (1e-4 * v.moleculeMass * v.concentration)),
+          },
+          variables: {
+            pressure: { name: "давление", unit: "Па", min: 1, max: 100000 },
+            concentration: {
+              name: "концентрация",
+              unit: "10²¹ м⁻³",
+              min: 1,
+              max: 100,
+            },
+            avgSpeed: {
+              name: "средняя квадратичная скорость",
+              unit: "м/с",
+              min: 100,
+              max: 900,
+            },
+            moleculeMass: {
+              name: "масса молекулы",
+              unit: "x10⁻²⁵ кг",
+              min: 1,
+              max: 10,
             },
           },
         },
@@ -3139,6 +3214,7 @@
               min: 1,
               max: 100,
             },
+            R: {name: "универсальная газовая постоянная", unit: "Дж/моль・К", min: 8.31, max: 8.31}
           },
         },
         // ТЕСТ 18 - Первый закон термодинамики (изохорный, 3/2)
@@ -3172,8 +3248,42 @@
               min: 1,
               max: 100,
             },
+          R: {name: "универсальная газовая постоянная", unit: "Дж/моль・К", min: 8.31, max: 8.31}
           },
         },
+        // {
+        //   id: "first_law_isochoric",
+        //   topic: "Термодинамика",
+        //   name: "Первый закон термодинамики (изобарный)",
+        //   mainVar: "heat",
+        //   formula: "$$Q = \\frac{5}{2}\\nu R \\Delta T$$",
+        //   calcMain: (v) => 2.5 * v.amount * 8.31 * v.tempChange,
+        //   calcOther: {
+        //     amount: (v) => v.heat / (1.5 * 8.31 * v.tempChange),
+        //     tempChange: (v) => v.heat / (1.5 * v.amount * 8.31),
+        //   },
+        //   variables: {
+        //     heat: {
+        //       name: "количество теплоты",
+        //       unit: "Дж",
+        //       min: 1,
+        //       max: 100000,
+        //     },
+        //     amount: {
+        //       name: "количество вещества",
+        //       unit: "моль",
+        //       min: 1,
+        //       max: 100,
+        //     },
+        //     tempChange: {
+        //       name: "изменение температуры",
+        //       unit: "К",
+        //       min: 1,
+        //       max: 100,
+        //     },
+        //   R: {name: "универсальная газовая постоянная", unit: "Дж/моль・К", min: 8.31, max: 8.31}
+        //   },
+        // },
         // ТЕСТ 18 - Первый закон термодинамики (изотермический)
         {
           id: "first_law_isothermal",
@@ -3681,6 +3791,7 @@
           for (const key of otherVars) {
             const def = vars[key];
             values[key] = Math.round((Math.random() * (def.max - def.min) + def.min) * 100) / 100;
+            if (key == "angle") values[key] = [0, 30, 45, 60, 90][Math.floor(Math.random() * 4)];
           }
           let raw;
           try {
@@ -3698,7 +3809,7 @@
           if (typeof raw !== "number" || !Number.isFinite(raw)) continue;
           if (raw <= 0) continue;
           const answer = Math.round(raw * 100) / 100;
-          if (answer <= 0 || answer > 1e9) continue;
+          if (answer < 0 || answer > 1e9) continue;
           values[targetVar] = answer;
           return { values, answer, exactAnswer: raw };
         }
