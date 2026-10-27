@@ -3090,7 +3090,7 @@
             period: { name: "период", unit: "с", min: 0.01, max: 10 },
           },
         },
-        // ТЕСТ 31 тут !!!
+        // ТЕСТ 31
         {
           id: "thomson_formula",
           topic: "Колебания и волны",
@@ -3105,14 +3105,15 @@
               Math.pow(v.period / (2 * 3.14), 2) / v.inductance,
           },
           variables: {
-            period: { name: "период", unit: "мс", min: 0.001, max: 1 },
+            period: { name: "период", unit: "мс", min: 1, max: 100 },
             inductance: {
               name: "индуктивность",
               unit: "Гн",
-              min: 0.01,
+              min: 0.1,
               max: 1,
             },
-            capacitance: { name: "ёмкость", unit: "мкФ", min: 1, max: 1000 },
+            capacitance: { name: "ёмкость", unit: "мкФ", min: 10, max: 100 },
+            pi: { name: "число 𝝅", unit: "", min: 3.14, max: 3.14 },
           },
         },
         {
@@ -3127,13 +3128,13 @@
             rmsCurrent: {
               name: "действующий ток",
               unit: "А",
-              min: 0.1,
-              max: 100,
+              min: 1,
+              max: 70,
             },
             amplitudeCurrent: {
               name: "амплитуда тока",
               unit: "А",
-              min: 0.1,
+              min: 2,
               max: 100,
             },
           },
@@ -3154,6 +3155,7 @@
               max: 10000,
             },
             period: { name: "период", unit: "нс", min: 1, max: 1000 },
+            c: { name: "скорость света", unit: " x10⁸ м/с", min: 3, max: 3 },
           },
         },
         // ТЕСТ 32
@@ -3179,7 +3181,7 @@
             refractiveIndex1: {
               name: "показатель преломления 1",
               unit: "",
-              min: 1.3,
+              min: 1.6,
               max: 3,
             },
             refractiveIndex2: {
@@ -3258,20 +3260,20 @@
             focalLength: {
               name: "фокусное расстояние",
               unit: "м",
-              min: 0.01,
-              max: 10,
+              min: 0.05,
+              max: 5,
             },
             objectDistance: {
               name: "расстояние до предмета",
               unit: "м",
-              min: 0.01,
-              max: 100,
+              min: 0.1,
+              max: 10,
             },
             imageDistance: {
               name: "расстояние до изображения",
               unit: "м",
-              min: 0.01,
-              max: 100,
+              min: 0.1,
+              max: 10,
             },
           },
         },
@@ -3309,11 +3311,12 @@
           variables: {
             energy: {
               name: "энергия покоя",
-              unit: "10⁻¹⁰ Дж",
+              unit: " x10⁻¹⁰ Дж",
               min: 1,
               max: 100,
             },
-            mass: { name: "масса", unit: "10⁻²⁷ кг", min: 10, max: 100 },
+            mass: { name: "масса", unit: " x10⁻²⁷ кг", min: 10, max: 100 },
+            c: { name: "скорость света", unit: " x10⁸ м/с", min: 3, max: 3 },
           },
         },
         {
@@ -3322,14 +3325,14 @@
           name: "Энергия фотона",
           mainVar: "energy",
           formula: "$$E = h \\nu$$",
-          calcMain: (v) => 6.63e1 * v.frequency,
-          calcOther: { frequency: (v) => v.energy / 6.63e-34 },
+          calcMain: (v) => 6.63 * v.frequency,
+          calcOther: { frequency: (v) => v.energy / 6.63 },
           variables: {
             energy: {
               name: "энергия фотона",
-              unit: "10⁻²²Дж",
-              min: 1000,
-              max: 10000,
+              unit: "x10⁻²²Дж",
+              min: 663,
+              max: 6630,
             },
             frequency: { name: "частота", unit: "TГц", min: 100, max: 1000 },
           },
@@ -3391,36 +3394,36 @@
             },
           },
         },
-        //ТЕСТ 36
+        //ТЕСТ 36 
         {
           id: "bohr_frequency",
           topic: "Атомная+",
           name: "Правило частот Бора",
           mainVar: "frequency",
           formula: "$$h\\nu = E_k - E_m$$",
-          calcMain: (v) => ((v.initialEnergy - v.finalEnergy) * 1.6e10) / 6.63,
+          calcMain: (v) => (v.initialEnergy - v.finalEnergy),
           calcOther: {
-            initialEnergy: (v) => v.finalEnergy + (v.frequency * 6.63e-1) / 1.6,
-            finalEnergy: (v) => v.initialEnergy - (v.frequency * 6.63e-1) / 1.6,
+            initialEnergy: (v) => v.finalEnergy + v.energy,
+            finalEnergy: (v) => v.initialEnergy - v.energy,
           },
           variables: {
-            frequency: {
-              name: "частота излучения",
-              unit: "10¹⁴Гц",
+            energy: {
+              name: "энергия фотона",
+              unit: "эВ",
               min: 1,
               max: 100,
             },
             initialEnergy: {
               name: "начальная энергия уровня",
               unit: "эВ'",
-              min: 1,
+              min: 5,
               max: 14,
             },
             finalEnergy: {
               name: "конечная энергия уровня",
               unit: "эВ",
               min: 1,
-              max: 14,
+              max: 4,
             },
           },
         },
@@ -3429,14 +3432,14 @@
           topic: "Атомная+",
           name: "Энергия связи ядра",
           mainVar: "bindingEnergy",
-          formula: "$$E_{св} = \\Delta m c^2$$",
+          formula: "$$E_{св} = \\Delta m 931.5 МэВ$$",
           calcMain: (v) => v.massDefect * 931.5,
           calcOther: { massDefect: (v) => v.bindingEnergy / 931.5 },
           variables: {
             bindingEnergy: {
               name: "энергия связи",
               unit: "МэВ",
-              min: 100,
+              min: 10,
               max: 1000,
             },
             massDefect: {
@@ -3866,33 +3869,33 @@
           },
         },
         // ТЕСТ 30 - Уравнение гармонических колебаний
-        {
-          id: "harmonic_oscillations",
-          topic: "Колебания и волны",
-          name: "Уравнение гармонических колебаний",
-          mainVar: "amplitude",
-          formula: "$$x = x_{max} \\cos(\\omega t + \\varphi_0)$$",
-          calcMain: (v) =>
-            Math.abs(
-              v.position / Math.cos(v.angularFrequency * v.time + v.phase),
-            ),
-          calcOther: {
-            position: (v) =>
-              v.amplitude * Math.cos(v.angularFrequency * v.time + v.phase),
-          },
-          variables: {
-            amplitude: { name: "амплитуда", unit: "м", min: 1, max: 10 },
-            position: { name: "координата", unit: "м", min: 1, max: 10 },
-            angularFrequency: {
-              name: "циклическая частота",
-              unit: "рад/с",
-              min: 1,
-              max: 10,
-            },
-            time: { name: "время", unit: "с", min: 0, max: 1 },
-            phase: { name: "начальная фаза", unit: "рад", min: 0, max: 0 },
-          },
-        },
+        // {
+        //   id: "harmonic_oscillations",
+        //   topic: "Колебания и волны",
+        //   name: "Уравнение гармонических колебаний",
+        //   mainVar: "amplitude",
+        //   formula: "$$x = x_{max} \\cos(\\omega t + \\varphi_0)$$",
+        //   calcMain: (v) =>
+        //     Math.abs(
+        //       v.position / Math.cos(v.angularFrequency * v.time + v.phase),
+        //     ),
+        //   calcOther: {
+        //     position: (v) =>
+        //       v.amplitude * Math.cos(v.angularFrequency * v.time + v.phase),
+        //   },
+        //   variables: {
+        //     amplitude: { name: "амплитуда", unit: "м", min: 1, max: 10 },
+        //     position: { name: "координата", unit: "м", min: 1, max: 10 },
+        //     angularFrequency: {
+        //       name: "циклическая частота",
+        //       unit: "рад/с",
+        //       min: 1,
+        //       max: 10,
+        //     },
+        //     time: { name: "время", unit: "с", min: 0, max: 1 },
+        //     phase: { name: "начальная фаза", unit: "рад", min: 0, max: 0 },
+        //   },
+        // },
         // ТЕСТ 32 - Абсолютный показатель преломления
         {
           id: "refractive_index",
@@ -3915,6 +3918,7 @@
               min: 1,
               max: 3,
             },
+            c: { name: "скорость света", unit: " x10⁸ м/с", min: 3, max: 3 },
           },
         },
         // ТЕСТ 35 - Максимальная кинетическая энергия фотоэлектронов
@@ -3930,7 +3934,7 @@
             maxKineticEnergy: {
               name: "макс. кин. энергия",
               unit: "эВ",
-              min: 1,
+              min: 0.1,
               max: 10,
             },
             stoppingVoltage: {
