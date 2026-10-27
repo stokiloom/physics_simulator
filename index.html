@@ -607,7 +607,220 @@
   .type-btn {
     min-height: 44px;
   }
+  /* ===== ПЛАНШЕТ (до 768px) ===== */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.4em;
+  }
+
+  .topics-grid {
+    grid-template-columns: 1fr;        /* темы в одну колонку */
+  }
+
+  .level-buttons,
+  .type-buttons {
+    flex-direction: column;            /* кнопки уровней друг под другом */
+  }
+
+  .level-btn,
+  .type-btn {
+    width: 100%;
+  }
+
+  .test-meta {
+    flex-direction: column;            /* мета-информация в столбик */
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .stats {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .stat {
+    flex: 1 1 40%;
+  }
+
+  .task {
+    padding: 15px;
+    margin: 12px 0;
+  }
+
+  .task-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .answer-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .answer-input input {
+    width: 100%;                       /* поле ввода на всю ширину */
+  }
+
+  .answer-unit {
+    text-align: center;
+  }
+
+  .btn {
+    width: 100%;                       /* кнопки на всю ширину — удобно для пальца */
+    margin: 6px 0;
+    text-align: center;
+  }
+}
+
+/* ===== ТЕЛЕФОН (до 480px) ===== */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.25em;
+    padding-bottom: 6px;
+  }
+
+  .topic-item,
+  .level-btn,
+  .type-btn {
+    font-size: 14px;
+    padding: 10px 12px;
+    min-height: 44px;                  /* минимум для touch-target */
+  }
+
+  .task-number {
+    font-size: 15px;
+  }
+
+  .task-question {
+    font-size: 14px;
+  }
+
+  .task-given {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .unit-options {
+    gap: 6px;
+  }
+
+  .unit-option {
+    flex: 1 1 calc(50% - 6px);         /* единицы измерения по 2 в ряд */
+    padding: 8px 10px;
+    font-size: 13px;
+    justify-content: center;
+  }
+
+  .review-formula {
+    font-size: 15px;                   /* формулы не вылезали за край */
+    padding: 10px;
+  }
+
+  .ans-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .ans-label {
+    min-width: auto;
+  }
+
+  .score {
+    font-size: 24px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+}
+
+/* ===== ПЕЧАТЬ ===== */
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+    padding: 0;
+    max-width: 100%;
+    font-size: 12pt;
+  }
+
+  .btn,
+  .hint-btn,
+  .answer-input input {
+    display: none;                     /* скрываем интерактив при печати */
+  }
+
+  .task {
+    box-shadow: none;
+    border: 1px solid #000;
+    page-break-inside: avoid;          /* задача не разрывается между страницами */
+  }
+
+  .task-result.correct,
+  .task-result.incorrect {
+    background: none;
+    color: #000;
+    border: 1px solid #000;
+  }
+
+  h1 {
+    border-bottom: 2px solid #000;
+  }
+}
+
+/* ===== Тёмная тема (опционально, если школа разрешает) ===== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #1a1d21;
+    color: #e4e6e8;
+  }
+
+  h1, h2, h3 {
+    color: #a8c0dc;
+  }
+
+  .task,
+  .results-summary,
+  .topic-stat-card,
+  .review-card {
+    background: #24282d;
+    border-color: #3a3f45;
+  }
+
+  .task-given,
+  .review-question {
+    background: #1e2227;
+    border-color: #3a3f45;
+  }
+
+  .topic-item,
+  .level-btn,
+  .type-btn,
+  .unit-option {
+    background: #24282d;
+    border-color: #3a3f45;
+    color: #e4e6e8;
+  }
+
+  .btn {
+    background: #2f5d8a;
+    border-color: #2f5d8a;
+  }
+}
+
 </style>
+
   </head>
   <body>
     <h1>🔬 Физика. Тренажёр</h1>
@@ -2624,7 +2837,7 @@
             time: { name: "время", unit: "с", min: 1, max: 1000 },
           },
         },
-        // ТЕСТ 28 тут!!!
+        // ТЕСТ 28
         {
           id: "amperes_force",
           topic: "Магнитное поле",
@@ -2654,9 +2867,9 @@
               min: 0.001,
               max: 10,
             },
-            current: { name: "сила тока", unit: "А", min: 0.1, max: 100 },
-            magneticField: { name: "индукция", unit: "Тл", min: 0.01, max: 10 },
-            length: { name: "длина проводника", unit: "м", min: 0.01, max: 10 },
+            current: { name: "сила тока", unit: "А", min: 0.1, max: 10 },
+            magneticField: { name: "индукция", unit: "Тл", min: 0.1, max: 1 },
+            length: { name: "длина проводника", unit: "м", min: 1, max: 10 },
             angle: { name: "угол", unit: "°", min: 30, max: 90 },
           },
         },
@@ -2687,12 +2900,12 @@
             lorentzForce: {
               name: "сила Лоренца",
               unit: "мкН",
-              min: 1,
-              max: 1000,
+              min: 5,
+              max: 10000,
             },
-            charge: { name: "заряд", unit: "мкКл", min: 1, max: 100 },
-            velocity: { name: "скорость", unit: "м/с", min: 100, max: 10000 },
-            magneticField: { name: "индукция", unit: "Тл", min: 0.01, max: 1 },
+            charge: { name: "заряд", unit: "мкКл", min: 1, max: 10 },
+            velocity: { name: "скорость", unit: "м/с", min: 100, max: 1000 },
+            magneticField: { name: "индукция", unit: "Тл", min: 0.1, max: 1 },
             angle: { name: "угол", unit: "°", min: 30, max: 90 },
           },
         },
@@ -2716,11 +2929,11 @@
             magneticFlux: {
               name: "магнитный поток",
               unit: "Вб",
-              min: 0.001,
+              min: 0.01,
               max: 1,
             },
-            magneticField: { name: "индукция", unit: "Тл", min: 0.01, max: 1 },
-            area: { name: "площадь", unit: "м²", min: 0.01, max: 10 },
+            magneticField: { name: "индукция", unit: "Тл", min: 0.1, max: 1 },
+            area: { name: "площадь", unit: "м²", min: 0.2, max: 1 },
             angle: { name: "угол", unit: "°", min: 0, max: 60 },
           },
         },
@@ -2736,14 +2949,14 @@
             time: (v) => Math.abs(v.fluxChange) / v.emf,
           },
           variables: {
-            emf: { name: "ЭДС индукции", unit: "В", min: 0.01, max: 100 },
+            emf: { name: "ЭДС индукции", unit: "В", min: 0.1, max: 100 },
             fluxChange: {
               name: "изменение потока",
               unit: "Вб",
-              min: 0.01,
+              min: 0.1,
               max: 10,
             },
-            time: { name: "время", unit: "с", min: 0.1, max: 10 },
+            time: { name: "время", unit: "с", min: 0.1, max: 1 },
           },
         },
         {
@@ -2766,10 +2979,10 @@
               (v.magneticField * v.velocity * Math.sin((v.angle * 3.14) / 180)),
           },
           variables: {
-            emf: { name: "ЭДС", unit: "В", min: 0.01, max: 100 },
-            magneticField: { name: "индукция", unit: "Тл", min: 0.01, max: 1 },
-            length: { name: "длина", unit: "м", min: 0.1, max: 10 },
-            velocity: { name: "скорость", unit: "м/с", min: 1, max: 100 },
+            emf: { name: "ЭДС", unit: "В", min: 0.2, max: 100 },
+            magneticField: { name: "индукция", unit: "Тл", min: 0.2, max: 1 },
+            length: { name: "длина", unit: "м", min: 0.2, max: 1 },
+            velocity: { name: "скорость", unit: "м/с", min: 10, max: 100 },
             angle: { name: "угол", unit: "°", min: 30, max: 90 },
           },
         },
@@ -2785,20 +2998,20 @@
             currentChange: (v) => (v.emf * v.time) / v.inductance,
           },
           variables: {
-            emf: { name: "ЭДС самоиндукции", unit: "В", min: 0.01, max: 100 },
+            emf: { name: "ЭДС самоиндукции", unit: "В", min: 0.1, max: 100 },
             inductance: {
               name: "индуктивность",
               unit: "Гн",
-              min: 0.01,
-              max: 10,
+              min: 0.1,
+              max: 1,
             },
             currentChange: {
               name: "изменение тока",
               unit: "А",
-              min: 0.1,
-              max: 100,
+              min: 1,
+              max: 10,
             },
-            time: { name: "время", unit: "с", min: 0.1, max: 10 },
+            time: { name: "время", unit: "с", min: 0.1, max: 1 },
           },
         },
         {
@@ -2813,17 +3026,17 @@
             current: (v) => Math.sqrt((2 * v.energy) / v.inductance),
           },
           variables: {
-            energy: { name: "энергия", unit: "Дж", min: 0.01, max: 100 },
+            energy: { name: "энергия", unit: "Дж", min: 0.05, max: 50 },
             inductance: {
               name: "индуктивность",
               unit: "Гн",
-              min: 0.01,
-              max: 10,
+              min: 0.1,
+              max: 1,
             },
-            current: { name: "сила тока", unit: "А", min: 0.1, max: 100 },
+            current: { name: "сила тока", unit: "А", min: 1, max: 10 },
           },
         },
-        // ТЕСТ 30
+        // ТЕСТ 30 
         {
           id: "math_pendulum_period",
           topic: "Колебания и волны",
@@ -2835,8 +3048,11 @@
             length: (v) => Math.pow(v.period / (2 * 3.14), 2) * 10,
           },
           variables: {
-            period: { name: "период", unit: "с", min: 1, max: 10 },
+            period: { name: "период", unit: "с", min: 3, max: 7 },
             length: { name: "длина нити", unit: "м", min: 1, max: 10 },
+            pi: { name: "число 𝝅", unit: "", min: 3.14, max: 3.14 },
+            g: { name: "ускорение свободного падения", unit: "", min: 10, max: 10 },
+
           },
         },
         {
@@ -2851,9 +3067,10 @@
             stiffness: (v) => v.mass / Math.pow(v.period / (2 * 3.14), 2),
           },
           variables: {
-            period: { name: "период", unit: "с", min: 1, max: 10 },
+            period: { name: "период", unit: "с", min: 2, max: 10 },
             mass: { name: "масса", unit: "кг", min: 1, max: 100 },
-            stiffness: { name: "жёсткость", unit: "Н/м", min: 10, max: 10000 },
+            stiffness: { name: "жёсткость", unit: "Н/м", min: 10, max: 100 },
+            pi: { name: "число 𝝅", unit: "", min: 3.14, max: 3.14 },
           },
         },
         {
@@ -2868,12 +3085,12 @@
             period: (v) => v.wavelength / v.velocity,
           },
           variables: {
-            wavelength: { name: "длина волны", unit: "м", min: 0.1, max: 100 },
-            velocity: { name: "скорость", unit: "м/с", min: 1, max: 1000 },
+            wavelength: { name: "длина волны", unit: "м", min: 0.1, max: 1000 },
+            velocity: { name: "скорость", unit: "м/с", min: 10, max: 100 },
             period: { name: "период", unit: "с", min: 0.01, max: 10 },
           },
         },
-        // ТЕСТ 31
+        // ТЕСТ 31 тут !!!
         {
           id: "thomson_formula",
           topic: "Колебания и волны",
@@ -3592,10 +3809,10 @@
             heat: {
               name: "количество теплоты",
               unit: "Дж",
-              min: 1,
-              max: 10000,
+              min: 2,
+              max: 2000,
             },
-            pressure: { name: "давление", unit: "Па", min: 1000, max: 100000 },
+            pressure: { name: "давление", unit: "Па", min: 100, max: 1000 },
             volumeChange: {
               name: "изменение объёма",
               unit: "м³",
@@ -3606,7 +3823,7 @@
               name: "изменение внутр. энергии",
               unit: "Дж",
               min: 1,
-              max: 10000,
+              max: 1000,
             },
           },
         },
@@ -3624,10 +3841,10 @@
             time: (v) => v.work / (v.current * v.emf),
           },
           variables: {
-            work: { name: "работа", unit: "Дж", min: 1, max: 100000 },
-            current: { name: "сила тока", unit: "А", min: 0.1, max: 100 },
-            emf: { name: "ЭДС", unit: "В", min: 1, max: 100 },
-            time: { name: "время", unit: "с", min: 1, max: 1000 },
+            work: { name: "работа", unit: "Дж", min: 1, max: 10000 },
+            current: { name: "сила тока", unit: "А", min: 1, max: 10 },
+            emf: { name: "ЭДС", unit: "В", min: 1, max: 10 },
+            time: { name: "время", unit: "с", min: 1, max: 100 },
           },
         },
         // ТЕСТ 27 - Мощность источника тока
@@ -3643,8 +3860,8 @@
             emf: (v) => v.power / v.current,
           },
           variables: {
-            power: { name: "мощность", unit: "Вт", min: 1, max: 10000 },
-            current: { name: "сила тока", unit: "А", min: 0.1, max: 100 },
+            power: { name: "мощность", unit: "Вт", min: 1, max: 1000 },
+            current: { name: "сила тока", unit: "А", min: 1, max: 10 },
             emf: { name: "ЭДС", unit: "В", min: 1, max: 100 },
           },
         },
