@@ -3377,20 +3377,20 @@
           name: "Красная граница фотоэффекта",
           mainVar: "thresholdFrequency",
           formula: "$$\\nu_{min} = \\frac{A_{вых}}{h}$$",
-          calcMain: (v) => (1.6 * v.workFunction) / 6.63e-15,
+          calcMain: (v) => (1.6 * v.workFunction) / 6.63,
           calcOther: {
             workFunction: (v) => 1e12 * v.thresholdFrequency * 6.63e-34,
           },
           variables: {
             thresholdFrequency: {
               name: "красная граница (частота)",
-              unit: "TГц",
-              min: 16,
-              max: 1600,
+              unit: "10¹⁵Гц",
+              min: 0.1,
+              max: 5,
             },
             workFunction: {
               name: "работа выхода",
-              unit: "эВ'",
+              unit: "эВ",
               min: 1,
               max: 10,
             },
@@ -3435,7 +3435,7 @@
           topic: "Атомная+",
           name: "Энергия связи ядра",
           mainVar: "bindingEnergy",
-          formula: "$$E_{св} = \\Delta m 931.5 МэВ$$",
+          formula: "$$E_{св} = \\Delta m • 931.5 МэВ$$",
           calcMain: (v) => v.massDefect * 931.5,
           calcOther: { massDefect: (v) => v.bindingEnergy / 931.5 },
           variables: {
